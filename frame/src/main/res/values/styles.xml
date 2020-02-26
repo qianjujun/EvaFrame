@@ -1,0 +1,67 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="divider_horizontal_D0D0D0">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10px</item>
+        <item name="android:alpha">0.7</item>
+        <item name="android:background">#d0d0d0</item>
+    </style>
+
+    <style name="BottomAnimStyle" parent="android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
+        <!--<item name="android:activityOpenEnterAnimation">@anim/bottom_in</item>-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/bottom_out</item>-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/bottom_in</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/bottom_out</item>-->
+    </style>
+
+    <style name="CenterAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/center_in</item>
+        <item name="android:windowExitAnimation">@anim/center_out</item>
+    </style>
+
+    <style name="LeftDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/left_in</item>
+        <item name="android:windowExitAnimation">@anim/left_out</item>
+    </style>
+
+
+    <style name="my_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+
+        <!-- 背景透明 -->
+          
+        <item name="android:windowContentOverlay">@null</item>
+          <!-- 浮于Activity之上 -->
+          
+        <item name="android:windowIsFloating">true</item>
+          <!-- 边框 -->
+          
+        <item name="android:windowFrame">@null</item>
+          <!-- Dialog以外的区域模糊效果 -->
+          
+        <item name="android:backgroundDimEnabled">true</item>
+          <!-- 无标题 -->
+          <!-- 半透明 -->
+          
+        <item name="android:windowIsTranslucent">true</item>
+
+    </style>
+
+    <style name="bottom_dialog" parent="my_dialog">
+        <item name="android:windowAnimationStyle">@style/BottomAnimStyle</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="ImageTextView">
+        <attr name="viewLocation" format="enum">
+            <enum name="drawableLeft" value="0"/>
+            <enum name="drawableRight" value="1"/>
+            <enum name="drawableTop" value="2"/>
+            <enum name="drawableBottom" value="3"/>
+            <enum name="drawableVisable" value="4"/>
+            <enum name="textVisable" value="5"/>
+            <enum name="drawableNum" value="6"/>
+        </attr>
+        <attr name="childGravity" format="enum">
+            <enum name="center_horizontal" value="0"/>
+            <enum name="left_right" value="1"/>
+            <enum name="left_left" value="2"/>
+            <enum name="right_right" value="3"/>
+        </attr>
+        <attr name="drawablePading" format="dimension"/>
+        <attr name="src" format="reference"/>
+        <attr name="text" format="reference"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="imageWidth" format="dimension"/>
+        <attr name="imageHight" format="dimension"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="StateImageView">
+        <attr name="check" format="boolean"/>
+        <attr name="clickChangeState" format="boolean"/>
+    </declare-styleable>
+
+    <!--<declare-styleable name="SwipeItemLayout">-->
+        <!--<attr name="silSwipeDirection" format="enum">-->
+            <!--<enum name="left" value="0"/>-->
+            <!--<enum name="right" value="1"/>-->
+        <!--</attr>-->
+        <!--<attr name="silBottomMode" format="enum">-->
+            <!--<enum name="pullOut" value="0"/>-->
+            <!--<enum name="layDown" value="1"/>-->
+        <!--</attr>-->
+        <!--<attr name="silSpringDistance" format="dimension"/>-->
+        <!--<attr name="silSwipeAble" format="boolean"/>-->
+    <!--</declare-styleable>-->
+
+    <declare-styleable name="SwipeItemLayout.Layout">
+        <attr name="layout_itemType">
+            <flag name="main" value="0x01"/>
+            <flag name="menu" value="0x02"/>
+        </attr>
+    </declare-styleable>
+</resources>

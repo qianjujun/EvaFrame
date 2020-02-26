@@ -1,0 +1,2 @@
+rootProject.name='EvaFrame'
+include ':frame', ':arouter-api', ':app'

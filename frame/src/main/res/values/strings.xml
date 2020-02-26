@@ -1,0 +1,15 @@
+<resources>
+    <string name="better_app_name">BetterFrame</string>
+    <string name="better_empty">这里什么也沒有</string>
+    <string name="better_server_error">服务出錯了哦</string>
+    <string name="better_reload">重新加載</string>
+    <string name="better_no_net">信号好像不太好哦</string>
+    <string name="better_tip_server_error">服务出错了，请重新尝试</string>
+    <string name="better_tip_success">操作成功</string>
+    <string name="better_string_cancel">取消</string>
+    <string name="better_no_more_data">沒有更多数据</string>
+    <string name="better_click_reload">点击重新加载</string>
+    <string name="better_tip_loading">加载中请稍后</string>
+    <string name="better_common_wait">请稍候...</string>
+    <string name="better_common_fast_op">您的操作太频繁了</string>
+</resources>

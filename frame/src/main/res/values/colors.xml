@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+
+
+
+    <color name="bg_scan">#e003267f</color>
+    <color name="bg_im">#e002c871</color>
+    <color name="bg_pay">#e0ea4d5e</color>
+    <color name="bg_live">#8A2293</color>
+
+    <color name="transparent">#00000000</color>
+
+    <!-- 红、绿、蓝 -->
+    <color name="white_01">#3A000000</color>
+    <color name="white_02">#6F000000</color>
+
+    <color name="red">#FF0000</color>
+    <color name="e0_white">#50ffffff</color>
+    <color name="red_01">#F15252</color>
+    <color name="red_02">#CD3333</color>
+    <color name="black_01">#252525</color>
+    <color name="white_half_transparent">#80ffffff</color>
+    <color name="gray_01">#F9F9F9</color>
+    <color name="gray_02">#333333</color>
+    <color name="gray_03">#808080</color>
+    <color name="gray_04">#FAFAFA</color>
+    <color name="gray_05">#DDDDDD</color>
+    <color name="gray_06">#999999</color>
+    <color name="gray_07">#F5F5F5</color>
+    <color name="gray_08">#F0F0F4</color>
+    <color name="gray_09">#EFEFF4</color>
+    <color name="gray_10">#DEDEDE</color>
+    <color name="gray_11">#5B5B5B</color>
+    <color name="gray_12">#9C9C9C</color>
+    <color name="gray_13">#FFCCCCCC</color>
+    <color name="gray_14">#6FDEDEDE</color>
+    <color name="gray_15">#80efefef</color>
+    <color name="gray_6d">#dddddd</color>
+
+    <color name="gray_58626E">#58626E</color>
+    <color name="gray_999999">#999999</color>
+    <color name="gray_525C67">#525C67</color>
+    <color name="gray_ededed">#ededed</color>
+    <color name="blue_01">#64BCF3</color>
+    <color name="blue_02">#037AFF</color>
+
+    <color name="bg_01">#2D3B49</color>
+    <color name="bg_01_color">#e02D3B49</color>
+    <color name="bg_02">#6D7680</color>
+
+    <color name="orange_01">#EF7F5E</color>
+
+    <color name="black">#000000</color>
+    <color name="black_02">#222222</color>
+    <color name="white">#ffffff</color>
+    <color name="deep_white">#efefef</color>
+    <color name="light_gray">#99a4b7</color>
+    <color name="deep_gray">#4b5b74</color>
+    <color name="border_gray">#d9dfe5</color>
+    <color name="bg_gray">#e1e1e1</color>
+    <color name="btn_gray">#d1d1d1</color>
+    <color name="glass_gall">#c2ebef</color>
+    <color name="light_blue">#87d0f2</color>
+    <color name="yellow_02">#ffd576</color>
+
+
+    <drawable name="purple">#8e8bf2</drawable>
+
+    <drawable name="red_add_to_cart_n">#F15353</drawable>
+    <drawable name="red_add_to_cart_p">#A83A3A</drawable>
+    <color name="red_qr_code">#E17660</color>
+    <color name="croci">#FFA83B</color>
+
+    <color name="prd_detail_text_red_bg">#F15353</color>
+
+
+    <color name="red_balance_01">#B05E51</color>
+    <color name="red_balance_02">#E17660</color>
+    <color name="red_balance_01_color">#B05E51</color>
+    <color name="red_balance_02_color">#E17660</color>
+
+
+    <!--二维码扫描相关颜色-->
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="lightgreen">#99CC33</color>
+    <color name="green">#00CC00</color>
+    <color name="yellow">#FFFF00</color>
+    <drawable name="transparent">#00000000</drawable>
+
+    <color name="mt_dot_normal_color">#66bbbbbb</color>
+    <color name="mt_point_buy_original_color">#cceeeeee</color>
+    <color name="mt_dot_select_color">#00bcd6</color>
+    <color name="white_alpha_70">#B2FFFFFF</color>
+
+    <color name="region_shopping_bg">#0f0243</color>
+    <color name="region_bar_bg">#52525c</color>
+    <color name="region_topbar_bg">#FF484755</color>
+    <color name="text_color_item_content">#888888</color>
+
+    <color name="dynamic_main_color">#4ABDCC</color>
+    <color name="friend_dy_main_color">#ff7800</color>
+    <color name="gray_474747">#474747</color>
+    <color name="color_live_common_message">#daa520</color>
+    <color name="color_live_my_text_message">#8a2293</color>
+    <color name="FFA454">#FFA454</color>
+    <color name="ee124f">#80ee124f</color>
+    <color name="f65f14">#80f65f14</color>
+    <color name="bb16f2">#80bb16f2</color>
+    <color name="color_274678">#27467880</color>
+</resources>
