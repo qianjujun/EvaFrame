@@ -48,7 +48,13 @@ public abstract class BaseViewModule<T> {
 
     //需要在界面上显示的数量
     public int getSize() {
-        return size()+1;
+        if(size()==0){
+            return 1;
+        }
+        if(isGridLayout()){
+            return size()+1;
+        }
+        return size();
     }
 
 
@@ -126,11 +132,34 @@ public abstract class BaseViewModule<T> {
 
 
     int getSpanSize(int position) {
+        int maxSpanSize = getMaxSpanSize();
         if (maxSpanSize <= 1) {
             return 1;
         }
-        return maxSpanSize;
+        int spanCount = _getSpanCount(position);
+        if ((maxSpanSize % spanCount) != 0) {
+            throw new RuntimeException("最大列数必须是所取列数的整数倍");
+        }
+        return maxSpanSize / spanCount;
     }
+
+
+    private int _getSpanCount(int position) {
+        int dataPosition = position - getStartPosition();
+        if ((dataPosition == getSize() - 1)&&isGridLayout()) {//最后一列占满全列
+            return 1;
+        }
+        if (isStickyItem(dataPosition)) {//吸顶item占满全列
+            return 1;
+        }
+        return getSpanCount(dataPosition);
+    }
+
+    protected @IntRange(from = 1) int getSpanCount(int dataPosition){
+        return 1;
+    }
+
+
 
 
 

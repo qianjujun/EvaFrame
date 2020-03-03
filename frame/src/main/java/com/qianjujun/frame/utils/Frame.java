@@ -13,7 +13,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
  */
 
 public class Frame {
+    public static boolean DEBUG = true;
     public static void init(Application context,boolean debug){
+        DEBUG = debug;
         ContextProvider.init(context);
         Itn.init(context);
         ScrrenUtil.init(context);
@@ -24,6 +26,5 @@ public class Frame {
             ARouter.openLog();
         }
         ARouter.init(context);
-
     }
 }

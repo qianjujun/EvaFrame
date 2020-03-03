@@ -17,6 +17,8 @@ public interface RouterPath {
 
     String PATH_TEST_MODULE = _GROUP_NAME+"test_module";
 
+    String PATH_TEST_DIVIDER = _GROUP_NAME+"testDivider";
+
 
 
 

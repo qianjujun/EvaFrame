@@ -1,5 +1,7 @@
 package com.qianjujun.frame.adapter;
 
+import androidx.annotation.IntRange;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
 public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<T> {
 
     @Override
-    protected  boolean isGridLayout() {
+    protected boolean isGridLayout() {
         return false;
     }
 
@@ -119,6 +121,12 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         this.dataList.clear();
         notifyItemRemove(0, size);
     }
+
+
+
+
+
+
 
 
 }

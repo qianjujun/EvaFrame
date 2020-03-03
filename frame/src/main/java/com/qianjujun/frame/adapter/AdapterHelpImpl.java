@@ -4,6 +4,7 @@ package com.qianjujun.frame.adapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,10 +28,7 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
     public static final int POSITION_NONE = -1;
 
 
-    /**
-     *  ViewModule类相同但对象不同创建ViewHolder时可能传入耦合的参数 ,
-     *  因此同类型不同对象的ViewModule创建的ViewHolder会返回不同的ViewType
-     */
+
 
     //按顺序添加ViewModule  key:添加的index  依次加1
     private Map<Integer, BaseViewModule> mIndexViewModules = new TreeMap<>();
@@ -57,6 +55,7 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
             resetData();
             return;
         }
+
 
 
         viewModuleList.addAll(Arrays.asList(viewModules));
@@ -221,6 +220,22 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
     @Override
     public void onBindStickyViewHolder(BaseViewHolder viewHolder, int position) {
         adapter.onBindViewHolder(viewHolder,position);
+    }
+
+    @Override
+    public void onBindStickyViewHolder(BaseViewHolder viewHolder, int position, List<Object> payloads) {
+        adapter.onBindViewHolder(viewHolder,position,payloads);
+    }
+
+    @Override
+    public void changeLayoutManager(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer) {
+        adapter.registerAdapterDataObserver(observer);
     }
 
 

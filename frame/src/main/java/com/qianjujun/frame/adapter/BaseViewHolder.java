@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +53,7 @@ public abstract class BaseViewHolder<T,DB extends ViewDataBinding> extends Recyc
     public abstract void onBindData(T t, int dataPosition, int layoutPosition);
 
 
-    public void onBindData(T t, int dataPosition, int layoutPosition, List<Object> payloads) {
+    public void onBindData(T t, int dataPosition, int layoutPosition, @NonNull List<Object> payloads) {
 
     }
 

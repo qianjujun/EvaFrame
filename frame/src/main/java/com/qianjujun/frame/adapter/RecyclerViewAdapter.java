@@ -65,6 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     public void onBindViewHolder(BaseViewHolder holder, int position, List<Object> payloads) {
         if(payloads==null||payloads.isEmpty()){
             onBindViewHolder(holder,position);
+            return;
         }
         BaseViewModule viewModule = adapterHelper.findViewModuleByPosition(position);
         int dataPosition = adapterHelper.getDataPosition(viewModule,position);

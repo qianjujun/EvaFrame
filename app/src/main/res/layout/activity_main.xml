@@ -8,8 +8,8 @@
     tools:context=".MainActivity">
 
    <Button
-       android:text="测试跳转"
-       android:onClick="testJump"
+       android:text="测试分割线"
+       android:onClick="testDivider"
        android:layout_width="match_parent"
        android:layout_height="wrap_content" />
 

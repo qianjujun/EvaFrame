@@ -25,14 +25,16 @@ public class MainActivity extends AppCompatActivity implements RouterPath{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.image);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                test();
-            }
-        });
+        /*-+
+
+         */
 
     }
+
+    public void testDivider(View view) {
+        Router.buildFragment(PATH_TEST_DIVIDER).navigation(this);
+    }
+
 
     public void testJump(View view) {
         Router.build(PATH_DEFAULT_ACTIVITY).navigation();
@@ -65,4 +67,6 @@ public class MainActivity extends AppCompatActivity implements RouterPath{
     private void test(){
         imageView.setImageDrawable(tintDrawable(imageView.getDrawable(),ColorStateList.valueOf(Color.RED)));
     }
+
+
 }
