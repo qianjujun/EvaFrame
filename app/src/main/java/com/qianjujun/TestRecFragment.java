@@ -51,9 +51,9 @@ public class TestRecFragment extends BetterModuleFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
-        recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
-                .setChildColumnNum(3)
-        .setDividerColor(Color.BLUE));
+//        recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
+//                .setChildColumnNum(3)
+//        .setDividerColor(Color.BLUE));
 
         List<Group> list = Group.createTestData();
         groupVm.setExpendable(true);
@@ -99,10 +99,10 @@ public class TestRecFragment extends BetterModuleFragment {
         switch (view.getId()){
             case R.id.btn_add:
                 adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new LinearLayoutManager(getContext()));
-                groupViewModuleItemDecoration.setChildColumnNum(1);
+                //groupViewModuleItemDecoration.setChildColumnNum(1);
                 break;
             case R.id.btn_change:
-                groupViewModuleItemDecoration.setChildColumnNum(3);
+                //groupViewModuleItemDecoration.setChildColumnNum(3);
                 adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new GridLayoutManager(getContext(),3));
                 break;
             case R.id.btn_remove:

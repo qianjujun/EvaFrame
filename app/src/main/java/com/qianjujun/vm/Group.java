@@ -59,7 +59,12 @@ public class Group implements GroupData<Child> {
         for(int i = 0;i<10;i++){
             group = new Group();
             group.setText("group"+i+"组");
-            maxChildSize = random.nextInt(20);
+            if(i==1){
+                maxChildSize = 1;
+            }else {
+                maxChildSize = random.nextInt(20);
+            }
+
             childList = new ArrayList<>();
             for(int j = 0;j< maxChildSize;j++){
                 childList.add(new Child("group:"+i+"  child:"+j));

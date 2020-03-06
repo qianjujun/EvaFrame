@@ -18,9 +18,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private boolean handlerNullData = true;
+    private boolean handlerNullData;
 
     private IAdapterHelp adapterHelper;
+
 
     public IAdapterHelp getAdapterHelper() {
         return adapterHelper;
@@ -53,12 +54,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
+
+
         BaseViewModule viewModule = adapterHelper.findViewModuleByPosition(position);
         int dataPosition = adapterHelper.getDataPosition(viewModule,position);
         Object data = viewModule.getItem(dataPosition);
-        holder.bindData(data,dataPosition,position);
+        holder.bindData(data,dataPosition,position,null);
         Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
-
     }
 
     @Override
@@ -70,7 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
         BaseViewModule viewModule = adapterHelper.findViewModuleByPosition(position);
         int dataPosition = adapterHelper.getDataPosition(viewModule,position);
         Object data = viewModule.getItem(dataPosition);
-        holder.onBindData(data,dataPosition,position,payloads);
+        holder.bindData(data,dataPosition,position,payloads);
     }
 
     @Override

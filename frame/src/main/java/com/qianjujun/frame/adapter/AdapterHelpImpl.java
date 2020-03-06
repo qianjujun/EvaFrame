@@ -1,7 +1,6 @@
 package com.qianjujun.frame.adapter;
 
 
-import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -26,6 +25,8 @@ import java.util.TreeMap;
 public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener{
 
     public static final int POSITION_NONE = -1;
+
+    public static final String ANIM_UPDATE_PAYLOAD = "AdapterHelpImpl_ANIM_UPDATE_PAYLOAD";
 
 
 
@@ -256,8 +257,8 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
         if(start>0){//==0时插入动画 会直接滑倒底部
             adapter.notifyItemRangeInserted(start,itemCount);
         }
-        adapter.notifyItemRangeChanged(start,size);
-        Log.d("qianjujun", "onDataSizeChangeByInserted() called with: viewModule = [" + "start:"+start + "], positionStart = [" + positionStart + "], itemCount = [" + itemCount + "]"+size);
+        //adapter.notifyItemRangeChanged(start,size);
+        adapter.notifyItemRangeChanged(start,size,ANIM_UPDATE_PAYLOAD);
     }
 
     @Override
@@ -265,7 +266,8 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
         resetData();
         int start = viewModule.getStartPosition()+positionStart;
         adapter.notifyItemRangeRemoved(start,itemCount);
-        adapter.notifyItemRangeChanged(start,size);
+        //adapter.notifyItemRangeChanged(start,size);
+        adapter.notifyItemRangeChanged(start,size,ANIM_UPDATE_PAYLOAD);
     }
 
     @Override

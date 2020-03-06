@@ -1,6 +1,7 @@
 package com.qianjujun.vm;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +18,7 @@ import com.qianjujun.frame.utils.ToastUtils;
  * @describe
  */
 public class GroupVm extends GroupViewModule3<Child,Group> {
+    private static final String TAG = "GroupVm";
 
     public GroupVm(){
         setOnChildItemClickListener((child, group, groupIndex, childIndex, dataPosition) -> ToastUtils.showWarning("], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]"+child.getText()));
@@ -31,6 +33,7 @@ public class GroupVm extends GroupViewModule3<Child,Group> {
             @Override
             protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition) {
                 dataBing.tvText.setText(child.getText());
+                Log.d(TAG, "ChildHolder onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], child = [" + "" + "], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]");
             }
         };
     }
@@ -44,6 +47,7 @@ public class GroupVm extends GroupViewModule3<Child,Group> {
                 dataBing.text.setText(group.getText());
                 mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
                 changeExpendImage(mDataBinding.ivArrow,expend);
+                Log.d(TAG, "GroupHolder TOP onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
             }
 
             @Override
@@ -62,6 +66,7 @@ public class GroupVm extends GroupViewModule3<Child,Group> {
                 dataBing.ivArrow.setVisibility(View.GONE);
                 dataBing.text.setText("底部");
                 dataBing.text.setBackgroundColor(Color.BLACK);
+                Log.d(TAG, "GroupHolder Bottom onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
             }
         };
     }
