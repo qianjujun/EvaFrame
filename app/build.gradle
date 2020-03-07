@@ -51,4 +51,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation project(path: ':frame')
+
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 }

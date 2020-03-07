@@ -1,9 +1,9 @@
 package com.qianjujun.frame.adapter;
 
 
-import android.util.Log;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +26,10 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
 
     public static final int POSITION_NONE = -1;
 
+    public static final String ANIM_UPDATE_PAYLOAD = "AdapterHelpImpl_ANIM_UPDATE_PAYLOAD";
 
-    /**
-     *  ViewModule类相同但对象不同创建ViewHolder时可能传入耦合的参数 ,
-     *  因此同类型不同对象的ViewModule创建的ViewHolder会返回不同的ViewType
-     */
+
+
 
     //按顺序添加ViewModule  key:添加的index  依次加1
     private Map<Integer, BaseViewModule> mIndexViewModules = new TreeMap<>();
@@ -57,6 +56,7 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
             resetData();
             return;
         }
+
 
 
         viewModuleList.addAll(Arrays.asList(viewModules));
@@ -223,6 +223,22 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
         adapter.onBindViewHolder(viewHolder,position);
     }
 
+    @Override
+    public void onBindStickyViewHolder(BaseViewHolder viewHolder, int position, List<Object> payloads) {
+        adapter.onBindViewHolder(viewHolder,position,payloads);
+    }
+
+    @Override
+    public void changeLayoutManager(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer) {
+        adapter.registerAdapterDataObserver(observer);
+    }
+
 
     @Override
     public void onDataItemRangeChanged(BaseViewModule viewModule, int dataPosition, int itemCount, int layoutPosition) {
@@ -241,7 +257,9 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
         if(start>0){//==0时插入动画 会直接滑倒底部
             adapter.notifyItemRangeInserted(start,itemCount);
         }
-        adapter.notifyItemRangeChanged(start,size);
+
+        //adapter.notifyItemRangeChanged(start,size);
+        adapter.notifyItemRangeChanged(start,size,ANIM_UPDATE_PAYLOAD);
     }
 
     @Override
@@ -249,7 +267,8 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
         resetData();
         int start = viewModule.getStartPosition()+positionStart;
         adapter.notifyItemRangeRemoved(start,itemCount);
-        adapter.notifyItemRangeChanged(start,size);
+        //adapter.notifyItemRangeChanged(start,size);
+        adapter.notifyItemRangeChanged(start,size,ANIM_UPDATE_PAYLOAD);
     }
 
     @Override

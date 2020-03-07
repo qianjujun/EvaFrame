@@ -1,9 +1,11 @@
 package com.qianjujun.frame.adapter;
 
-import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 /**
  * @author qianjujun
@@ -62,5 +64,11 @@ public interface IAdapterHelp {
     BaseViewHolder onCreateStickyViewHolder(ViewGroup container,int viewType);
 
     void onBindStickyViewHolder(BaseViewHolder viewHolder,int position);
+
+    void onBindStickyViewHolder(BaseViewHolder viewHolder, int position, List<Object> payloads);
+
+    void changeLayoutManager(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager);
+
+    void registerAdapterDataObserver(@NonNull RecyclerView.AdapterDataObserver observer);
 
 }

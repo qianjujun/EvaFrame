@@ -1,22 +1,19 @@
 package com.qianjujun;
 
+import android.graphics.Color;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.qianjujun.frame.adapter.GroupViewModuleItemDecoration;
 import com.qianjujun.frame.adapter.RecyclerViewAdapter;
 import com.qianjujun.frame.adapter.StickyItemDecoration;
 import com.qianjujun.frame.base.BetterModuleFragment;
-import com.qianjujun.frame.utils.ToastUtils;
-import com.qianjujun.vm.HeadVm;
-import com.qianjujun.vm.Test;
-import com.qianjujun.vm.TestVm1;
-import com.qianjujun.vm.TestVm2;
-import com.qianjujun.vm.TestVm3;
-import com.qianjujun.vm.TestVm4;
-import com.qianjujun.vm.TestVm5;
+import com.qianjujun.vm.Group;
+import com.qianjujun.vm.GroupVm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,34 +33,31 @@ public class TestRecFragment extends BetterModuleFragment {
 
     private static int index = 0;
 
-    //多列  悬停item自动填充一列
-    TestVm1 vm1 = new TestVm1();
-    TestVm2 vm2 = new TestVm2();
-    TestVm3 vm3 = new TestVm3();
-    TestVm4 vm4 = new TestVm4();
 
     //分组
-    TestVm5 vm5 = new TestVm5();
+
+
+    GroupVm groupVm = new GroupVm();
+    RecyclerViewAdapter adapter;
+    private GroupViewModuleItemDecoration groupViewModuleItemDecoration;
+
     @Override
     protected void initModule(RecyclerView recyclerView,View contentView) {
         index = 0;
 
-        vm4.setData("我是头");
-        vm1.setList(createTestData());
-        vm2.setList(createStringTestData());
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(new HeadVm(),vm1,vm2,vm3,vm4,vm5);
-
-
-
+        adapter = new RecyclerViewAdapter(groupVm);
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity,3));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
-        vm1.setOnModuleItemClickListener((integer, dataPosition, layoutPosition) -> ToastUtils.showWarning("AAAAA"+integer));
 
+//        recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
+//                .setChildColumnNum(3)
+//        .setDividerColor(Color.BLUE));
 
-
-        vm5.setList(Test.createGroup());
+        List<Group> list = Group.createTestData();
+        groupVm.setExpendable(true);
+        groupVm.setList(list);
 
 
         contentView.findViewById(R.id.btn_add).setOnClickListener(this);
@@ -104,19 +98,18 @@ public class TestRecFragment extends BetterModuleFragment {
     public void onViewClick(View view) {
         switch (view.getId()){
             case R.id.btn_add:
-                vm2.addAll(createStringTestData());
+                adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new LinearLayoutManager(getContext()));
+                //groupViewModuleItemDecoration.setChildColumnNum(1);
                 break;
             case R.id.btn_change:
-                vm2.set(1,new Random().nextInt()+"");
+                //groupViewModuleItemDecoration.setChildColumnNum(3);
+                adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new GridLayoutManager(getContext(),3));
                 break;
             case R.id.btn_remove:
-                vm2.remove(1);
                 break;
             case R.id.btn_clear:
-                vm2.clear();
                 break;
             case R.id.btn_setting:
-                vm2.setList(createStringTestData());
                 break;
         }
     }

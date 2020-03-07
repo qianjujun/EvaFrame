@@ -99,19 +99,19 @@ public abstract class GroupViewModule<G extends GroupData<C>,C extends ChildData
 
                 if(!map.containsKey(index)){
                     map.put(index,false);
-                    dataList.removeAll(group.getData());
-                    notifyItemRemove(dataPosition+1,group.getData().size());
+                    dataList.removeAll(group.getChildList());
+                    notifyItemRemove(dataPosition+1,group.getChildList().size());
                     return;
                 }
 
                 if(map.get(index)){
                     map.put(index,false);
-                    dataList.removeAll(group.getData());
-                    notifyItemRemove(dataPosition+1,group.getData().size());
+                    dataList.removeAll(group.getChildList());
+                    notifyItemRemove(dataPosition+1,group.getChildList().size());
                 }else {
                     map.put(index,true);
-                    dataList.addAll(dataPosition+1,group.getData());
-                    notifyItemInserted(dataPosition+1,group.getData().size());
+                    dataList.addAll(dataPosition+1,group.getChildList());
+                    notifyItemInserted(dataPosition+1,group.getChildList().size());
                 }
             }else {
                 if(onChildItemClickListener!=null){
@@ -184,7 +184,7 @@ public abstract class GroupViewModule<G extends GroupData<C>,C extends ChildData
             if(gcGroupInfo!=null){
                 groupIndex = gcGroupInfo.groupIndex;
                 G group = gcGroupInfo.group;
-                List<C> childList = group.getData();
+                List<C> childList = group.getChildList();
                 if(childList!=null){
                     childIndex = childList.indexOf(c);
                     childSize = childList.size();

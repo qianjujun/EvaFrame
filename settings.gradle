@@ -1,3 +1,7 @@
 rootProject.name='EvaFrame'
+<<<<<<< HEAD
 include ':frame', ':arouter-api', ':app','adapter'
 include ':lib'
+=======
+include ':frame', ':arouter-api', ':app', ':lib'
+>>>>>>> 7d2b209f47d317578ce4bdfa2dcbfde68b4d2efc

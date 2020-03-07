@@ -8,9 +8,12 @@ import java.util.List;
  * @createTime 2020/1/22 14:25
  * @describe
  */
-public interface GroupData<T extends ChildData> {
-     T convertToChild();
+public interface GroupData<T> {
 
-    List<T> getData();
+    List<T> getChildList();
+
+    T getChild(int childPosition);
+
+    int getChildSize();
 
 }

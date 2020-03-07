@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qianjujun.frame.base.BetterSimpleFragment;
 

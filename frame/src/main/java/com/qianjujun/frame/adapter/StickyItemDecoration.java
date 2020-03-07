@@ -1,17 +1,21 @@
 package com.qianjujun.frame.adapter;
 
 import android.graphics.Canvas;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +42,8 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
      */
     private Map<Integer,BaseViewHolder> stickyHolder = new HashMap<>();
 
+    private Handler mHandler = new Handler();
+
 
 
     private BaseViewHolder getViewHolderByItemViewType(ViewGroup parent,int position){
@@ -57,12 +63,31 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
 
 
     public StickyItemDecoration(IAdapterHelp adapterHelper) {
-        this.adapterHelper = adapterHelper;
+        this(adapterHelper,null);
+
     }
 
     public StickyItemDecoration(IAdapterHelp adapterHelper, ViewGroup viewRoot) {
         this.adapterHelper = adapterHelper;
         this.viewRoot = viewRoot;
+        this.adapterHelper.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                super.onItemRangeChanged(positionStart, itemCount);
+                if(currentStickyPosition==positionStart){
+                    mHandler.postDelayed(() -> handlerView(currentStickyPosition),64);
+
+                }
+            }
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
+                super.onItemRangeChanged(positionStart, itemCount, payload);
+                if(currentStickyPosition==positionStart){
+                    mHandler.postDelayed(() -> handlerView(currentStickyPosition,payload),64);
+                }
+            }
+        });
     }
 
     @Override
@@ -85,8 +110,8 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
         View child = parent.getChildAt(0);
         int pos = parent.getChildAdapterPosition(child);
         int stickyPosition = adapterHelper.findCurrentStickyPosition(pos);
+        Log.d(TAG, "onDrawOver() called with: c = [stickyPosition<0"+stickyPosition +"  pos:"+pos);
         if(stickyPosition<0){
-            Log.d(TAG, "onDrawOver() called with: c = [stickyPosition<0"+stickyPosition );
             container.setVisibility(View.GONE);
             return;
         }
@@ -164,6 +189,21 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
                 child.setVisibility(View.GONE);
             }
         }
+    }
+
+    private void handlerView(int stickyPosition,Object payload){
+        int viewType = adapterHelper.getAdapterViewType(stickyPosition);
+        BaseViewHolder viewHolder = null;
+        if(stickyHolder.containsKey(viewType)){
+            viewHolder =  stickyHolder.get(viewType);
+        }
+        if(viewHolder==null){
+            return;
+        }
+        List<Object> list = new ArrayList<>();
+        list.add(payload);
+        adapterHelper.onBindStickyViewHolder(viewHolder,stickyPosition,list);
+
     }
 
 
