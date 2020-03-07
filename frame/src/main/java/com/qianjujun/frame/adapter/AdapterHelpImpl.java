@@ -242,7 +242,6 @@ public class AdapterHelpImpl implements IAdapterHelp,ViewType,DataChangeListener
             adapter.notifyItemRangeInserted(start,itemCount);
         }
         adapter.notifyItemRangeChanged(start,size);
-        Log.d("qianjujun", "onDataSizeChangeByInserted() called with: viewModule = [" + "start:"+start + "], positionStart = [" + positionStart + "], itemCount = [" + itemCount + "]"+size);
     }
 
     @Override
