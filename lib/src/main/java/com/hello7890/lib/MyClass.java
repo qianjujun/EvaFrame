@@ -8,6 +8,8 @@ public class MyClass {
 
 
         Cat cat = new RedHat();
-        System.out.println(cat.getClass().getName());
+
+        Cat cat1 = new RedHat();
+        System.out.println(cat.getClass().getName()==cat1.getClass().getName());
     }
 }

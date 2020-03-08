@@ -8,4 +8,7 @@ public interface IErrorCode {
     int STATE_EMPTY_DATA = 10002;//空数据
 
     int STATE_ERROR_SERVER = 10003;//服务器 ，网络相关错误
+
+
+    int STATE_ERROR_THROW_BY_USER = 10004;
 }

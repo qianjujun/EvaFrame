@@ -3,11 +3,11 @@ package com.qianjujun.vm;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
+import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.vh.BaseDbViewHolder;
+import com.hello7890.adapter.vm.ViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.TestHold1Binding;
-import com.qianjujun.frame.adapter.BaseViewHolder;
-import com.qianjujun.frame.adapter.GridViewModule;
-import com.qianjujun.frame.adapter.ViewModule;
 
 /**
  * @author qianjujun
@@ -15,9 +15,9 @@ import com.qianjujun.frame.adapter.ViewModule;
  * @createTime 2020/1/20 16:22
  * @describe
  */
-public class TestVm1 extends GridViewModule<Integer> {
+public class TestVm1 extends ViewModule<Integer> {
     @Override
-    public BaseViewHolder<Integer, ?> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder<Integer> onCreateViewHolder(ViewGroup parent, int viewType) {
         return new TestHold1(parent);
     }
 
@@ -26,7 +26,7 @@ public class TestVm1 extends GridViewModule<Integer> {
         return 3;
     }
 
-    static class TestHold1 extends BaseViewHolder<Integer, TestHold1Binding> {
+    static class TestHold1 extends BaseDbViewHolder<Integer, TestHold1Binding> {
 
         public TestHold1(ViewGroup container) {
             super(R.layout.test_hold1, container);

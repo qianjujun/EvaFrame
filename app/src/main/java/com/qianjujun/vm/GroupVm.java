@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hello7890.adapter.vm.GroupViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
-import com.qianjujun.frame.adapter.GroupViewModule3;
 import com.qianjujun.frame.utils.ToastUtils;
 
 /**
@@ -17,7 +17,7 @@ import com.qianjujun.frame.utils.ToastUtils;
  * @createTime 2020/3/2 16:23
  * @describe
  */
-public class GroupVm extends GroupViewModule3<Child,Group> {
+public class GroupVm extends GroupViewModule<Child,Group> {
     private static final String TAG = "GroupVm";
 
     public GroupVm(){

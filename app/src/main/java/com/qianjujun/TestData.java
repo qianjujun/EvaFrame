@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class TestData {
     private static final Random random = new Random();
-
+    private static int index = 0;
 
     public static List<String> createTestStringList(){
         int max = random.nextInt(25)+1;
@@ -22,7 +22,7 @@ public class TestData {
     public static List<String> createTestStringList(int max){
         List<String> list = new ArrayList<>();
         for(int i = 0;i<max;i++){
-            list.add("数据："+i);
+            list.add("数据："+(index++));
         }
         return list;
     }

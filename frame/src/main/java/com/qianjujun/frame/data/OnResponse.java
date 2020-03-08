@@ -36,14 +36,14 @@ public abstract class OnResponse<T, M extends IData<T>> extends ResourceSubscrib
         T t = dt.getData();
 
         if(t==null){
-            onFail(new EmptyException());
+            onEmptyData();
             onEnd(false,STATE_EMPTY_DATA, dt.getMessage());
             return;
         }
 
         if(t instanceof List){
             if(((List)t).size()==0){
-                onFail(new EmptyException());
+                onEmptyData();
                 onEnd(false,STATE_EMPTY_DATA, dt.getMessage());
                 return;
             }
@@ -66,7 +66,12 @@ public abstract class OnResponse<T, M extends IData<T>> extends ResourceSubscrib
     @Override
     public final void onError(Throwable t) {
         AppException exception = AppException.create(t);
-        onFail(exception);
+
+        if(exception.getErrorCode()==IErrorCode.STATE_EMPTY_DATA){
+            onEmptyData();
+        }else {
+            onFail(exception);
+        }
         onEnd(false,exception.getErrorCode(), exception.getMessage());
         t.printStackTrace();
 
@@ -102,6 +107,11 @@ public abstract class OnResponse<T, M extends IData<T>> extends ResourceSubscrib
 
 
     public void onFail(AppException ex) {
+
+    }
+
+
+    public void onEmptyData(){
 
     }
 

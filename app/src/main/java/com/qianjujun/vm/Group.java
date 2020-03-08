@@ -1,6 +1,7 @@
 package com.qianjujun.vm;
 
-import com.qianjujun.frame.adapter.GroupData;
+
+import com.hello7890.adapter.data.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;

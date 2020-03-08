@@ -6,8 +6,9 @@ import android.view.ViewGroup;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.qianjujun.frame.adapter.RecyclerViewAdapter;
+import com.hello7890.adapter.RecyclerViewAdapter;
 import com.qianjujun.frame.base.BetterSimpleFragment;
+import com.qianjujun.router.RouterPath;
 import com.qianjujun.vm.PageVm;
 
 /**
@@ -17,7 +18,7 @@ import com.qianjujun.vm.PageVm;
  * @describe
  */
 
-@Route(path=RouterPath.PATH_TEST_PAGE)
+@Route(path= RouterPath.PATH_TEST_PAGE)
 public class TestViewPage2Fragment extends BetterSimpleFragment {
     private ViewPager2 viewPager2;
     @Override

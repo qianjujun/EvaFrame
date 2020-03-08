@@ -1,5 +1,6 @@
 package com.hello7890.adapter.vm;
 
+import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
@@ -22,7 +23,10 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
     }
 
     @Override
-    public BaseDbViewHolder<T, DB> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public final BaseDbViewHolder<T, DB> onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        Log.d("SingleDbViewModule", "onCreateViewHolder() called with: parent = [" + this + "], viewType = [" + viewType + "]");
+
         return new BaseDbViewHolder<T, DB>(getLayoutId(),parent) {
             @Override
             public void onBindData(T t, int dataPosition, int layoutPosition) {
@@ -39,4 +43,6 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
     public void onModuleItemClick(T t, int dataPosition, int layoutPosition) {
 
     }
+
+
 }

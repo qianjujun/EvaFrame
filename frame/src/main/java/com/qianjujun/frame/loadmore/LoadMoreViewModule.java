@@ -4,9 +4,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.vh.BaseDbViewHolder;
+import com.hello7890.adapter.vm.ViewModule;
 import com.qianjujun.frame.R;
-import com.qianjujun.frame.adapter.BaseViewHolder;
-import com.qianjujun.frame.adapter.ViewModule;
 import com.qianjujun.frame.databinding.RvItemFooterErrorBinding;
 import com.qianjujun.frame.databinding.RvItemFooterLoadingBinding;
 import com.qianjujun.frame.databinding.RvItemFooterNomoredataBinding;
@@ -40,11 +41,11 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
 
 
     @Override
-    public BaseViewHolder<Footer, ?> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder<Footer> onCreateViewHolder(ViewGroup parent, int viewType) {
         if (postView == null) {
             postView = parent;
         }
-        BaseViewHolder<Footer, ?> holder = null;
+        BaseViewHolder<Footer> holder = null;
         switch (viewType) {
             case Footer.STATE_LODING:
                 holder = onCreateLoadingHolder(parent);
@@ -92,16 +93,16 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     }
 
 
-    protected BaseViewHolder<Footer, ?> onCreateLoadingHolder(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateLoadingHolder(ViewGroup parent) {
         return new LoadingHolder(R.layout.rv_item_footer_loading, parent);
     }
 
-    protected BaseViewHolder<Footer, ?> onCreateFailHolder(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateFailHolder(ViewGroup parent) {
         return new FailHolder(R.layout.rv_item_footer_error, parent);
     }
 
-    protected BaseViewHolder<Footer, ?> onCreateNormalHodler(ViewGroup parent) {
-        return new BaseViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
+    protected BaseViewHolder<Footer> onCreateNormalHodler(ViewGroup parent) {
+        return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
                 Log.d(TAG, "onBindData() called with: footer = [" + footer + "], dataPosition = [" + dataPosition + "], layoutPosition = [" + layoutPosition + "]");
@@ -110,16 +111,16 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         };
     }
 
-    protected BaseViewHolder<Footer, ?> onCreateSuccessHodler(ViewGroup parent) {
-        return new BaseViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
+    protected BaseViewHolder<Footer> onCreateSuccessHodler(ViewGroup parent) {
+        return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
             }
         };
     }
 
-    protected BaseViewHolder<Footer, ?> onCreateNoMoreHodler(ViewGroup parent) {
-        return new BaseViewHolder<Footer, RvItemFooterNomoredataBinding>(R.layout.rv_item_footer_nomoredata, parent) {
+    protected BaseViewHolder<Footer> onCreateNoMoreHodler(ViewGroup parent) {
+        return new BaseDbViewHolder<Footer, RvItemFooterNomoredataBinding>(R.layout.rv_item_footer_nomoredata, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
                 mDataBinding.text.setText("没有更多数据");
@@ -128,7 +129,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     }
 
 
-    class LoadingHolder extends BaseViewHolder<Footer, RvItemFooterLoadingBinding> {
+    class LoadingHolder extends BaseDbViewHolder<Footer, RvItemFooterLoadingBinding> {
 
         public LoadingHolder(int layoutId, ViewGroup container) {
             super(layoutId, container);
@@ -140,7 +141,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         }
     }
 
-    class FailHolder extends BaseViewHolder<Footer, RvItemFooterErrorBinding> {
+    class FailHolder extends BaseDbViewHolder<Footer, RvItemFooterErrorBinding> {
 
         public FailHolder(int layoutId, ViewGroup container) {
             super(layoutId, container);

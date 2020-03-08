@@ -6,12 +6,12 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.qianjujun.frame.adapter.RecyclerViewAdapter;
-import com.qianjujun.frame.adapter.ViewModuleItemDecoration;
+import com.hello7890.adapter.RecyclerViewAdapter;
+import com.hello7890.adapter.decoration.ViewModuleItemDecoration;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.SimpleTextVm;
 
-import static com.qianjujun.RouterPath.PATH_TEST_DIVIDER;
+import static com.qianjujun.router.RouterPath.PATH_TEST_DIVIDER;
 
 /**
  * @author qianjujun

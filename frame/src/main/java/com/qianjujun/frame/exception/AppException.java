@@ -37,11 +37,16 @@ public class AppException extends RuntimeException implements IErrorCode{
                 break;
 
             case STATE_ERROR_NO_NET:
-
                 break;
         }
 
 
+    }
+
+
+    public AppException(String message){
+        super(message);
+        this.errorCode = STATE_ERROR_THROW_BY_USER;
     }
 
 

@@ -53,4 +53,6 @@ dependencies {
     implementation project(path: ':frame')
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation deps.rx.rxjava2
+    implementation deps.rx.rx_android
 }

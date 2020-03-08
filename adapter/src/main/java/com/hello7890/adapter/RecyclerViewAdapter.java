@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     }
 
     public RecyclerViewAdapter(boolean handlerNullData,BaseViewModule... viewModules){
-        adapterHelper = new AdapterHelpImpl(this,viewModules);
+        adapterHelper = new AdapterHelpImpl2(this,viewModules);
         this.handlerNullData = handlerNullData;
     }
 

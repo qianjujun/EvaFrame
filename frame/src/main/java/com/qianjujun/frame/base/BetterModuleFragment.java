@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewStub;
 
 import androidx.annotation.LayoutRes;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qianjujun.frame.R;
@@ -22,6 +23,7 @@ public abstract class BetterModuleFragment extends BetterBaseFragment {
         viewStub.setLayoutResource(getLayoutId());
         View view = viewStub.inflate();
         mRecyclerView = view.findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(createLayoutManger());
         initModule(mRecyclerView,view);
     }
 
@@ -30,4 +32,11 @@ public abstract class BetterModuleFragment extends BetterBaseFragment {
     }
 
     protected abstract void initModule(RecyclerView recyclerView,View contentView);
+
+
+    protected RecyclerView.LayoutManager createLayoutManger(){
+        return new LinearLayoutManager(mActivity);
+    }
+
+
 }

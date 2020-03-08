@@ -41,7 +41,14 @@ public abstract class BaseViewModule<T> implements ViewType{
      */
     public void forceState(@NonNull ViewModuleState state){
         this.state = state;
-        clear();
+        if(size()>0){
+            clear();
+            return;
+        }
+        if(getSize()>0){
+            notifyItemChanged(0);
+        }
+
     }
 
 

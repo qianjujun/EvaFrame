@@ -1,38 +1,23 @@
 package com.qianjujun;
 
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
-
 import com.alibaba.android.arouter.launcher.Router;
-import com.qianjujun.frame.adapter.OnModuleItemClickListener;
-import com.qianjujun.frame.adapter.RecyclerViewAdapter;
-import com.qianjujun.frame.adapter.ViewModuleItemDecoration;
+import com.hello7890.adapter.RecyclerViewAdapter;
+import com.hello7890.adapter.decoration.ViewModuleItemDecoration;
 import com.qianjujun.frame.base.BetterBaseActivity;
 import com.qianjujun.frame.base.BetterModuleFragment;
-import com.qianjujun.frame.base.BetterSimpleFragment;
-import com.qianjujun.frame.utils.ScrrenUtil;
+import com.qianjujun.router.RouterPath;
 import com.qianjujun.vm.RouterBean;
 import com.qianjujun.vm.SimpleStringVm;
-import com.qianjujun.vm.SimpleTextVm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +59,7 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
 
 
         super.onCreateView(savedInstanceState);
-        ScrrenUtil.setStatusBar(this, false, false);
+        //ScrrenUtil.setStatusBar(this, false, false);
     }
 
 
@@ -86,13 +71,10 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
 
         @Override
         protected void initModule(RecyclerView recyclerView, View contentView) {
-            recyclerView.setBackgroundColor(Color.RED);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
             recyclerView.setAdapter(new RecyclerViewAdapter(textVm));
             recyclerView.addItemDecoration(new ViewModuleItemDecoration(textVm, 2).setDividerColor(Color.parseColor("#f2f2f2")));
             textVm.setList(createData());
             textVm.setOnModuleItemClickListener((routerBean, dataPosition, layoutPosition) -> Router.buildFragment(routerBean.getRouter()).navigation(mActivity));
-
         }
 
 
@@ -101,6 +83,9 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
             routers.add(new RouterBean("分割线", PATH_TEST_DIVIDER));
             routers.add(new RouterBean("分组列表", PATH_TEST_MODULE));
             routers.add(new RouterBean("ViewPage2", PATH_TEST_PAGE));
+            routers.add(new RouterBean("状态VM",PATH_TEST_STATE_VM));
+            routers.add(new RouterBean("多类型Vm，复用",PATH_TEST_MORE_VM));
+
             return routers;
         }
     }

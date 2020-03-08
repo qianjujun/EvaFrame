@@ -2,6 +2,7 @@ package com.qianjujun;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qianjujun.frame.base.BetterBaseActivity;
+import com.qianjujun.router.RouterPath;
 
 /**
  * @author qianjujun

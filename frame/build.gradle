@@ -64,6 +64,7 @@ dependencies {
 
     implementation deps.rx.rxjava2
     implementation deps.rx.rx_android
+    api project(path: ':adapter')
 
 
 //    api "org.permissionsdispatcher:permissionsdispatcher:4.6.0"
