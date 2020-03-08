@@ -7,5 +7,5 @@ package com.hello7890.adapter.listener;
  * @describe
  */
 public interface OnModuleItemLongClickListener<T> {
-    boolean onModuleItemLongClick(T t, int dataPosition, int layoutPosition);
+    boolean onModuleItemLongClick(T t, int dataPosition, int adapterPosition);
 }

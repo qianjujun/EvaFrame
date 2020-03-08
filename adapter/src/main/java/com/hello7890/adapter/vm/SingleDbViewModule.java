@@ -29,8 +29,8 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
 
         return new BaseDbViewHolder<T, DB>(getLayoutId(),parent) {
             @Override
-            public void onBindData(T t, int dataPosition, int layoutPosition) {
-                SingleDbViewModule.this.onBindData(mDataBinding,t,dataPosition,layoutPosition);
+            public void onBindData(T t, int dataPosition, int adapterPosition) {
+                SingleDbViewModule.this.onBindData(mDataBinding,t,dataPosition, adapterPosition);
             }
         };
     }
@@ -40,7 +40,7 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
     protected abstract void onBindData(DB dataBinding,T t, int dataPosition, int layoutPosition);
 
     @Override
-    public void onModuleItemClick(T t, int dataPosition, int layoutPosition) {
+    public void onModuleItemClick(T t, int dataPosition, int adapterPosition) {
 
     }
 

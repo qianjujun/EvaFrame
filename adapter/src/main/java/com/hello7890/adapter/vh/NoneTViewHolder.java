@@ -10,8 +10,8 @@ public abstract class NoneTViewHolder extends BaseViewHolder<Object> {
     }
 
     @Override
-    public final void onBindData(Object o, int dataPosition, int layoutPosition) {
-        onBindData(dataPosition,layoutPosition);
+    public final void onBindData(Object o, int dataPosition, int adapterPosition) {
+        onBindData(dataPosition, adapterPosition);
     }
 
     protected abstract void onBindData(int dataPosition, int layoutPosition);

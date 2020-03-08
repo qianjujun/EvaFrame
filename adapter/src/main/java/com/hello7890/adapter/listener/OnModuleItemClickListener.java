@@ -7,5 +7,5 @@ package com.hello7890.adapter.listener;
  * @describe
  */
 public interface OnModuleItemClickListener<T> {
-    void onModuleItemClick(T t, int dataPosition, int layoutPosition);
+    void onModuleItemClick(T t, int dataPosition, int adapterPosition);
 }

@@ -100,7 +100,7 @@ public abstract class BaseViewModule<T> implements ViewType{
 
 
 
-    protected final void notifyItemInserted(int dataPosition,int itemCount){
+    public final void notifyItemInserted(int dataPosition,int itemCount){
         if (mDataChangeListener != null) {
             if(isGridLayout()){//多列的清空  getSize需要实时调整
                 mDataChangeListener.onDataSizeChange(this);
@@ -110,7 +110,7 @@ public abstract class BaseViewModule<T> implements ViewType{
         }
 
     }
-    protected final void notifyItemRemove(int dataPosition,int itemCount){
+    public final void notifyItemRemove(int dataPosition,int itemCount){
         if (mDataChangeListener != null) {
             if(isGridLayout()){
                 mDataChangeListener.onDataSizeChange(this);
@@ -125,7 +125,7 @@ public abstract class BaseViewModule<T> implements ViewType{
 
 
 
-    protected final void notifyDataSetChanged() {
+    public final void notifyDataSetChanged() {
         if(mDataChangeListener==null){
             return;
         }
@@ -134,25 +134,25 @@ public abstract class BaseViewModule<T> implements ViewType{
 
 
 
-    protected final void notifyItemRangeChanged(int dataPosition,int itemCount){
+    public final void notifyItemRangeChanged(int dataPosition,int itemCount){
         if (mDataChangeListener != null) {
             mDataChangeListener.onDataItemRangeChanged(this,dataPosition,itemCount,startPosition+dataPosition);
         }
     }
 
-    protected final void notifyDataChanged(){
+    public final void notifyDataChanged(){
         if (mDataChangeListener != null) {
             mDataChangeListener.onDataItemRangeChanged(this,0,size(),startPosition);
         }
     }
 
-    protected final void notifyItemChanged(int dataPosition){
+    public final void notifyItemChanged(int dataPosition){
         if (mDataChangeListener != null) {
             mDataChangeListener.onDataItemRangeChanged(this,dataPosition,1,startPosition+dataPosition);
         }
     }
 
-    protected final void notifyItemChanged(int dataPosition, Object payload) {
+    public final void notifyItemChanged(int dataPosition, Object payload) {
         if (mDataChangeListener != null) {
             mDataChangeListener.onDataItemRangeChanged(this, dataPosition, 1,dataPosition + startPosition, payload);
         }

@@ -2,6 +2,9 @@ package com.hello7890.adapter;
 
 import android.util.SparseArray;
 
+/**
+ * 实现多个相同viewModule的viewHolder的共享
+ */
 public class AdapterHelpImpl2 extends BaseAdapterHelperImpl {
 
     private static SparseArray<String> vmNames = new SparseArray<>();

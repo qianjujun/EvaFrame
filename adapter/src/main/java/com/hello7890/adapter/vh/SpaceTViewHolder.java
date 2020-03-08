@@ -11,7 +11,7 @@ public class SpaceTViewHolder<T> extends BaseViewHolder<T> {
     }
 
     @Override
-    public void onBindData(T t, int dataPosition, int layoutPosition) {
+    public void onBindData(T t, int dataPosition, int adapterPosition) {
 
     }
 }

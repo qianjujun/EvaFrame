@@ -31,7 +31,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
         return new ChildHolder<VmChildBinding>(R.layout.vm_child,parent) {
 
             @Override
-            protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition) {
+            protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition,int adapterPosition) {
                 dataBing.tvText.setText(child.getText());
                 Log.d(TAG, "ChildHolder onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], child = [" + "" + "], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]");
             }
@@ -43,15 +43,15 @@ public class GroupVm extends GroupViewModule<Child,Group> {
         return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
 
             @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,boolean expend) {
-                dataBing.text.setText(group.getText());
+            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
+                dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
                 mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
                 changeExpendImage(mDataBinding.ivArrow,expend);
                 Log.d(TAG, "GroupHolder TOP onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
             }
 
             @Override
-            protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, boolean expend) {
+            protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, int adapterPosition,boolean expend) {
                 changeExpendImageAnim(dataBing.ivArrow,expend);
             }
         };
@@ -62,7 +62,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
         return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
 
             @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,boolean expend) {
+            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
                 dataBing.ivArrow.setVisibility(View.GONE);
                 dataBing.text.setText("底部");
                 dataBing.text.setBackgroundColor(Color.BLACK);
@@ -79,6 +79,6 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     protected int getSpanCount(int dataPosition) {
-        return getDataType(dataPosition)==DATA_TYPE_CHILD?3:1;
+        return isChildItem(dataPosition)?3:1;
     }
 }

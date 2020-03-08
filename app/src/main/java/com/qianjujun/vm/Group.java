@@ -62,6 +62,8 @@ public class Group implements GroupData<Child> {
             group.setText("group"+i+"组");
             if(i==1){
                 maxChildSize = 1;
+            }else if(i==9){
+                maxChildSize = 20;
             }else {
                 maxChildSize = random.nextInt(20);
             }

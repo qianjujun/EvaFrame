@@ -83,8 +83,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         }else {
             outRect.set(0,0,0,0);
         }
-
-
     }
 
     private int[] childInfo = new int[2];
@@ -109,9 +107,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        if(state.isMeasuring()){
-            //return;
-        }
         drawHorizontal(c,parent);
     }
 
@@ -123,8 +118,13 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         for (int i = 0; i < childSize; i++) {
             child = parent.getChildAt(i);
             int adapterPosition = parent.getChildAdapterPosition(child);
+            if(!isValidItem(adapterPosition)){
+                continue;
+            }
+
+
             int dataPosition = adapterPosition-viewModule.getStartPosition();
-            if(isValidItem(adapterPosition)&&viewModule.getDataType(dataPosition)== GroupViewModule.DATA_TYPE_CHILD){//只绘制子项
+            if(viewModule.getDataType(dataPosition)== GroupViewModule.DATA_TYPE_CHILD){//只绘制子项
                 layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
                 int left = child.getLeft();
                 int right = child.getRight();

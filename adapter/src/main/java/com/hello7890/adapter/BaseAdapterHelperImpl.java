@@ -1,6 +1,7 @@
 package com.hello7890.adapter;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -174,6 +175,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
         for(int index = 0;index<stickyPositionSet.size();index++){
             int stickyPos = stickyPositionSet.get(index);
             //如果吸顶position小于当前显示的position
+            Log.d("TAG", "findCurrentStickyPosition() called with: position = [" + position + "]"+"  stickyPos:"+stickyPos);
             if(stickyPos<position){
                 continue;
             }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.hello7890.adapter.AdapterHelpImpl;
 import com.hello7890.adapter.IAdapterHelp;
 import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.RecyclerViewHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
     int[] location = new int[2];
     int[] rootLocation = new int[2];
 
-    Helper helper = new Helper();
+    RecyclerViewHelper helper = new RecyclerViewHelper();
 
     private int currentStickyPosition = -1;
     /**
@@ -113,8 +114,12 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
 
         View child = parent.getChildAt(0);
         int pos = parent.getChildAdapterPosition(child);
+
+        // fixme: 2020/3/8 解决通过 RecyclerView.scrollToPosition(adapterPosition);时，getChildAt(0) 是一个完全看不见的position
+        if(child.getBottom()==0){
+            pos += 1;
+        }
         int stickyPosition = adapterHelper.findCurrentStickyPosition(pos);
-        Log.d(TAG, "onDrawOver() called with: c = [stickyPosition<0"+stickyPosition +"  pos:"+pos);
         if(stickyPosition==IAdapterHelp.POSITION_NONE){
             container.setVisibility(View.GONE);
             return;
@@ -211,42 +216,5 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-    private static class Helper{
-        private LinearLayoutManager linearLayoutManager;
-        private StaggeredGridLayoutManager staggeredGridLayoutManager;
-        private RecyclerView.LayoutManager layoutManager;
-
-        public int findFirstCompletePosition(RecyclerView parent){
-            RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-            if(this.layoutManager==layoutManager){
-                return findFirstCompletePosition(layoutManager);
-            }
-
-            this.layoutManager = layoutManager;
-            if(layoutManager instanceof LinearLayoutManager){
-                linearLayoutManager = (LinearLayoutManager) layoutManager;
-            }
-
-            if(layoutManager instanceof StaggeredGridLayoutManager){
-                staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
-            }
-            return findFirstCompletePosition(layoutManager);
-        }
-
-        private int findFirstCompletePosition(RecyclerView.LayoutManager layoutManager){
-            if(linearLayoutManager==layoutManager){
-                return linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-            }
-            if(staggeredGridLayoutManager==layoutManager){
-                int[] positions = staggeredGridLayoutManager.findFirstCompletelyVisibleItemPositions(null);
-                if(positions.length>0){
-                    return positions[0];
-                }
-            }
-            return 0;
-        }
-
-
-    }
 
 }

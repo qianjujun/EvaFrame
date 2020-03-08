@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * @author qianjujun
  * @email qianjujun@163.com
  * @createTime 2020/1/19 17:17
- * @describe
+ * @describe 相同的viewModule的viewHolder返回的viewType不同
  */
 public class AdapterHelpImpl extends BaseAdapterHelperImpl {
 

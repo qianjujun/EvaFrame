@@ -33,7 +33,7 @@ public class TestVm1 extends ViewModule<Integer> {
         }
 
         @Override
-        public void onBindData(Integer integer, int dataPosition, int layoutPosition) {
+        public void onBindData(Integer integer, int dataPosition, int adapterPosition) {
             mDataBinding.text.setText(String.valueOf(integer));
             ViewGroup.LayoutParams vl = mDataBinding.text.getLayoutParams();
             if (testStickyItem(dataPosition)) {

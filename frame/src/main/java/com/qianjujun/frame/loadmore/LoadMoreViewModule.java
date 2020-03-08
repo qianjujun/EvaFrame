@@ -104,8 +104,8 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     protected BaseViewHolder<Footer> onCreateNormalHodler(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
-            public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
-                Log.d(TAG, "onBindData() called with: footer = [" + footer + "], dataPosition = [" + dataPosition + "], layoutPosition = [" + layoutPosition + "]");
+            public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
+                Log.d(TAG, "onBindData() called with: footer = [" + footer + "], dataPosition = [" + dataPosition + "], layoutPosition = [" + adapterPosition + "]");
                 loadData();
             }
         };
@@ -114,7 +114,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     protected BaseViewHolder<Footer> onCreateSuccessHodler(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
-            public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
+            public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
             }
         };
     }
@@ -122,7 +122,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     protected BaseViewHolder<Footer> onCreateNoMoreHodler(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNomoredataBinding>(R.layout.rv_item_footer_nomoredata, parent) {
             @Override
-            public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
+            public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
                 mDataBinding.text.setText("没有更多数据");
             }
         };
@@ -136,7 +136,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         }
 
         @Override
-        public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
+        public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
             mDataBinding.loadingTv.setText("正在加载中...");
         }
     }
@@ -148,7 +148,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         }
 
         @Override
-        public void onBindData(Footer footer, int dataPosition, int layoutPosition) {
+        public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
             mDataBinding.loadingText.setText("点击重新加载");
             mDataBinding.root.setOnClickListener(view -> loadData());
         }

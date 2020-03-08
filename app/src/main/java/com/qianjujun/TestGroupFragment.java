@@ -1,5 +1,6 @@
 package com.qianjujun;
 
+import android.graphics.Color;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -50,9 +51,9 @@ public class TestGroupFragment extends BetterModuleFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
-//        recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
-//                .setChildColumnNum(3)
-//        .setDividerColor(Color.BLUE));
+        recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
+                .setChildColumnNum(3)
+        .setDividerColor(Color.BLUE));
 
         List<Group> list = Group.createTestData();
         groupVm.setExpendable(true);
