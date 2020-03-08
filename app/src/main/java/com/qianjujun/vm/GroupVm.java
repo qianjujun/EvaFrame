@@ -5,11 +5,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.vh.NoneTViewHolder;
 import com.hello7890.adapter.vm.GroupViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
 import com.qianjujun.frame.utils.ToastUtils;
+import com.qianjujun.vh.EmptyVh;
+import com.qianjujun.vh.FailVh;
+import com.qianjujun.vh.LoadingVh;
 
 /**
  * @author qianjujun
@@ -80,5 +85,22 @@ public class GroupVm extends GroupViewModule<Child,Group> {
     @Override
     protected int getSpanCount(int dataPosition) {
         return isChildItem(dataPosition)?3:1;
+    }
+
+
+
+    @Override
+    protected BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
+        return new LoadingVh(parent);
+    }
+
+    @Override
+    protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
+        return new FailVh(parent);
+    }
+
+    @Override
+    protected NoneTViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
+        return new EmptyVh(parent);
     }
 }

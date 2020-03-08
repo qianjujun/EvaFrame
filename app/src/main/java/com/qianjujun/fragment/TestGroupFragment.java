@@ -1,4 +1,4 @@
-package com.qianjujun;
+package com.qianjujun.fragment;
 
 import android.graphics.Color;
 import android.view.View;
@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
 import com.hello7890.adapter.decoration.GroupViewModuleItemDecoration;
 import com.hello7890.adapter.decoration.StickyItemDecoration;
+import com.qianjujun.R;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.Group;
 import com.qianjujun.vm.GroupVm;
@@ -53,18 +54,17 @@ public class TestGroupFragment extends BetterModuleFragment {
 
         recyclerView.addItemDecoration(groupViewModuleItemDecoration = new GroupViewModuleItemDecoration(groupVm,3)
                 .setChildColumnNum(3)
-        .setDividerColor(Color.BLUE));
+        .setDividerColor(Color.BLACK));
 
         List<Group> list = Group.createTestData();
         groupVm.setExpendable(true);
         groupVm.setList(list);
 
 
-        contentView.findViewById(R.id.btn_add).setOnClickListener(this);
-        contentView.findViewById(R.id.btn_remove).setOnClickListener(this);
-        contentView.findViewById(R.id.btn_setting).setOnClickListener(this);
-        contentView.findViewById(R.id.btn_change).setOnClickListener(this);
-        contentView.findViewById(R.id.btn_clear).setOnClickListener(this);
+        contentView.findViewById(R.id.btn_change_grid).setOnClickListener(this);
+        contentView.findViewById(R.id.btn_change_linear).setOnClickListener(this);
+        contentView.findViewById(R.id.btn_add_divider).setOnClickListener(this);
+        contentView.findViewById(R.id.btn_delete_divider).setOnClickListener(this);
 
 
     }
@@ -97,20 +97,30 @@ public class TestGroupFragment extends BetterModuleFragment {
     @Override
     public void onViewClick(View view) {
         switch (view.getId()){
-            case R.id.btn_add:
+            case R.id.btn_change_linear:
                 adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new LinearLayoutManager(getContext()));
-                //groupViewModuleItemDecoration.setChildColumnNum(1);
+                groupViewModuleItemDecoration.setChildColumnNum(1);
                 break;
-            case R.id.btn_change:
-                //groupViewModuleItemDecoration.setChildColumnNum(3);
+            case R.id.btn_change_grid:
+                groupViewModuleItemDecoration.setChildColumnNum(3);
                 adapter.getAdapterHelper().changeLayoutManager(mRecyclerView,new GridLayoutManager(getContext(),3));
                 break;
-            case R.id.btn_remove:
+            case R.id.btn_add_divider:
+                addItemDecoration();
                 break;
-            case R.id.btn_clear:
-                break;
-            case R.id.btn_setting:
+            case R.id.btn_delete_divider:
+                mRecyclerView.removeItemDecoration(groupViewModuleItemDecoration);
                 break;
         }
+    }
+
+
+    private void addItemDecoration(){
+        for(int i = 0;i<mRecyclerView.getItemDecorationCount();i++){
+            if(mRecyclerView.getItemDecorationAt(i)==groupViewModuleItemDecoration){
+                return;
+            }
+        }
+        mRecyclerView.addItemDecoration(groupViewModuleItemDecoration);
     }
 }

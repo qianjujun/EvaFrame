@@ -85,6 +85,8 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
             routers.add(new RouterBean("ViewPage2", PATH_TEST_PAGE));
             routers.add(new RouterBean("状态VM",PATH_TEST_STATE_VM));
             routers.add(new RouterBean("多类型Vm，复用",PATH_TEST_MORE_VM));
+            routers.add(new RouterBean("wrapVm",PATH_TEST_WRAP_VM));
+
 
             return routers;
         }

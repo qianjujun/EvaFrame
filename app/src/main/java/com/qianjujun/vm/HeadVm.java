@@ -9,6 +9,13 @@ public class HeadVm extends SingleDbViewModule<String, VmHeadBinding> {
     public HeadVm(){
         setData("");
     }
+
+
+    public HeadVm(String name){
+        setData(name);
+    }
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.vm_head;
@@ -16,6 +23,6 @@ public class HeadVm extends SingleDbViewModule<String, VmHeadBinding> {
 
     @Override
     protected void onBindData(VmHeadBinding dataBinding, String s, int dataPosition, int layoutPosition) {
-
+        dataBinding.test.setText(s);
     }
 }

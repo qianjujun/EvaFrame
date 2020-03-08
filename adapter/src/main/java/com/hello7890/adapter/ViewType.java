@@ -42,4 +42,8 @@ public interface ViewType {
 
     //全局空数据item类型
     int GLOBE_NULL_DATA_VIEW_TYPE = -1;
+
+
+
+    int GLOBE_TITLE_VIEW_TYPE = 995;
 }

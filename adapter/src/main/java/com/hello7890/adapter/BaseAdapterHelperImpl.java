@@ -53,8 +53,13 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
             resetData();
             return;
         }
-        viewModuleList.addAll(Arrays.asList(viewModules));
+        viewModuleList.addAll(convert(viewModules));
         initViewModules(viewModuleList);
+    }
+
+
+    protected List<BaseViewModule> convert(BaseViewModule... viewModules){
+        return Arrays.asList(viewModules);
     }
 
 

@@ -4,8 +4,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:minHeight="300dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ProgressBar
             android:layerType="software"

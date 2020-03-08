@@ -2,20 +2,32 @@ package com.hello7890.adapter.vm;
 
 import android.view.ViewGroup;
 
+import androidx.databinding.ViewDataBinding;
+
 import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.vh.BaseDbViewHolder;
 
 import java.util.List;
 
 
 /**
- * 带title的viewModule  暂未实现
+ * todo 暂未实现
+ * 带title的viewModule
  * @param <T>
  */
-public abstract class TitleViewModule<T> extends ViewModule<T>{
-    @Override
-    public BaseViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+abstract class TitleViewModule<T,DB extends ViewDataBinding> extends ViewModule<T>{
+
+    private final ViewModule<T> viewModule;
+
+
+
+    protected TitleViewModule(ViewModule<T> viewModule) {
+        this.viewModule = viewModule;
+        dataList.add(null);//代表Title头
     }
+
+
+
 
 
 

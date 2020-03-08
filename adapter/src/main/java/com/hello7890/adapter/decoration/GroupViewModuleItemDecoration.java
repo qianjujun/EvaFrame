@@ -107,10 +107,10 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        drawHorizontal(c,parent);
+        drawLine(c,parent);
     }
 
-    private void drawHorizontal(Canvas canvas, RecyclerView parent) {
+    private void drawLine(Canvas canvas, RecyclerView parent) {
         final int childSize = parent.getChildCount();
 
         View child;

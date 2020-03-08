@@ -9,13 +9,10 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.hello7890.adapter.AdapterHelpImpl;
-import com.hello7890.adapter.IAdapterHelp;
 import com.hello7890.adapter.BaseViewHolder;
+import com.hello7890.adapter.IAdapterHelp;
 import com.hello7890.adapter.RecyclerViewHelper;
 
 import java.util.ArrayList;

@@ -3,12 +3,10 @@ package com.qianjujun.vm2;
 import android.view.ViewGroup;
 
 import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vh.NoneTViewHolder;
+import com.hello7890.adapter.vm.SingleDbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmTestStateBinding;
-
-import com.hello7890.adapter.vm.SingleDbViewModule;
 import com.qianjujun.frame.utils.ToastUtils;
 import com.qianjujun.vh.EmptyVh;
 import com.qianjujun.vh.FailVh;

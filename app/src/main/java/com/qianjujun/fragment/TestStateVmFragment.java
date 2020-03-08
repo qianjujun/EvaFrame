@@ -18,6 +18,7 @@ import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.frame.exception.AppException;
 import com.qianjujun.frame.exception.EmptyException;
 import com.qianjujun.rx.OnDataCallBack;
+import com.qianjujun.rx.OnStateVmCallBack;
 import com.qianjujun.rx.RxUtil;
 import com.qianjujun.vm2.TestStateVm;
 
@@ -48,45 +49,9 @@ public class TestStateVmFragment extends BetterCustomModuleFragment<FragmentTest
         testLoadData();
     }
 
-    private static int requestNum = 0;
     private void testLoadData(){
-        cancelRequest();
-        int state = requestNum%3;
-        requestNum++;
-        disposable = Flowable.just(state)
-                .delay(700, TimeUnit.MILLISECONDS)
-                .map(strings -> {
-                    switch (state){
-                        case 0:
-                            throw new EmptyException();
-                        case 1:
-                            throw new AppException("数据加载错误");
-                        default:
-                            return Data.success(TestData.createTestStringList());
-                    }
-                })
-
-
-                .compose(RxUtil.rxBaseParamsHelper())
-                .subscribeWith(new OnDataCallBack<List<String>>(){
-                    @Override
-                    public void onBegin() {
-                        super.onBegin();
-                        testStateVm.setState(ViewModuleState.LOADING);
-                    }
-
-                    @Override
-                    public void onFail(AppException ex) {
-                        super.onFail(ex);
-                        testStateVm.setState(ViewModuleState.FAIL);
-                    }
-
-                    @Override
-                    public void onEmptyData() {
-                        super.onEmptyData();
-                        testStateVm.setState(ViewModuleState.EMPTY);
-                    }
-
+        disposable = TestData.createTestStringListRequest()
+                .subscribeWith(new OnStateVmCallBack<List<String>>(testStateVm){
                     @Override
                     public void onSuccess(List<String> strings) throws AppException {
                         super.onSuccess(strings);

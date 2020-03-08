@@ -27,6 +27,9 @@ public interface RouterPath {
     String PATH_TEST_MORE_VM = _GROUP_NAME+"testMoreVm";
 
 
+    String PATH_TEST_WRAP_VM = _GROUP_NAME+"testWrapVm";
+
+
 
 
 

@@ -181,6 +181,56 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
     }
 
 
+    public void removeGroup(int groupPosition){
+        remove(groupPosition);
+    }
+
+    public void removeGroup(G group){
+        remove(group);
+    }
+
+    public G getGroup(int groupPosition){
+        if(groupPosition<0||groupPosition>=groupList.size()){
+            return null;
+        }
+        return groupList.get(groupPosition);
+    }
+
+    public void removeChild(int groupPosition,int childPosition){
+        G group = getGroup(groupPosition);
+        if(group==null){
+            Log.e(TAG, "removeChild: ",new RuntimeException("the group is null"));
+            return;
+        }
+        List<C> childList = group.getChildList();
+        if(childList!=null&&childPosition>=0&&childPosition<childList.size()){
+            childList.remove(childPosition);
+        }
+        set(groupPosition,group);
+    }
+
+    public void addChild(int groupPosition,int childPosition,C child){
+        G group = getGroup(groupPosition);
+        if(group==null){
+            Log.e(TAG, "removeChild: ",new RuntimeException("the group is null"));
+            return;
+        }
+        List<C> childList = group.getChildList();
+        if (childPosition < 0) {
+            childPosition = 0;
+        }
+        if (childPosition > childList.size()) {
+            childPosition = childList.size();
+        }
+        childList.add(childPosition,child);
+        set(groupPosition,group);
+    }
+
+
+
+
+
+
     @Override
     public BaseViewHolder<G> onCreateViewHolder(ViewGroup parent, int viewType) {
         if(mRecyclerView==null&&parent instanceof RecyclerView){
@@ -348,14 +398,12 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         }
         groupList.addAll(list);
         List<G> result = GroupInfoData.convert(list);
-        if (dataList.isEmpty()) {
-            dataList.addAll(result);
-            notifyItemInserted(0, result.size());
-        } else {
+        int oldSize = getSize();
+        if (!dataList.isEmpty()) {
             dataList.clear();
-            dataList.addAll(result);
-            notifyDataSetChanged();
         }
+        dataList.addAll(result);
+        updateDate(oldSize,getSize());
     }
 
     @Override
@@ -372,8 +420,9 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         if (location > dataList.size()) {
             location = dataList.size();
         }
+        int oldSize = getSize();
         dataList.addAll(location, result);
-        notifyItemInserted(location, list.size());
+        updateDate(oldSize,getSize());
     }
 
 
@@ -407,15 +456,14 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.set(location, data);
-        setList(GroupInfoData.convert(groupList));
+        super.setList(GroupInfoData.convert(groupList));
     }
 
 
     @Override
     public void removeAll(List<? extends G> list) {
-        //super.removeAll(list);
         groupList.removeAll(list);
-        setList(GroupInfoData.convert(groupList));
+        super.setList(GroupInfoData.convert(groupList));
     }
 
 
@@ -423,7 +471,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
     @Override
     public void remove(G data) {
         groupList.remove(data);
-        setList(GroupInfoData.convert(groupList));
+        super.setList(GroupInfoData.convert(groupList));
     }
 
     @Override
@@ -432,7 +480,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.remove(location);
-        setList(GroupInfoData.convert(groupList));
+        super.setList(GroupInfoData.convert(groupList));
     }
 
 

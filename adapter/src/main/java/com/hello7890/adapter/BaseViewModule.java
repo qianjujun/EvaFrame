@@ -25,6 +25,10 @@ public abstract class BaseViewModule<T> implements ViewType{
     protected List<T> dataList = new ArrayList<>();
     private DataChangeListener mDataChangeListener;
 
+    protected BaseViewModule getChildBaseViewModule(){
+        return null;
+    }
+
 
     private ViewModuleState state = ViewModuleState.EMPTY;
 
@@ -56,9 +60,11 @@ public abstract class BaseViewModule<T> implements ViewType{
         if (this.dataList.isEmpty()) {
             return;
         }
-        int size = size();
+        int size = size()-1;
         this.dataList.clear();
-        notifyItemRemove(0, size);
+        notifyItemChanged(0);
+        notifyItemRemove(1, size);
+        //notifyDataSetChanged();
     }
 
 
@@ -79,6 +85,17 @@ public abstract class BaseViewModule<T> implements ViewType{
     }
 
 
+    public List<T> getDataList() {
+        return new ArrayList<>(dataList);
+    }
+
+    /**
+     *
+     * @return 返回源数据  操作后必须调用相关更新方法
+     */
+    public final List<T> _getDataList(){
+        return dataList;
+    }
 
 
 

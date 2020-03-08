@@ -3,6 +3,7 @@ package com.hello7890.adapter.vm;
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.data.OpData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,26 +21,62 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
 
     @Override
     public void setList(List<? extends T> list) {
-        if (dataList.isEmpty()) {
-            addAll(list);
+        if(list==null||list.isEmpty()){
+            clear();
             return;
         }
-        this.dataList.clear();
-        if (list != null) {
-            dataList.addAll(list);
+
+        int oldSize = getSize();
+        if (!dataList.isEmpty()) {
+            this.dataList.clear();
         }
-        notifyDataSetChanged();
+        dataList.addAll(list);
+        int newSize = getSize();
+
+        updateDate(oldSize,newSize);
     }
+
+
+
+
+    protected final void updateDate(int oldSize,int newSize){
+        if(oldSize==newSize){
+            notifyItemRangeChanged(0,newSize);
+        }else if(oldSize>newSize){
+            notifyItemRangeChanged(0,newSize);
+            notifyItemRemove(newSize,oldSize-newSize);
+        }else {
+            if(oldSize==1){
+                notifyItemRangeChanged(0,oldSize);
+                notifyItemInserted(oldSize-1,newSize-oldSize);
+            }else {
+                notifyItemRangeChanged(0,oldSize);
+                notifyItemInserted(oldSize,newSize-oldSize);
+            }
+
+        }
+    }
+
+    protected final void updateDate(int oldSize,int newSize,int anchorPosition){
+        if(oldSize==newSize){
+            notifyItemRangeChanged(0,newSize);
+        }else if(oldSize>newSize){
+            notifyItemRangeChanged(0,anchorPosition);
+            notifyItemRemove(anchorPosition,oldSize-newSize);
+        }else {
+            // TODO: 2020/3/9 需要调试锚点为0的时候 与 状态（loading empty fail）占位的position冲突
+            notifyItemRangeChanged(0,anchorPosition);
+            notifyItemInserted(anchorPosition,newSize-oldSize);
+        }
+    }
+
+
 
     @Override
     public void setData(T data) {
-        if (dataList.isEmpty()) {
-            add(data);
-            return;
-        }
-        this.dataList.clear();
-        this.dataList.add(data);
-        notifyItemInserted(0, 1);
+        List<T> list = new ArrayList<>();
+        list.add(data);
+        setList(list);
     }
 
 
@@ -65,8 +102,11 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         if (location > dataList.size()) {
             location = dataList.size();
         }
+
+        int oldSize = getSize();
         dataList.add(location, data);
-        notifyItemInserted(location, 1);
+        int newSize = getSize();
+        updateDate(oldSize,newSize,location);
     }
 
     @Override
@@ -85,8 +125,10 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         if (location > dataList.size()) {
             location = dataList.size();
         }
+        int oldSize = getSize();
         dataList.addAll(location, list);
-        notifyItemInserted(location, list.size());
+        int newSize = getSize();
+        updateDate(oldSize,newSize);
     }
 
     @Override
@@ -94,8 +136,11 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         if (location < 0 || location >= size()) {
             return;
         }
+
+        int oldSize = getSize();
         dataList.remove(location);
-        notifyItemRemove(location, 1);
+        int newSize = getSize();
+        updateDate(oldSize,newSize,location);
     }
 
     @Override
@@ -109,8 +154,10 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         if (list == null || list.isEmpty()) {
             return;
         }
+        int oldSize = getSize();
         dataList.removeAll(list);
-        notifyDataSetChanged();
+        int newSize = getSize();
+        updateDate(oldSize,newSize);
     }
 
     @Override
@@ -118,9 +165,10 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         if (this.dataList.isEmpty()) {
             return;
         }
-        int size = size();
+        int size = size()-1;
         this.dataList.clear();
-        notifyItemRemove(0, size);
+        notifyItemChanged(0);
+        notifyItemRemove(1, size);
     }
 
 

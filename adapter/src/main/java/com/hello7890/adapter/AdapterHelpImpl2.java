@@ -2,6 +2,11 @@ package com.hello7890.adapter;
 
 import android.util.SparseArray;
 
+import com.hello7890.adapter.vm.ViewModule;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 实现多个相同viewModule的viewHolder的共享
  */
@@ -41,5 +46,24 @@ public class AdapterHelpImpl2 extends BaseAdapterHelperImpl {
             return viewModule;
         }
         throw new RuntimeException("After the data changes, must be called notif");
+    }
+
+
+    @Override
+    protected List<BaseViewModule> convert(BaseViewModule... viewModules) {
+        List<BaseViewModule> viewModuleList = new ArrayList<>();
+        for(BaseViewModule viewModule:viewModules){
+            addViewModule(viewModule,viewModuleList);
+        }
+        return viewModuleList;
+    }
+
+    private void addViewModule(BaseViewModule viewModule,List<BaseViewModule> viewModuleList){
+        if(viewModule==null){
+            return;
+        }
+        viewModuleList.add(viewModule);
+        addViewModule(viewModule.getChildBaseViewModule(),viewModuleList);
+
     }
 }

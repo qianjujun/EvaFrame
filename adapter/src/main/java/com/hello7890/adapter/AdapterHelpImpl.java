@@ -65,4 +65,23 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
     }
 
 
+    @Override
+    protected List<BaseViewModule> convert(BaseViewModule... viewModules) {
+        List<BaseViewModule> viewModuleList = new ArrayList<>();
+        for(BaseViewModule viewModule:viewModules){
+            addViewModule(viewModule,viewModuleList);
+        }
+        return viewModuleList;
+    }
+
+    private void addViewModule(BaseViewModule viewModule,List<BaseViewModule> viewModuleList){
+        if(viewModule==null){
+            return;
+        }
+        viewModuleList.add(viewModule);
+        addViewModule(viewModule.getChildBaseViewModule(),viewModuleList);
+
+    }
+
+
 }
