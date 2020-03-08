@@ -252,8 +252,8 @@ public abstract class BaseViewModule<T> implements ViewType{
         }
 
         BaseViewHolder<T> viewHolder = onCreateViewHolder(parent, viewType);
-        viewHolder.setOnModuleItemClickListener(mItemClickListener);
-        viewHolder.setOnModuleItemLongClickListener(mItemLongClickListener);
+        //viewHolder.setOnModuleItemClickListener(mItemClickListener);
+        //viewHolder.setOnModuleItemLongClickListener(mItemLongClickListener);
         return viewHolder;
     }
 
@@ -340,6 +340,14 @@ public abstract class BaseViewModule<T> implements ViewType{
 
     public void setOnModuleItemLongClickListener(OnModuleItemLongClickListener<T> itemLongClickListener){
         this.mItemLongClickListener = itemLongClickListener;
+    }
+
+    public OnModuleItemClickListener<T> getItemClickListener() {
+        return mItemClickListener;
+    }
+
+    public OnModuleItemLongClickListener<T> getItemLongClickListener() {
+        return mItemLongClickListener;
     }
 
     public T getItem(int dataPosition) {

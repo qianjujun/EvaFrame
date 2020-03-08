@@ -34,14 +34,20 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
 
         //当正常更新数据 或者 分组
         if(payloads==null||payloads.isEmpty()||payloads.contains(AdapterHelpImpl.ADAPTER_SIZE_UPDATE_PAYLOAD)){
-            if(mOnModuleItemClickListener!=null){
-                itemView.setOnClickListener(v -> {
-                    mOnModuleItemClickListener.onModuleItemClick(t,dataPosition,layoutPosition);
-                });
-            }
-            if(mOnModuleItemLongClickListener!=null){
-                itemView.setOnLongClickListener(v -> mOnModuleItemLongClickListener.onModuleItemLongClick(t,dataPosition,layoutPosition));
-            }
+
+        }
+
+        if(mOnModuleItemClickListener!=null){
+            itemView.setOnClickListener(v -> {
+                mOnModuleItemClickListener.onModuleItemClick(t,dataPosition,layoutPosition);
+            });
+        }else {
+            itemView.setOnClickListener(null);
+        }
+        if(mOnModuleItemLongClickListener!=null){
+            itemView.setOnLongClickListener(v -> mOnModuleItemLongClickListener.onModuleItemLongClick(t,dataPosition,layoutPosition));
+        }else {
+            itemView.setOnLongClickListener(null);
         }
 
         if(payloads==null||payloads.isEmpty()){

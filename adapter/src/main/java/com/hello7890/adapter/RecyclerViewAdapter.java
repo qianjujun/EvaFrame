@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     }
 
     public RecyclerViewAdapter(boolean handlerNullData,BaseViewModule... viewModules){
-        adapterHelper = new AdapterHelpImpl(this,viewModules);
+        adapterHelper = new AdapterHelpImpl2(this,viewModules);
         this.handlerNullData = handlerNullData;
     }
 
@@ -59,6 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
         BaseViewModule viewModule = adapterHelper.findViewModuleByPosition(position);
         int dataPosition = adapterHelper.getDataPosition(viewModule,position);
         Object data = viewModule.getItem(dataPosition);
+        holder.setOnModuleItemClickListener(viewModule.getItemClickListener());
+        holder.setOnModuleItemLongClickListener(viewModule.getItemLongClickListener());
         holder.bindData(data,dataPosition,position,null);
         Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
     }
@@ -70,6 +72,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
             return;
         }
         BaseViewModule viewModule = adapterHelper.findViewModuleByPosition(position);
+        holder.setOnModuleItemClickListener(viewModule.getItemClickListener());
+        holder.setOnModuleItemLongClickListener(viewModule.getItemLongClickListener());
         int dataPosition = adapterHelper.getDataPosition(viewModule,position);
         Object data = viewModule.getItem(dataPosition);
         holder.bindData(data,dataPosition,position,payloads);

@@ -123,7 +123,7 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
     private static int index = 0;
     @SuppressLint("CheckResult")
     private void request1() {
-        TestData.createTestStringListRequest(index++,1)
+        TestData.createTestStringListRequest(index++,10)
                 .subscribeWith(new OnStateVmCallBack<List<String>>(stateVm1) {
                     @Override
                     public void onBegin() {
@@ -132,8 +132,8 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
                     @Override
                     public void onSuccess(List<String> strings) throws AppException {
                         super.onSuccess(strings);
-                        //stateVm1.setList(strings);
-                        stateVm1.add(strings.get(0));
+                        stateVm1.setList(strings);
+
                         Log.d(TAG, "onSuccess() called with: strings = [" + strings + "]");
                     }
                 });
