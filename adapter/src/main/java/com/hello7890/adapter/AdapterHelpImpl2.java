@@ -45,7 +45,7 @@ public class AdapterHelpImpl2 extends BaseAdapterHelperImpl {
         if(viewModule!=null){
             return viewModule;
         }
-        throw new RuntimeException("After the data changes, must be called notif");
+        throw new RuntimeException("After the data changes, must be called notifyXXX");
     }
 
 
