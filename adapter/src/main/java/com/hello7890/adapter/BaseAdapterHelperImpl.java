@@ -118,7 +118,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
         }
 
 
-        throw new RuntimeException("After the data changes, must be called notif");
+        throw new RuntimeException("After the data changes, must be called notifyXXX");
     }
 
     @Override
@@ -143,7 +143,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
         if (dataPosition >= 0 && dataPosition < viewModule.getSize()) {
             return dataPosition;
         }
-        throw new RuntimeException("After the data changes, must be called notif");
+        throw new RuntimeException("After the data changes, must be called notifyXXX");
     }
 
     @Override

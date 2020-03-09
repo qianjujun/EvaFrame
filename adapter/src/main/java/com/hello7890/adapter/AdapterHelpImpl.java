@@ -61,7 +61,7 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
         if (mIndexViewModules.containsKey(index)) {
             return mIndexViewModules.get(index);
         }
-        throw new RuntimeException("After the data changes, must be called notif");
+        throw new RuntimeException("After the data changes, must be called notifyXXX");
     }
 
 
