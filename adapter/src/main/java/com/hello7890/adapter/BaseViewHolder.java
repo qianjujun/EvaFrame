@@ -32,23 +32,27 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
 
     final void bindData(T t, int dataPosition, int layoutPosition, List<Object> payloads){
 
-        //当正常更新数据 或者 分组
+        //当正常更新数据 或者 size发生变化
         if(payloads==null||payloads.isEmpty()||payloads.contains(AdapterHelpImpl.ADAPTER_SIZE_UPDATE_PAYLOAD)){
-            // TODO: 2020/3/9 预留
-
+            // TODO: 2020/3/9 预留  只需在这个地方需要重新绑定事件   暂未测试正确性
         }
 
-        if(mOnModuleItemClickListener!=null){
-            itemView.setOnClickListener(v -> {
-                mOnModuleItemClickListener.onModuleItemClick(t,dataPosition,layoutPosition);
-            });
-        }else {
+        if(dataPosition==0&&t==null){//状态Holder
             itemView.setOnClickListener(null);
-        }
-        if(mOnModuleItemLongClickListener!=null){
-            itemView.setOnLongClickListener(v -> mOnModuleItemLongClickListener.onModuleItemLongClick(t,dataPosition,layoutPosition));
-        }else {
             itemView.setOnLongClickListener(null);
+        }else {
+            if(mOnModuleItemClickListener!=null){
+                itemView.setOnClickListener(v -> {
+                    mOnModuleItemClickListener.onModuleItemClick(t,dataPosition,layoutPosition);
+                });
+            }else {
+                itemView.setOnClickListener(null);
+            }
+            if(mOnModuleItemLongClickListener!=null){
+                itemView.setOnLongClickListener(v -> mOnModuleItemLongClickListener.onModuleItemLongClick(t,dataPosition,layoutPosition));
+            }else {
+                itemView.setOnLongClickListener(null);
+            }
         }
 
         if(payloads==null||payloads.isEmpty()){

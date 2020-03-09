@@ -28,7 +28,6 @@ public class GroupInfoData {
                 }
             }
             result.add(groupData);//尾部数据
-            Log.d(TAG, "convert: end1");
         }
         Log.d(TAG, "convert: end");
         return result;

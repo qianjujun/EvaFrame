@@ -23,7 +23,7 @@ import java.util.List;
  */
 public abstract class BaseViewModule<T> implements ViewType{
     protected List<T> dataList = new ArrayList<>();
-    private DataChangeListener mDataChangeListener;
+    protected DataChangeListener mDataChangeListener;
 
     protected BaseViewModule getChildBaseViewModule(){
         return null;
@@ -67,53 +67,6 @@ public abstract class BaseViewModule<T> implements ViewType{
         //notifyDataSetChanged();
     }
 
-
-    boolean isNoneDataState(){
-       return size()==0&&getSize()>0;
-    }
-
-
-    public void setDataChangeListener(DataChangeListener dataChangeListener) {
-        this.mDataChangeListener = dataChangeListener;
-    }
-
-
-
-
-    public boolean isStickyItem(int dataPosition){
-        return false;
-    }
-
-
-    public List<T> getDataList() {
-        return new ArrayList<>(dataList);
-    }
-
-    /**
-     *
-     * @return 返回源数据  操作后必须调用相关更新方法
-     */
-    public final List<T> _getDataList(){
-        return dataList;
-    }
-
-
-
-    public @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_NORMAL_VIEW_TYPE)
-    int getItemViewType(int dataPosition) {
-        return 0;
-    }
-
-    //需要在界面上显示的数量
-    public final int getSize() {
-        if(size()==0){
-            return 1;
-        }
-        if(isGridLayout()){//确保最后一项是
-            return size()+1;
-        }
-        return size();
-    }
 
 
 
@@ -174,6 +127,62 @@ public abstract class BaseViewModule<T> implements ViewType{
             mDataChangeListener.onDataItemRangeChanged(this, dataPosition, 1,dataPosition + startPosition, payload);
         }
     }
+
+
+
+
+
+
+    boolean isNoneDataState(){
+       return size()==0&&getSize()>0;
+    }
+
+
+    public void setDataChangeListener(DataChangeListener dataChangeListener) {
+        this.mDataChangeListener = dataChangeListener;
+    }
+
+
+
+
+    public boolean isStickyItem(int dataPosition){
+        return false;
+    }
+
+
+    public List<T> getDataList() {
+        return new ArrayList<>(dataList);
+    }
+
+    /**
+     *
+     * @return 返回源数据  操作后必须调用相关更新方法
+     */
+    public final List<T> _getDataList(){
+        return dataList;
+    }
+
+
+
+    public @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_NORMAL_VIEW_TYPE)
+    int getItemViewType(int dataPosition) {
+        return 0;
+    }
+
+    //需要在界面上显示的数量
+    public final int getSize() {
+        if(size()==0){
+            return 1;
+        }
+        if(isGridLayout()){//确保最后一项是
+            return size()+1;
+        }
+        return size();
+    }
+
+
+
+
 
 
     protected abstract boolean isGridLayout();
