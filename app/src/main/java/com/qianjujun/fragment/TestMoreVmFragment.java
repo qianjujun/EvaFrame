@@ -15,6 +15,7 @@ import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.Group;
 import com.qianjujun.vm.GroupVm;
 import com.qianjujun.vm2.TestStateVm;
+import com.qianjujun.vm2.TitleWrapVm;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class TestMoreVmFragment extends BetterModuleFragment {
 
     @Override
     protected void initModule(RecyclerView recyclerView, View contentView) {
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(testStateVm, testStateVm1, groupVm, testStateVm2);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(testStateVm, TitleWrapVm.wrap(testStateVm1,"第二个"), groupVm, testStateVm2);
         recyclerView.setAdapter(adapter);
 
         testStateVm.setList(TestData.createTestStringList(5));

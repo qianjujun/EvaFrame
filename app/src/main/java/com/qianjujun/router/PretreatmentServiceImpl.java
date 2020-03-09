@@ -25,10 +25,6 @@ public class PretreatmentServiceImpl implements PretreatmentService {
             postcard.setPath(RouterPath.PATH_DEFAULT_ACTIVITY);
         }
 
-
-
-        Log.d("qianjujun", "onPretreatment() called with: context = [" + context + "], postcard = [" + postcard + "]");
-
         return true;
     }
 

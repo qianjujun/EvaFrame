@@ -1,19 +1,16 @@
 package com.qianjujun.frame.base;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qianjujun.frame.R;
 import com.qianjujun.frame.utils.FrameConstant;
@@ -81,7 +78,6 @@ public class BetterBaseActivity extends AppCompatActivity implements FrameConsta
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.activity_container);
         if(fragment!=null){
             mHandler.post(() -> fragment.onActivityResult(requestCode,resultCode,data));
-
         }
     }
 

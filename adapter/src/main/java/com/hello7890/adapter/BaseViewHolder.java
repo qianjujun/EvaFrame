@@ -34,7 +34,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
 
         //当正常更新数据 或者 分组
         if(payloads==null||payloads.isEmpty()||payloads.contains(AdapterHelpImpl.ADAPTER_SIZE_UPDATE_PAYLOAD)){
-
+            // TODO: 2020/3/9 预留
         }
 
         if(mOnModuleItemClickListener!=null){
