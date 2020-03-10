@@ -1,6 +1,7 @@
 package com.qianjujun.vm;
 
 import android.graphics.Color;
+import android.view.ViewGroup;
 
 import com.hello7890.adapter.vm.SingleDbViewModule;
 import com.qianjujun.R;
@@ -39,8 +40,16 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
 
     @Override
     protected void onBindData(VmChildBinding dataBinding, String s, int dataPosition, int layoutPosition) {
+        if(dataPosition%columnNum==1){
+            dataBinding.tvText.setBackgroundColor(Color.parseColor("#60773399"));
+        }else if(dataPosition%columnNum==2){
+            dataBinding.tvText.setBackgroundColor(Color.parseColor("#336699"));
+        }else {
+            dataBinding.tvText.setBackgroundColor(Color.WHITE);
+        }
+
         dataBinding.tvText.setText(s);
-        dataBinding.tvText.setBackgroundColor(backColor);
+
         dataBinding.tvText.setTextColor(textColor);
     }
 

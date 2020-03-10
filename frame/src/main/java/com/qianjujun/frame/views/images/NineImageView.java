@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.DataChangeListener;

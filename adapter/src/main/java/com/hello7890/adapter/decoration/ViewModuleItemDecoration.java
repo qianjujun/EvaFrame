@@ -33,6 +33,15 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     private int columnNum = 1;
     private int dividerWidth;
 
+
+    private int leftAndRight = 90;
+    private int offsetWidth = 0;
+
+
+    public void setLeftAndRight(int leftAndRight) {
+        this.leftAndRight = leftAndRight;
+    }
+
     public ViewModuleItemDecoration setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
         mPaint.setColor(dividerColor);
@@ -79,7 +88,7 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         drawHorizontal(c,parent);
     }
 
-    private int findIndexInMultipeColumn(int columnNum,int dataPosition){
+    private int findIndexInMultipleColumn(int columnNum, int dataPosition){
         return dataPosition%columnNum;
     }
 
@@ -94,11 +103,29 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
             if(columnNum==1){
                 outRect.set(0,0,0,mDividerHeight);
             }else {
-                int index = findIndexInMultipeColumn(columnNum,dataPosition);
+                int index = findIndexInMultipleColumn(columnNum,dataPosition);
                 int itemNum = columnNum-1;
                 int left = dividerWidth *index/itemNum;
                 int right = dividerWidth *(itemNum-index)/itemNum;
+
+
+
+                if(leftAndRight>0){
+                    if(offsetWidth==0){
+                        offsetWidth = leftAndRight*2/columnNum;
+                    }
+                    int offsetLeft = leftAndRight-index*offsetWidth;
+                    int offsetRight = offsetWidth-offsetLeft;
+                    left += offsetLeft;
+                    right += offsetRight;
+
+                }
+
+
+
                 outRect.set(left,0,right,mDividerHeight);
+
+
             }
         }else {
             outRect.set(0,0,0,0);
@@ -160,6 +187,9 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         int right = itemWidth*(itemNum-index)/itemNum;
         return new int[]{left,right};
     }
+
+
+
 
 
 }

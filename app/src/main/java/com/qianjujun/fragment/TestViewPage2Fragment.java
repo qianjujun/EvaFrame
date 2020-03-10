@@ -1,4 +1,4 @@
-package com.qianjujun;
+package com.qianjujun.fragment;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
+import com.qianjujun.TestData;
 import com.qianjujun.frame.base.BetterSimpleFragment;
 import com.qianjujun.router.RouterPath;
 import com.qianjujun.vm.PageVm;

@@ -120,7 +120,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     @Override
     public void onViewAttachedToWindow(BaseViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        notifyItemChanged(0);
     }
 
 
