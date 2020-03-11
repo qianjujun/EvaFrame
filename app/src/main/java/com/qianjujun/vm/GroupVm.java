@@ -83,7 +83,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
 
     @Override
-    protected int getSpanCount(int dataPosition) {
+    public int getSpanCount(int dataPosition) {
         return isChildItem(dataPosition)?3:1;
     }
 

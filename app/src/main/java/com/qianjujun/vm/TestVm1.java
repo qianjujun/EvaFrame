@@ -22,7 +22,7 @@ public class TestVm1 extends ViewModule<Integer> {
     }
 
     @Override
-    protected int getSpanCount(int dataPosition) {
+    public int getSpanCount(int dataPosition) {
         return 3;
     }
 

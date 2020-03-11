@@ -7,9 +7,13 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.vm.ViewModule;
+
+import java.util.Arrays;
 
 
 /**
@@ -28,10 +32,12 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
     private Paint mPaint;
     private ViewModule viewModule;
-    private int dividerColor = Color.RED;
+    private int dividerColor = Color.parseColor("#222222");
     private boolean noneBottomDivider;
-    private int columnNum = 1;
-    private int dividerWidth;
+
+    private final ItemInfo itemInfo;
+
+
 
     public ViewModuleItemDecoration setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
@@ -45,23 +51,27 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     }
 
 
-    public ViewModuleItemDecoration setColumnNum(int columnNum) {
-        this.columnNum = columnNum;
-        dividerWidth = mDividerHeight*(columnNum-1)/columnNum;
-        return this;
+
+
+    public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight,int leftAndRight){
+        this.viewModule = viewModule;
+        this.mDividerHeight = dividerHeight;
+        this.itemInfo = new ItemInfo(dividerHeight,leftAndRight);
+        mPaint = new Paint();
+        mPaint.setColor(dividerColor);
     }
 
     public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight){
-        this.viewModule = viewModule;
-        mPaint = new Paint();
-        mPaint.setColor(dividerColor);
-        this.mDividerHeight = dividerHeight;
+       this(viewModule,dividerHeight,0);
     }
 
     private boolean isValidItem(int dataPosition){
         if(viewModule.size()==0){
             return false;
         }
+//        if(viewModule.getItem(dataPosition)==null){
+//            return false;
+//        }
         startPosition = viewModule.getStartPosition();
         endPosition = startPosition+viewModule.size();
         int end = endPosition;
@@ -76,12 +86,9 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        drawHorizontal(c,parent);
+        drawLine(c,parent);
     }
 
-    private int findIndexInMultipeColumn(int columnNum,int dataPosition){
-        return dataPosition%columnNum;
-    }
 
 
 
@@ -89,30 +96,100 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int adapterPosition = parent.getChildAdapterPosition(view);
         int dataPosition = adapterPosition-viewModule.getStartPosition();
-        log1(view.getRight(),parent.getRight(),columnNum,adapterPosition);
         if(isValidItem(adapterPosition)){
-            if(columnNum==1){
-                outRect.set(0,0,0,mDividerHeight);
-            }else {
-                int index = findIndexInMultipeColumn(columnNum,dataPosition);
-                int itemNum = columnNum-1;
-                int left = dividerWidth *index/itemNum;
-                int right = dividerWidth *(itemNum-index)/itemNum;
-                outRect.set(left,0,right,mDividerHeight);
-            }
+            int[] lr = itemInfo.count(dataPosition,viewModule.getSpanCount());
+            Log.d(TAG, "getItemOffsets() called with: outRect = [" + Arrays.toString(lr) + "], view = [" + "view" + "], parent = [" + "parent" + "], state = [" + "state" + "]");
+            outRect.set(lr[0],0,lr[1],mDividerHeight);
         }else {
             outRect.set(0,0,0,0);
         }
     }
 
-    private void log1(int viewR,int parentR,int columnNum,int adapterPosition){
-        Log.d(TAG, "log1() called with: viewR = [" + viewR + "], parentR = [" + parentR + "], columnNum = [" + columnNum + "], adapterPosition = [" + adapterPosition + "]");
+
+
+
+    static class ItemInfo{
+        int columnNum;
+        int dividerWidth;//分割线的宽度
+        /**
+         * 最左和最右边的宽度
+         */
+        int leftAndRight;
+        /**
+         * 总宽度 为 60  columnNum*dividerWidth/(columnNum-1)
+         * --  --  --
+         *   30  30
+         */
+        int totalDividerWidth;
+
+        /**
+         * 每个item要分配给divider的宽度   如上图 分割线总长为60，有3个item  则每个item分配出去的宽度为60/3
+         */
+        int itemColumnWidth;
+
+        int firstLeft;
+        int lastLeft;
+        int itemStep;
+
+        int[] tempLR = new int[2];
+
+        public ItemInfo(int dividerWidth, int leftAndRight) {
+            this.dividerWidth = dividerWidth;
+            this.leftAndRight = leftAndRight;
+
+        }
+
+        private void update(@IntRange(from = 2) int columnNum){//列数变化
+            if(columnNum<2){
+                throw new IllegalArgumentException("columnNum must >= 2");
+            }
+            this.columnNum = columnNum;
+            totalDividerWidth = leftAndRight*2+dividerWidth*(columnNum-1);
+            itemColumnWidth = totalDividerWidth/columnNum;
+            firstLeft = leftAndRight;
+            lastLeft = itemColumnWidth - leftAndRight;
+            itemStep = (leftAndRight-lastLeft)/(columnNum-1);
+        }
+
+        int[] count(int dataPosition,int columnNum){
+            if(columnNum<1){
+                throw new IllegalArgumentException("columnNum must >= 1");
+            }
+            if(columnNum==1){
+                tempLR[0] = leftAndRight;
+                tempLR[1] = leftAndRight;
+                return tempLR;
+            }
+            if(this.columnNum!=columnNum){
+                update(columnNum);
+            }
+            int columnIndex = dataPosition%columnNum;
+            int left = leftAndRight - columnIndex*itemStep;
+            int right = itemColumnWidth-left;
+            tempLR[0] = left;
+            tempLR[1] = right;
+            return tempLR;
+        }
+
+
+        boolean needDrawGrid(int dataPosition){
+            return columnNum>1&&dataPosition%columnNum!=(columnNum-1);
+        }
+
+
     }
 
 
 
+
+
+
+
+
+
+
     //绘制横向 item 分割线
-    private void drawHorizontal(Canvas canvas, RecyclerView parent) {
+    private void drawLine(Canvas canvas, RecyclerView parent) {
         final int childSize = parent.getChildCount();
 
         View child;
@@ -126,23 +203,27 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
                 int right = child.getRight();
                 final int top = child.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mDividerHeight;
+                //横线部分
                 canvas.drawRect(left, top, right, bottom, mPaint);
 
-//                if(Frame.DEBUG){
-//                    log(left,top,right,bottom,dataPosition);
-//                }
 
-                if(columnNum>1&&dataPosition%columnNum!=columnNum-1){
+                boolean custom = onDrawGridBg(canvas,child,dataPosition,viewModule.getSpanCount(),mDividerHeight,viewModule.size());
+
+                //纵向部分
+                if(!custom&&itemInfo.needDrawGrid(dataPosition)){
                     canvas.drawRect(right,child.getTop(),right+mDividerHeight,bottom,mPaint);
                 }
+
             }
         }
     }
 
 
-    private void log(int left,int top,int right,int bottom,int index){
-        Log.d(TAG, "log() called with: left = [" + left + "], top = [" + top + "], right = [" + right + "], bottom = [" + bottom + "], index = [" + index + "]");
+    protected boolean onDrawGridBg(Canvas canvas,View child,int dataPosition,int columnNum,int dividerHeight,int size){
+        return false;
     }
+
+
 
 
     /**
@@ -160,6 +241,10 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         int right = itemWidth*(itemNum-index)/itemNum;
         return new int[]{left,right};
     }
+
+
+
+
 
 
 }

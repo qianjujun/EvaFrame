@@ -41,7 +41,7 @@ public class TestVm2 extends SingleDbViewModule<String, TestHold1Binding> {
     }
 
     @Override
-    protected int getSpanCount(int dataPosition) {
+    public int getSpanCount(int dataPosition) {
         return 3;
     }
 }

@@ -46,7 +46,7 @@ public class SimpleStringVm<T extends IString> extends SingleDbViewModule<T, VmC
     }
 
     @Override
-    protected int getSpanCount(int dataPosition) {
+    public int getSpanCount(int dataPosition) {
         return columnNum;
     }
 
