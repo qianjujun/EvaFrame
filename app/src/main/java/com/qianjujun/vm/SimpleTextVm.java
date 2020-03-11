@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import com.hello7890.adapter.vm.SingleDbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
+import com.qianjujun.frame.utils.ToastUtils;
 
 /**
  * @author qianjujun
@@ -61,5 +62,12 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
     @Override
     protected boolean isGridLayout() {
         return true;
+    }
+
+
+    @Override
+    public void onModuleItemClick(String s, int dataPosition, int adapterPosition) {
+        super.onModuleItemClick(s, dataPosition, adapterPosition);
+        ToastUtils.showSuccess(s);
     }
 }
