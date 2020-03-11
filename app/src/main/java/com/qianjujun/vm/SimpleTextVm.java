@@ -8,6 +8,8 @@ import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.frame.utils.ToastUtils;
 
+import java.util.Random;
+
 /**
  * @author qianjujun
  * @email qianjujun@163.com
@@ -41,13 +43,9 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
 
     @Override
     protected void onBindData(VmChildBinding dataBinding, String s, int dataPosition, int layoutPosition) {
-//        if(dataPosition%columnNum==1){
-//            dataBinding.tvText.setBackgroundColor(Color.parseColor("#60773399"));
-//        }else if(dataPosition%columnNum==2){
-//            dataBinding.tvText.setBackgroundColor(Color.parseColor("#336699"));
-//        }else {
-//            dataBinding.tvText.setBackgroundColor(Color.WHITE);
-//        }
+
+
+        dataBinding.tvText.setBackgroundColor(colors[dataPosition%5]);
 
         dataBinding.tvText.setText(s);
 
@@ -70,4 +68,7 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
         super.onModuleItemClick(s, dataPosition, adapterPosition);
         ToastUtils.showSuccess(s);
     }
+
+
+    private int[] colors = new int[]{Color.RED,Color.BLUE,Color.YELLOW,Color.GREEN,Color.GRAY};
 }

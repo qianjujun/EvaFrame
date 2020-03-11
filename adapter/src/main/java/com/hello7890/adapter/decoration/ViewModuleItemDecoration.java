@@ -7,10 +7,10 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.vm.ViewModule;
 
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
 
     private Paint mPaint;
-    private ViewModule viewModule;
+    protected BaseViewModule viewModule;
     private int dividerColor = Color.parseColor("#222222");
     private boolean noneBottomDivider;
 
@@ -52,8 +52,14 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
 
 
+    public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight){
+        this(viewModule,dividerHeight,0);
+    }
+    public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight, int leftAndRight){
+        this(dividerHeight,leftAndRight,viewModule);
+    }
 
-    public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight,int leftAndRight){
+    ViewModuleItemDecoration(int dividerHeight, int leftAndRight,BaseViewModule viewModule){
         this.viewModule = viewModule;
         this.mDividerHeight = dividerHeight;
         this.itemInfo = new ItemInfo(dividerHeight,leftAndRight);
@@ -61,24 +67,38 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         mPaint.setColor(dividerColor);
     }
 
-    public ViewModuleItemDecoration(ViewModule viewModule, int dividerHeight){
-       this(viewModule,dividerHeight,0);
-    }
 
     private boolean isValidItem(int dataPosition){
         if(viewModule.size()==0){
             return false;
         }
-//        if(viewModule.getItem(dataPosition)==null){
-//            return false;
-//        }
-        startPosition = viewModule.getStartPosition();
-        endPosition = startPosition+viewModule.size();
-        int end = endPosition;
-        if(noneBottomDivider){
-            end = end-1;
+        if(viewModule.getItem(dataPosition)==null){
+            return false;
         }
-        return dataPosition>=startPosition&&dataPosition<end;
+
+        if(dataPosition<0||dataPosition>=viewModule.size()){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isNoBottomItem(int dataPosition){
+        int spanCount = viewModule.getSpanCount();
+        if(spanCount==1){
+            return dataPosition<viewModule.size()-1;
+        }
+
+        int index = (viewModule.size()-1)%spanCount;
+
+        return dataPosition<viewModule.size()-1-index;
+    }
+
+    private int getBottomHeight(int dataPosition){
+        if(noneBottomDivider&&isNoBottomItem(dataPosition)){
+            return mDividerHeight;
+        }
+        return 0;
     }
 
 
@@ -96,13 +116,20 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int adapterPosition = parent.getChildAdapterPosition(view);
         int dataPosition = adapterPosition-viewModule.getStartPosition();
-        if(isValidItem(adapterPosition)){
+        int bottom = 0;
+        if(isValidItem(dataPosition)){
             int[] lr = itemInfo.count(dataPosition,viewModule.getSpanCount());
             Log.d(TAG, "getItemOffsets() called with: outRect = [" + Arrays.toString(lr) + "], view = [" + "view" + "], parent = [" + "parent" + "], state = [" + "state" + "]");
-            outRect.set(lr[0],0,lr[1],mDividerHeight);
+            outRect.set(lr[0],0,lr[1],getBottomHeight(dataPosition));
+            handlerItemOffsets(outRect,dataPosition);
         }else {
             outRect.set(0,0,0,0);
         }
+    }
+
+
+    protected void handlerItemOffsets(Rect outRect,int dataPosition){
+
     }
 
 
@@ -177,6 +204,9 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         }
 
 
+
+
+
     }
 
 
@@ -192,35 +222,52 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     private void drawLine(Canvas canvas, RecyclerView parent) {
         final int childSize = parent.getChildCount();
 
+        View firstChild = null,lastChild = null;
+        int firstPosition=0,lastPosition = 0;
+
         View child;
         RecyclerView.LayoutParams layoutParams;
         for (int i = 0; i < childSize; i++) {
             child = parent.getChildAt(i);
-            int dataPosition = parent.getChildAdapterPosition(child);
+            int adapterPosition = parent.getChildAdapterPosition(child);
+            int dataPosition = adapterPosition-viewModule.getStartPosition();
             if(isValidItem(dataPosition)){
                 layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-                int left = child.getLeft();
-                int right = child.getRight();
-                final int top = child.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + mDividerHeight;
-                //横线部分
-                canvas.drawRect(left, top, right, bottom, mPaint);
-
-
-                boolean custom = onDrawGridBg(canvas,child,dataPosition,viewModule.getSpanCount(),mDividerHeight,viewModule.size());
-
-                //纵向部分
-                if(!custom&&itemInfo.needDrawGrid(dataPosition)){
-                    canvas.drawRect(right,child.getTop(),right+mDividerHeight,bottom,mPaint);
+                onDrawLine(layoutParams,canvas,child,dataPosition,viewModule.getSpanCount(),mDividerHeight,viewModule.size());
+                if(firstChild==null){
+                    firstChild = child;
+                    firstPosition = dataPosition;
                 }
-
+                lastChild = child;
+                lastPosition = dataPosition;
             }
         }
+
+        onDrawLine(firstPosition,firstChild,lastPosition,lastChild,canvas);
     }
 
 
-    protected boolean onDrawGridBg(Canvas canvas,View child,int dataPosition,int columnNum,int dividerHeight,int size){
-        return false;
+
+    protected void onDrawLine(int firstPosition,View firstChild,int lastPosition,View lastChild,Canvas canvas){
+
+    }
+
+
+    protected void onDrawLine(RecyclerView.LayoutParams layoutParams, Canvas canvas, View child, int dataPosition, int columnNum, int dividerHeight, int size){
+        layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+        int left = child.getLeft();
+        int right = child.getRight();
+        final int top = child.getBottom() + layoutParams.bottomMargin;
+        int bottom = top + mDividerHeight;
+        //横线部分
+        if(!noneBottomDivider||isNoBottomItem(dataPosition)){
+            canvas.drawRect(left, top, right, bottom, mPaint);
+        }
+
+        //纵向部分
+        if(itemInfo.needDrawGrid(dataPosition)){
+            canvas.drawRect(right,child.getTop(),right+mDividerHeight,bottom,mPaint);
+        }
     }
 
 

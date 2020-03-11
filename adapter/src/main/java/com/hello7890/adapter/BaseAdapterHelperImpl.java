@@ -75,7 +75,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
 
     protected void initViewModule(BaseViewModule viewModule) {
         onAddNewViewModule(viewModule);
-        viewModule.setDataChangeListener(this);
+        viewModule.addDataChangeListener(this);
         viewModule.setStartPosition(size);
         size += viewModule.getSize();
         stickyPositionSet.addAll(viewModule.getStickyLayoutPosition());

@@ -25,8 +25,38 @@ public class MyClass {
         System.out.println(state&LOCATION_RIGHT_TOP);
 
 
+        AA aa = new AA() {
+            @Override
+            public void test() {
+
+            }
+        };
 
 
+        AA aa2 = new AA() {
+            @Override
+            public void test() {
+
+            }
+        };
+
+        AA aa1 = new AAA();
+
+
+        System.out.println(aa.getClass().getName());
+        System.out.println(aa2.getClass().getName());
+
+        System.out.println(aa1.getClass().getName());
+
+
+    }
+
+    static class AAA implements AA{
+
+        @Override
+        public void test() {
+
+        }
     }
 
 
@@ -80,4 +110,8 @@ public class MyClass {
         int right = itemWidth-left;
         return new int[]{left,right};
     }
+
+
+
+
 }

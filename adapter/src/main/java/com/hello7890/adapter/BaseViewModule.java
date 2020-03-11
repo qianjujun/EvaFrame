@@ -21,12 +21,62 @@ import java.util.List;
  * @createTime 2020/1/22 14:43
  * @describe
  */
-public abstract class BaseViewModule<T> implements ViewType{
+public abstract class BaseViewModule<T> implements ViewType {
     protected List<T> dataList = new ArrayList<>();
-    protected DataChangeListener mDataChangeListener;
 
-    protected BaseViewModule getChildBaseViewModule(){
+    private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+
+
+    BaseViewModule getWrapViewModule() {
         return null;
+    }
+
+    public final void notifyItemInserted(int dataPosition, int itemCount) {
+
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataSizeChangeByInserted(this, dataPosition, itemCount);
+        }
+
+
+    }
+
+    public final void notifyItemRemove(int dataPosition, int itemCount) {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataSizeChangeByRemove(this, dataPosition, itemCount);
+        }
+    }
+
+
+    public final void notifyDataSetChanged() {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataSizeChange(this);
+        }
+
+    }
+
+
+    public final void notifyItemRangeChanged(int dataPosition, int itemCount) {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataItemRangeChanged(this, dataPosition, itemCount, startPosition + dataPosition);
+        }
+    }
+
+    public final void notifyDataChanged() {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataItemRangeChanged(this, 0, size(), startPosition);
+        }
+    }
+
+    public final void notifyItemChanged(int dataPosition) {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataItemRangeChanged(this, dataPosition, 1, startPosition + dataPosition);
+        }
+    }
+
+    public final void notifyItemChanged(int dataPosition, Object payload) {
+        for (DataChangeListener mDataChangeListener : dataChangeListeners) {
+            mDataChangeListener.onDataItemRangeChanged(this, dataPosition, 1, dataPosition + startPosition, payload);
+        }
     }
 
 
@@ -34,22 +84,23 @@ public abstract class BaseViewModule<T> implements ViewType{
 
     public void setState(@NonNull ViewModuleState state) {
         this.state = state;
-        if(isNoneDataState()){
+        if (isNoneDataState()) {
             notifyItemChanged(0);
         }
     }
 
     /**
      * 将会清空数据 强行至于某种状态
+     *
      * @param state
      */
-    public void forceState(@NonNull ViewModuleState state){
+    public void forceState(@NonNull ViewModuleState state) {
         this.state = state;
-        if(size()>0){
+        if (size() > 0) {
             clear();
             return;
         }
-        if(getSize()>0){
+        if (getSize() > 0) {
             notifyItemChanged(0);
         }
 
@@ -60,7 +111,7 @@ public abstract class BaseViewModule<T> implements ViewType{
         if (this.dataList.isEmpty()) {
             return;
         }
-        int size = size()-1;
+        int size = size() - 1;
         this.dataList.clear();
         notifyItemChanged(0);
         notifyItemRemove(1, size);
@@ -68,84 +119,26 @@ public abstract class BaseViewModule<T> implements ViewType{
     }
 
 
-
-
-    public final void notifyItemInserted(int dataPosition,int itemCount){
-        if (mDataChangeListener != null) {
-            if(isGridLayout()){//多列的清空  getSize需要实时调整
-                mDataChangeListener.onDataSizeChange(this);
-            }else {
-                mDataChangeListener.onDataSizeChangeByInserted(this,dataPosition,itemCount);
-            }
-        }
-
-    }
-    public final void notifyItemRemove(int dataPosition,int itemCount){
-        if (mDataChangeListener != null) {
-            if(isGridLayout()){
-                mDataChangeListener.onDataSizeChange(this);
-            }else {
-                mDataChangeListener.onDataSizeChangeByRemove(this,dataPosition,itemCount);
-            }
-        }
+    boolean isNoneDataState() {
+        return size() == 0 && getSize() > 0;
     }
 
 
-
-
-
-
-    public final void notifyDataSetChanged() {
-        if(mDataChangeListener==null){
+    public void addDataChangeListener(DataChangeListener dataChangeListener) {
+        if(dataChangeListener==null){
             return;
         }
-        mDataChangeListener.onDataSizeChange(this);
-    }
-
-
-
-    public final void notifyItemRangeChanged(int dataPosition,int itemCount){
-        if (mDataChangeListener != null) {
-            mDataChangeListener.onDataItemRangeChanged(this,dataPosition,itemCount,startPosition+dataPosition);
+        if(!dataChangeListeners.contains(dataChangeListener)){
+            dataChangeListeners.add(dataChangeListener);
         }
     }
 
-    public final void notifyDataChanged(){
-        if (mDataChangeListener != null) {
-            mDataChangeListener.onDataItemRangeChanged(this,0,size(),startPosition);
-        }
-    }
-
-    public final void notifyItemChanged(int dataPosition){
-        if (mDataChangeListener != null) {
-            mDataChangeListener.onDataItemRangeChanged(this,dataPosition,1,startPosition+dataPosition);
-        }
-    }
-
-    public final void notifyItemChanged(int dataPosition, Object payload) {
-        if (mDataChangeListener != null) {
-            mDataChangeListener.onDataItemRangeChanged(this, dataPosition, 1,dataPosition + startPosition, payload);
-        }
+    public void removeDataChangeListener(DataChangeListener dataChangeListener){
+        dataChangeListeners.remove(dataChangeListener);
     }
 
 
-
-
-
-
-    boolean isNoneDataState(){
-       return size()==0&&getSize()>0;
-    }
-
-
-    public void setDataChangeListener(DataChangeListener dataChangeListener) {
-        this.mDataChangeListener = dataChangeListener;
-    }
-
-
-
-
-    public boolean isStickyItem(int dataPosition){
+    public boolean isStickyItem(int dataPosition) {
         return false;
     }
 
@@ -155,13 +148,11 @@ public abstract class BaseViewModule<T> implements ViewType{
     }
 
     /**
-     *
      * @return 返回源数据  操作后必须调用相关更新方法
      */
-    public final List<T> _getDataList(){
+    public final List<T> _getDataList() {
         return dataList;
     }
-
 
 
     public @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_NORMAL_VIEW_TYPE)
@@ -170,23 +161,18 @@ public abstract class BaseViewModule<T> implements ViewType{
     }
 
     //需要在界面上显示的数量
-    public final int getSize() {
-        if(size()==0){
+    public int getSize() {
+        if (size() == 0) {
             return 1;
         }
-        if(isGridLayout()){//确保最后一项是
-            return size()+1;
+        if (isGridLayout()) {//确保最后一项是
+            return size() + 1;
         }
         return size();
     }
 
 
-
-
-
-
     protected abstract boolean isGridLayout();
-
 
 
     int getSpanSize(int position) {
@@ -204,7 +190,7 @@ public abstract class BaseViewModule<T> implements ViewType{
 
     private int _getSpanCount(int position) {
         int dataPosition = position - getStartPosition();
-        if ((dataPosition == getSize() - 1)&&isGridLayout()&&getItem(dataPosition)==null) {//最后一列占满全列
+        if ((dataPosition == getSize() - 1) && isGridLayout() && getItem(dataPosition) == null) {//最后一列占满全列
             return 1;
         }
         if (isStickyItem(dataPosition)) {//吸顶item占满全列
@@ -215,18 +201,17 @@ public abstract class BaseViewModule<T> implements ViewType{
 
 
     /**
-     *
      * 特别注意：
      * 约定
      *
      * @param dataPosition
      * @return 约定只返回1或者其他如 返回1或3 1或4 1或5
-     *
+     * <p>
      * --- ---  2
      * -------  1
      * ---      2
      * -------  1
-     *
+     * <p>
      * 如返回 3|2|1
      * ---  ---  2
      * -- -- --  3
@@ -234,28 +219,19 @@ public abstract class BaseViewModule<T> implements ViewType{
      * -- -- --  3
      * --------  1
      * 此混合模式很难找到当前item属于该行的第几列  如需要画分割线 则尽量避免此种组合
-     *
+     * <p>
      * 多种列结构 建议使用多个module组合非方式
-     *
-     *
      */
     @Deprecated
-    public @IntRange(from = 1) int getSpanCount(int dataPosition){
+    public @IntRange(from = 1)
+    int getSpanCount(int dataPosition) {
         return getSpanCount();
     }
 
 
-    public int getSpanCount(){
+    public int getSpanCount() {
         return 1;
     }
-
-
-
-
-
-
-
-
 
 
     private int typeViewFlag;
@@ -263,6 +239,7 @@ public abstract class BaseViewModule<T> implements ViewType{
     private Context context;
     private OnModuleItemClickListener<T> mItemClickListener;
     private OnModuleItemLongClickListener<T> mItemLongClickListener;
+
     public Context getContext() {
         return context;
     }
@@ -279,11 +256,11 @@ public abstract class BaseViewModule<T> implements ViewType{
         this.startPosition = startPosition;
     }
 
-    final BaseViewHolder createViewHolder(ViewGroup parent, int viewType){
-        if(context==null){
+    final BaseViewHolder createViewHolder(ViewGroup parent, int viewType) {
+        if (context == null) {
             context = parent.getContext();
         }
-        switch (viewType){
+        switch (viewType) {
             case EMPTY_VIEW_TYPE:
                 return onCreateEmptyViewHolder(parent);
             case LOADING_VIEW_TYPE:
@@ -293,8 +270,6 @@ public abstract class BaseViewModule<T> implements ViewType{
         }
 
         BaseViewHolder<T> viewHolder = onCreateViewHolder(parent, viewType);
-        //viewHolder.setOnModuleItemClickListener(mItemClickListener);
-        //viewHolder.setOnModuleItemLongClickListener(mItemLongClickListener);
         return viewHolder;
     }
 
@@ -316,38 +291,21 @@ public abstract class BaseViewModule<T> implements ViewType{
 
 
 
-
-
-//    final BaseViewHolder<? extends T, ?> createViewHolder(ViewGroup parent, int viewType) {
-//        if(context==null){
-//            context = parent.getContext();
-//        }
-//
-//        if(viewType==ViewType.EMPTY_VIEW_TYPE){
-//            return onCreateEmptyViewHolder(parent);
-//        }
-//
-//        BaseViewHolder<T, ?> viewHolder = onCreateViewHolder(parent, viewType);
-//        viewHolder.setOnModuleItemClickListener(mItemClickListener);
-//        viewHolder.setOnModuleItemLongClickListener(mItemLongClickListener);
-//        return viewHolder;
-//    }
-
     final int getAdapterItemViewType(int dataPosition) {
         return typeViewFlag + handlerStateAndEmptyViewType(dataPosition);
     }
 
-    final int getAdapterItemViewTypeByVmItemType(int itemType){
-        return typeViewFlag+itemType;
+    final int getAdapterItemViewTypeByVmItemType(int itemType) {
+        return typeViewFlag + itemType;
     }
 
 
-    int handlerStateAndEmptyViewType(int dataPosition){
+    int handlerStateAndEmptyViewType(int dataPosition) {
         if (size() == 0 && getSize() > 0 && dataPosition == 0) {//过滤状态类型
-            if(state==null){
+            if (state == null) {
                 return ViewType.SPACE_VIEW_TYPE;
             }
-            switch (state){
+            switch (state) {
                 case LOADING:
                     return ViewType.LOADING_VIEW_TYPE;
                 case EMPTY:
@@ -358,7 +316,7 @@ public abstract class BaseViewModule<T> implements ViewType{
                     return ViewType.SPACE_VIEW_TYPE;
             }
         }
-        if(getItem(dataPosition)==null){//过滤空数据类型
+        if (getItem(dataPosition) == null) {//过滤空数据类型
             return ViewType.SPACE_VIEW_TYPE;
         }
 
@@ -379,7 +337,7 @@ public abstract class BaseViewModule<T> implements ViewType{
         this.mItemClickListener = itemClickListener;
     }
 
-    public void setOnModuleItemLongClickListener(OnModuleItemLongClickListener<T> itemLongClickListener){
+    public void setOnModuleItemLongClickListener(OnModuleItemLongClickListener<T> itemLongClickListener) {
         this.mItemLongClickListener = itemLongClickListener;
     }
 

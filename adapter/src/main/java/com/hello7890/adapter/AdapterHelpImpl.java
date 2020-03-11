@@ -68,7 +68,7 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
             return;
         }
         viewModuleList.add(viewModule);
-        addViewModule(viewModule.getChildBaseViewModule(),viewModuleList);
+        addViewModule(viewModule.getWrapViewModule(),viewModuleList);
 
     }
 

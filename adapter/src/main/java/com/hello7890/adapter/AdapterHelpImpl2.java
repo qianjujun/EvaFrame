@@ -2,8 +2,6 @@ package com.hello7890.adapter;
 
 import android.util.SparseArray;
 
-import com.hello7890.adapter.vm.ViewModule;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class AdapterHelpImpl2 extends BaseAdapterHelperImpl {
             return;
         }
         viewModuleList.add(viewModule);
-        addViewModule(viewModule.getChildBaseViewModule(),viewModuleList);
+        addViewModule(viewModule.getWrapViewModule(),viewModuleList);
 
     }
 }
