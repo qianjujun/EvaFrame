@@ -41,13 +41,13 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
 
     @Override
     protected void onBindData(VmChildBinding dataBinding, String s, int dataPosition, int layoutPosition) {
-        if(dataPosition%columnNum==1){
-            dataBinding.tvText.setBackgroundColor(Color.parseColor("#60773399"));
-        }else if(dataPosition%columnNum==2){
-            dataBinding.tvText.setBackgroundColor(Color.parseColor("#336699"));
-        }else {
-            dataBinding.tvText.setBackgroundColor(Color.WHITE);
-        }
+//        if(dataPosition%columnNum==1){
+//            dataBinding.tvText.setBackgroundColor(Color.parseColor("#60773399"));
+//        }else if(dataPosition%columnNum==2){
+//            dataBinding.tvText.setBackgroundColor(Color.parseColor("#336699"));
+//        }else {
+//            dataBinding.tvText.setBackgroundColor(Color.WHITE);
+//        }
 
         dataBinding.tvText.setText(s);
 
@@ -55,7 +55,7 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
     }
 
     @Override
-    protected int getSpanCount(int dataPosition) {
+    public int getSpanCount() {
         return columnNum;
     }
 

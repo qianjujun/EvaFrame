@@ -213,7 +213,39 @@ public abstract class BaseViewModule<T> implements ViewType{
         return getSpanCount(dataPosition);
     }
 
-    protected @IntRange(from = 1) int getSpanCount(int dataPosition){
+
+    /**
+     *
+     * 特别注意：
+     * 约定
+     *
+     * @param dataPosition
+     * @return 约定只返回1或者其他如 返回1或3 1或4 1或5
+     *
+     * --- ---  2
+     * -------  1
+     * ---      2
+     * -------  1
+     *
+     * 如返回 3|2|1
+     * ---  ---  2
+     * -- -- --  3
+     * --- --    2|3
+     * -- -- --  3
+     * --------  1
+     * 此混合模式很难找到当前item属于该行的第几列  如需要画分割线 则尽量避免此种组合
+     *
+     * 多种列结构 建议使用多个module组合非方式
+     *
+     *
+     */
+    @Deprecated
+    public @IntRange(from = 1) int getSpanCount(int dataPosition){
+        return getSpanCount();
+    }
+
+
+    public int getSpanCount(){
         return 1;
     }
 
