@@ -55,25 +55,8 @@ public class BackgroundDecoration extends ViewModuleItemDecoration {
     private RectF rectF = new RectF();
 
     private void draw(View child, int dataPosition, int size, Canvas canvas, int columnNum) {
-//        View view  = (View) child.getParent();
-//        if(dataPosition==0){
-//            top = child.getTop()-innerPadding;
-//        }
-//        if(dataPosition==size-1){
-//            bottom = child.getBottom()+innerPadding;
-//            onDrawViewModuleBackground(canvas,new RectF(left,top,right,bottom),true,true);
-//        }
-//
-//        if(child.getTop()<parentTop){
-//            top = parentTop;
-//            onDrawViewModuleBackground(canvas,new RectF(left,top,right,bottom),false,true);
-//        }
-//        if(child.getBottom()>parentBottom){
-//            bottom = parentBottom;
-//            onDrawViewModuleBackground(canvas,new RectF(left,top,right,bottom),true,false);
-//        }
 
-        if (dataPosition % columnNum > 0) {
+        if (dataPosition % columnNum > 0) {//如果是多列的 只计算最左边的
             return;
         }
 
@@ -143,17 +126,33 @@ public class BackgroundDecoration extends ViewModuleItemDecoration {
             View view = (View) firstChild.getParent();
             left = view.getLeft() + view.getPaddingLeft() + outPadding;
             right = view.getRight() - view.getPaddingRight() - outPadding;
+
             parentTop = view.getTop() + view.getPaddingTop();
-            parentBottom = view.getBottom() - view.getPaddingBottom() - outPadding;
+            parentBottom = view.getBottom() - view.getPaddingBottom();
             rectF.left = left;
             rectF.right = right;
         }
 
-        int top = firstChild.getTop()- innerPadding;
-        int bottom = lastChild.getBottom() +innerPadding;
+        int top = firstChild.getTop() - innerPadding;
+        int bottom = lastChild.getBottom() + innerPadding;
 
-        rectF.top = top<=parentTop?parentTop:top;
-        rectF.bottom = bottom+outPadding>=parentBottom?parentBottom:bottom+outPadding;
+        if(top<parentTop){
+            top = parentTop;
+        }
+
+        if(top>parentBottom){
+            top = parentBottom;
+        }
+
+        if(bottom>parentBottom){
+            bottom = parentBottom;
+        }
+        if(bottom<parentTop){
+            bottom = parentTop;
+        }
+
+        rectF.top = top;
+        rectF.bottom = bottom;
 
         onDrawViewModuleBackground(canvas, rectF, top>parentTop&&isTopPosition(firstPosition), bottom<parentBottom&&isBottomPosition(lastPosition));
 

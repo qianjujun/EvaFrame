@@ -25,7 +25,7 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
     @Override
     public final BaseDbViewHolder<T, DB> onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.d("SingleDbViewModule", "onCreateViewHolder() called with: parent = [" + this + "], viewType = [" + viewType + "]");
+        Log.d("SingleDbViewModule", "onCreateViewHolder() called with: parent = [" + "this" + "], viewType = [" + viewType + "]");
 
         return new BaseDbViewHolder<T, DB>(getLayoutId(),parent) {
             @Override

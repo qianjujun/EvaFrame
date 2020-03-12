@@ -40,22 +40,27 @@ public class TestDividerFragment extends BetterModuleFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity,4));
         recyclerView.setAdapter(new RecyclerViewAdapter(grayTextVm,simpleTextVm));
 
-//        recyclerView.setPadding(30,30,30,30);
-        recyclerView.setBackgroundColor(Color.parseColor("#f2f2f2"));
+        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+        pool.setMaxRecycledViews(1000,21);
+        recyclerView.setRecycledViewPool(pool);
+
+
+        recyclerView.setBackgroundColor(Color.parseColor("#dddddd"));
 
         recyclerView.addItemDecoration(new BackgroundDecoration(grayTextVm,30,50){
             @Override
             protected void onDrawViewModuleBackground(Canvas canvas, RectF rectF,boolean top,boolean bottom) {
                 Log.d(TAG, "onDrawViewModuleBackground() called with: canvas = [" + "canvas" + "], rectF = [" + rectF + "], top = [" + top + "], bottom = [" + bottom + "]");
-                if(top&&bottom){
-                    DrawUtils.drawRoundRect(canvas,paint,rectF,20);
-                }else if(top){
-                    DrawUtils.drawTopRoundRect(canvas,paint,rectF,20);
-                }else if(bottom){
-                    DrawUtils.drawBottomRoundRect(canvas,paint,rectF,20);
-                }else {
-                    DrawUtils.drawRect(canvas,paint,rectF);
+
+                int state = DrawUtils.LOCATION_NONE;
+                if(top){
+                    state = state|DrawUtils.LOCATION_LEFT_TOP|DrawUtils.LOCATION_RIGHT_TOP;
                 }
+                if(bottom){
+                    state = state|DrawUtils.LOCATION_LEFT_BOTTOM|DrawUtils.LOCATION_RIGHT_BOTTOM;
+                }
+
+                DrawUtils.drawRoundRect(canvas,paint,state,rectF,20);
 
             }
         });
@@ -63,7 +68,6 @@ public class TestDividerFragment extends BetterModuleFragment {
         recyclerView.addItemDecoration(new BackgroundDecoration(simpleTextVm,30,50){
             @Override
             protected void onDrawViewModuleBackground(Canvas canvas, RectF rectF,boolean top,boolean bottom) {
-                Log.d(TAG, "onDrawViewModuleBackground() called with: canvas = [" + "canvas" + "], rectF = [" + rectF + "], top = [" + top + "], bottom = [" + bottom + "]");
                 if(top&&bottom){
                     DrawUtils.drawRoundRect(canvas,paint,rectF,20);
                 }else if(top){
@@ -78,7 +82,7 @@ public class TestDividerFragment extends BetterModuleFragment {
         });
 
 
-
+        recyclerView.addItemDecoration(new ViewModuleItemDecoration(grayTextVm,3).setNoneBottomDivider(true));
 
 
         recyclerView.addItemDecoration(new ViewModuleItemDecoration(simpleTextVm,30).setNoneBottomDivider(true));

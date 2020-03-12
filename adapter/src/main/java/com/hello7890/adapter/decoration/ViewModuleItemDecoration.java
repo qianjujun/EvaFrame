@@ -24,8 +24,7 @@ import java.util.Arrays;
  */
 public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     public static final String TAG = "ModuleItemDecoration";
-    int startPosition;
-    int endPosition;
+
     int mDividerHeight;
 
 
@@ -36,6 +35,8 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     private boolean noneBottomDivider;
 
     private final ItemInfo itemInfo;
+
+    private int parentTop,parentBottom;
 
 
 
@@ -106,6 +107,8 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
+        parentTop = parent.getTop()+parent.getPaddingTop();
+        parentBottom = parent.getBottom()-parent.getPaddingBottom();
         drawLine(c,parent);
     }
 
@@ -257,17 +260,36 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
         int left = child.getLeft();
         int right = child.getRight();
-        final int top = child.getBottom() + layoutParams.bottomMargin;
+        int top = child.getBottom() + layoutParams.bottomMargin;
         int bottom = top + mDividerHeight;
-        //横线部分
-        if(!noneBottomDivider||isNoBottomItem(dataPosition)){
-            canvas.drawRect(left, top, right, bottom, mPaint);
+
+
+        if(top<parentTop){
+            top = parentTop;
+        }
+        if(bottom>parentBottom){
+            bottom = parentBottom;
+        }
+        if(top<bottom){
+            //横线部分
+            if(!noneBottomDivider||isNoBottomItem(dataPosition)){
+                canvas.drawRect(left, top, right, bottom, mPaint);
+            }
         }
 
-        //纵向部分
-        if(itemInfo.needDrawGrid(dataPosition)){
-            canvas.drawRect(right,child.getTop(),right+mDividerHeight,bottom,mPaint);
+        top = child.getTop();
+        if(top<parentTop){
+            top = parentTop;
         }
+
+        if(top<bottom){
+            //纵向部分
+            if(itemInfo.needDrawGrid(dataPosition)){
+                canvas.drawRect(right,top,right+mDividerHeight,bottom,mPaint);
+            }
+        }
+
+
     }
 
 
