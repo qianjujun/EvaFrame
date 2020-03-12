@@ -1,6 +1,7 @@
 package com.hello7890.adapter.vm;
 
 import com.hello7890.adapter.BaseViewModule;
+import com.hello7890.adapter.XXXViewModule;
 import com.hello7890.adapter.data.OpData;
 
 import java.util.ArrayList;
@@ -12,12 +13,9 @@ import java.util.List;
  * @createTime 2020/1/19 16:59
  * @describe
  */
-public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<T> {
+public abstract class ViewModule<T> extends XXXViewModule<T> implements OpData<T> {
 
-    @Override
-    protected boolean isGridLayout() {
-        return false;
-    }
+
 
     @Override
     public void setList(List<? extends T> list) {
@@ -46,14 +44,8 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
             notifyItemRangeChanged(0,newSize);
             notifyItemRemove(newSize,oldSize-newSize);
         }else {
-            if(oldSize==1){
-                notifyItemRangeChanged(0,oldSize);
-                notifyItemInserted(oldSize-1,newSize-oldSize);
-            }else {
-                notifyItemRangeChanged(0,oldSize);
-                notifyItemInserted(oldSize,newSize-oldSize);
-            }
-
+            notifyItemRangeChanged(0,oldSize);
+            notifyItemInserted(oldSize,newSize-oldSize);
         }
     }
 
@@ -64,7 +56,6 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
             notifyItemRangeChanged(0,anchorPosition);
             notifyItemRemove(anchorPosition,oldSize-newSize);
         }else {
-            // TODO: 2020/3/9 需要调试锚点为0的时候 与 状态（loading empty fail）占位的position冲突
             notifyItemRangeChanged(0,anchorPosition);
             notifyItemInserted(anchorPosition,newSize-oldSize);
         }
@@ -160,19 +151,11 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
         updateDate(oldSize,newSize);
     }
 
+
+
+
     @Override
-    public void clear() {
-        if (this.dataList.isEmpty()) {
-            return;
-        }
-        int size = size()-1;
-        this.dataList.clear();
-        notifyItemChanged(0);
-        notifyItemRemove(1, size);
+    protected final BaseViewModule getWrapViewModule() {
+        return getSpanCount()>1?new SpaceViewModule():null;
     }
-
-
-
-
-
 }

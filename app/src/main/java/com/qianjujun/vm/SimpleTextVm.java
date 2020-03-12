@@ -57,10 +57,7 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
         return columnNum;
     }
 
-    @Override
-    protected boolean isGridLayout() {
-        return true;
-    }
+
 
 
     @Override

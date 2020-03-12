@@ -29,5 +29,5 @@ public interface OpData<T> {
 
     void removeAll(List<? extends T> data);
 
-    void clear();
+    //void clear();
 }

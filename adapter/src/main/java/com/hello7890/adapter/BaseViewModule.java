@@ -4,9 +4,8 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
 
-import com.hello7890.adapter.data.ViewModuleState;
+import com.hello7890.adapter.listener.DataStateChangeListener;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.listener.OnModuleItemLongClickListener;
 import com.hello7890.adapter.vh.NoneTViewHolder;
@@ -26,24 +25,58 @@ public abstract class BaseViewModule<T> implements ViewType {
 
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
+    private List<DataStateChangeListener> dataStateChangeListeners = new ArrayList<>();
+
 
     BaseViewModule getWrapViewModule() {
         return null;
     }
 
-    public final void notifyItemInserted(int dataPosition, int itemCount) {
 
+
+    public void notifyLoading(){
+        for(DataStateChangeListener stateChangeListener:dataStateChangeListeners){
+            stateChangeListener.onLoading();
+        }
+    }
+
+    public void notifyForceLoading(){
+        clear();
+        for(DataStateChangeListener stateChangeListener:dataStateChangeListeners){
+            stateChangeListener.onLoading();
+        }
+    }
+
+
+
+
+    public void notifyError(int errorCode,String message){
+        for(DataStateChangeListener stateChangeListener:dataStateChangeListeners){
+            stateChangeListener.onFail(errorCode,message);
+        }
+    }
+
+
+    public void notifyDataSizeChange(){
+        for(DataStateChangeListener stateChangeListener:dataStateChangeListeners){
+            stateChangeListener.onSizeChange(size());
+        }
+    }
+
+
+
+    public final void notifyItemInserted(int dataPosition, int itemCount) {
         for (DataChangeListener mDataChangeListener : dataChangeListeners) {
             mDataChangeListener.onDataSizeChangeByInserted(this, dataPosition, itemCount);
         }
-
-
+        notifyDataSizeChange();
     }
 
     public final void notifyItemRemove(int dataPosition, int itemCount) {
         for (DataChangeListener mDataChangeListener : dataChangeListeners) {
             mDataChangeListener.onDataSizeChangeByRemove(this, dataPosition, itemCount);
         }
+        notifyDataSizeChange();
     }
 
 
@@ -51,6 +84,7 @@ public abstract class BaseViewModule<T> implements ViewType {
         for (DataChangeListener mDataChangeListener : dataChangeListeners) {
             mDataChangeListener.onDataSizeChange(this);
         }
+        notifyDataSizeChange();
 
     }
 
@@ -80,48 +114,21 @@ public abstract class BaseViewModule<T> implements ViewType {
     }
 
 
-    private ViewModuleState state = ViewModuleState.EMPTY;
-
-    public void setState(@NonNull ViewModuleState state) {
-        this.state = state;
-        if (isNoneDataState()) {
-            notifyItemChanged(0);
-        }
-    }
-
-    /**
-     * 将会清空数据 强行至于某种状态
-     *
-     * @param state
-     */
-    public void forceState(@NonNull ViewModuleState state) {
-        this.state = state;
-        if (size() > 0) {
-            clear();
-            return;
-        }
-        if (getSize() > 0) {
-            notifyItemChanged(0);
-        }
-
-    }
 
 
-    void clear() {
+
+
+
+    public void clear() {
         if (this.dataList.isEmpty()) {
             return;
         }
-        int size = size() - 1;
+        int size = size();
         this.dataList.clear();
-        notifyItemChanged(0);
-        notifyItemRemove(1, size);
+        notifyItemRemove(0, size);
         //notifyDataSetChanged();
     }
 
-
-    boolean isNoneDataState() {
-        return size() == 0 && getSize() > 0;
-    }
 
 
     public void addDataChangeListener(DataChangeListener dataChangeListener) {
@@ -137,6 +144,18 @@ public abstract class BaseViewModule<T> implements ViewType {
         dataChangeListeners.remove(dataChangeListener);
     }
 
+    public void removeDataStateChangeListener(DataStateChangeListener dataStateChangeListener) {
+        dataStateChangeListeners.remove(dataStateChangeListener);
+    }
+
+    public void addDataStateChangeListener(DataStateChangeListener dataStateChangeListener) {
+        if(dataStateChangeListener==null){
+            return;
+        }
+        if(!dataStateChangeListeners.contains(dataStateChangeListener)){
+            dataStateChangeListeners.add(dataStateChangeListener);
+        }
+    }
 
     public boolean isStickyItem(int dataPosition) {
         return false;
@@ -162,17 +181,10 @@ public abstract class BaseViewModule<T> implements ViewType {
 
     //需要在界面上显示的数量
     public int getSize() {
-        if (size() == 0) {
-            return 1;
-        }
-        if (isGridLayout()) {//确保最后一项是
-            return size() + 1;
-        }
         return size();
     }
 
 
-    protected abstract boolean isGridLayout();
 
 
     int getSpanSize(int position) {
@@ -190,9 +202,6 @@ public abstract class BaseViewModule<T> implements ViewType {
 
     private int _getSpanCount(int position) {
         int dataPosition = position - getStartPosition();
-        if ((dataPosition == getSize() - 1) && isGridLayout() && getItem(dataPosition) == null) {//最后一列占满全列
-            return 1;
-        }
         if (isStickyItem(dataPosition)) {//吸顶item占满全列
             return 1;
         }
@@ -291,9 +300,6 @@ public abstract class BaseViewModule<T> implements ViewType {
 
 
 
-    final int getAdapterItemViewType(int dataPosition) {
-        return typeViewFlag + handlerStateAndEmptyViewType(dataPosition);
-    }
 
     final int getAdapterItemViewTypeByVmItemType(int itemType) {
         return typeViewFlag + itemType;
@@ -301,21 +307,6 @@ public abstract class BaseViewModule<T> implements ViewType {
 
 
     int handlerStateAndEmptyViewType(int dataPosition) {
-        if (size() == 0 && getSize() > 0 && dataPosition == 0) {//过滤状态类型
-            if (state == null) {
-                return ViewType.SPACE_VIEW_TYPE;
-            }
-            switch (state) {
-                case LOADING:
-                    return ViewType.LOADING_VIEW_TYPE;
-                case EMPTY:
-                    return ViewType.EMPTY_VIEW_TYPE;
-                case FAIL:
-                    return ViewType.FAIL_VIEW_TYPE;
-                default:
-                    return ViewType.SPACE_VIEW_TYPE;
-            }
-        }
         if (getItem(dataPosition) == null) {//过滤空数据类型
             return ViewType.SPACE_VIEW_TYPE;
         }

@@ -66,9 +66,9 @@ public class TestData {
                 .map(strings -> {
                     switch (state) {
                         case 0:
-                            //throw new EmptyException();
+                            throw new EmptyException();
                         case 1:
-                            //throw new AppException("数据加载错误");
+                            throw new AppException("数据加载错误");
                         default:
                             return Data.success(TestData.createTestStringList(new Random().nextInt(10)+1,index));
                     }

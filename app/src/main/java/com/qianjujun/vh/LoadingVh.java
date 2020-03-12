@@ -8,7 +8,7 @@ import com.qianjujun.databinding.VhLoadingBinding;
 
 public class LoadingVh extends NoneTDbViewHolder<VhLoadingBinding> {
     public LoadingVh(ViewGroup container) {
-        super(R.layout.vh_loading, container);
+        super(R.layout.simple_adapter_vh_loading, container);
     }
 
     @Override

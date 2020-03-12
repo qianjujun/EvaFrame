@@ -31,7 +31,6 @@ public class GroupVmHelper<C, G extends GroupData<C>> implements OpData<G> {
 
         groupList.clear();
         if (list == null || list.isEmpty()) {
-            clear();
             return;
         }
         groupList.addAll(list);
@@ -91,10 +90,7 @@ public class GroupVmHelper<C, G extends GroupData<C>> implements OpData<G> {
 
     }
 
-    @Override
-    public void clear() {
 
-    }
 
 
     public static class GroupDataWrap<C, G extends GroupData<C>> {

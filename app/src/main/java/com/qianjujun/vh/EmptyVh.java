@@ -7,7 +7,7 @@ import com.qianjujun.R;
 
 public class EmptyVh extends NoneTViewHolder {
     public EmptyVh(ViewGroup container) {
-        super(R.layout.vh_empty, container);
+        super(R.layout.simple_adapter_vh_empty, container);
     }
 
     @Override

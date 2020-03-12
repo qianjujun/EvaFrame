@@ -50,8 +50,5 @@ public class SimpleStringVm<T extends IString> extends SingleDbViewModule<T, VmC
         return columnNum;
     }
 
-    @Override
-    protected boolean isGridLayout() {
-        return true;
-    }
+
 }

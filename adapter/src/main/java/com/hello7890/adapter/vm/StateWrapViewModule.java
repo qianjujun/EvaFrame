@@ -1,26 +1,45 @@
 package com.hello7890.adapter.vm;
 
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.BaseViewModule;
-import com.hello7890.adapter.DataChangeListener;
-import com.hello7890.adapter.WrapViewModule;
+import com.hello7890.adapter.R;
 import com.hello7890.adapter.data.IState;
 import com.hello7890.adapter.data.ModuleState;
 import com.hello7890.adapter.data.ViewModuleState;
+import com.hello7890.adapter.databinding.SimpleAdapterVhEmptyBinding;
+import com.hello7890.adapter.databinding.SimpleAdapterVhLoadingBinding;
+import com.hello7890.adapter.databinding.SimpleAdapterVhFailBinding;
+import com.hello7890.adapter.listener.DataStateChangeListener;
+import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
 
 /**
  * 方案不好实现  暂搁置
  */
-public class StateWrapViewModule extends WrapViewModule<ModuleState> implements DataChangeListener {
+public class StateWrapViewModule extends XWrapViewModule<ModuleState> implements DataStateChangeListener {
+    public static final String TAG = "StateWrapViewModule";
 
+    private Runnable reloadRunnable;
     private ModuleState moduleState = new ModuleState();
     public StateWrapViewModule() {
-        setData(moduleState);
+        this.dataList.add(moduleState);
+        setDataState(ViewModuleState.EMPTY);
     }
+
+    public StateWrapViewModule setReloadRunnable(Runnable reloadRunnable) {
+        this.reloadRunnable = reloadRunnable;
+        return this;
+    }
+
+
+
+
+
 
     /**
      * 此类无需调用这个方法
@@ -28,11 +47,11 @@ public class StateWrapViewModule extends WrapViewModule<ModuleState> implements 
      */
     @Override
     public void setData(ModuleState data) {
-        throw new IllegalArgumentException("改变状态直接调用setState");
+        throw new IllegalArgumentException("改变状态请调用wrap对象的notify  如：notifyLoading，notifyError ，成功和空数据状态会自动判断");
     }
 
 
-    public void setState(ViewModuleState state){
+    private void setDataState(ViewModuleState state){
         if(state==null){
             moduleState.setState(IState.STATE_EMPTY);
         }else {
@@ -41,14 +60,7 @@ public class StateWrapViewModule extends WrapViewModule<ModuleState> implements 
         notifyItemChanged(0);
     }
 
-    public void loading(){
-        setState(ViewModuleState.LOADING);
-    }
 
-    public void error(String message){
-        moduleState.setMessage(message);
-        setState(ViewModuleState.FAIL);
-    }
 
 
 
@@ -60,12 +72,17 @@ public class StateWrapViewModule extends WrapViewModule<ModuleState> implements 
             case ModuleState.STATE_EMPTY:
                 return onCreateEmptyViewHolder1(parent);
             case ModuleState.STATE_FAIL:
-                return onCreateLoadingHolder1(parent);
-            case ModuleState.STATE_LOADING:
                 return onCreateFailHolder1(parent);
+            case ModuleState.STATE_LOADING:
+                return onCreateLoadingHolder1(parent);
             case ModuleState.STATE_SUCCESS:
             default:
-                return new SpaceTViewHolder<>(parent);
+                return new SpaceTViewHolder<ModuleState>(parent){
+                    @Override
+                    public void onBindData(ModuleState moduleState, int dataPosition, int adapterPosition) {
+                        Log.d(TAG, "onBindData() called with: moduleState = [" + moduleState + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
+                    }
+                };
         }
     }
 
@@ -76,55 +93,76 @@ public class StateWrapViewModule extends WrapViewModule<ModuleState> implements 
     }
 
     @Override
-    public final WrapViewModule wrap(ViewModule viewModule) {
+    public final BaseViewModule wrapWm(ViewModule viewModule) {
         if(viewModule==null){
-            return null;
+            return this;
         }
-        viewModule.addDataChangeListener(this);
-        return super.wrap(viewModule);
+
+        viewModule.addDataStateChangeListener(this);
+        return super.wrapWm(viewModule);
     }
 
     protected BaseViewHolder<ModuleState> onCreateEmptyViewHolder1(ViewGroup parent) {
-        return new SpaceTViewHolder<>(parent);
+        return new BaseDbViewHolder<ModuleState,SimpleAdapterVhEmptyBinding>(R.layout.simple_adapter_vh_empty,parent) {
+            @Override
+            public void onBindData(ModuleState moduleState, int dataPosition, int adapterPosition) {
+                //do nothing
+                Log.d(TAG, "onBindData() called with: moduleState = [" + moduleState + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
+            }
+        };
     }
     protected BaseViewHolder<ModuleState> onCreateLoadingHolder1(ViewGroup parent) {
-        return new SpaceTViewHolder<>(parent);
+        return new BaseDbViewHolder<ModuleState, SimpleAdapterVhLoadingBinding>(R.layout.simple_adapter_vh_loading,parent) {
+            @Override
+            public void onBindData(ModuleState moduleState, int dataPosition, int adapterPosition) {
+                //do nothing
+                Log.d(TAG, "onBindData() called with: moduleState = [" + moduleState + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
+            }
+        };
     }
 
     protected BaseViewHolder<ModuleState> onCreateFailHolder1(ViewGroup parent) {
-        return new SpaceTViewHolder<>(parent);
+        return new BaseDbViewHolder<ModuleState, SimpleAdapterVhFailBinding>(R.layout.simple_adapter_vh_fail,parent) {
+            @Override
+            public void onBindData(ModuleState moduleState, int dataPosition, int adapterPosition) {
+                Log.d(TAG, "onBindData() called with: moduleState = [" + moduleState + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
+                mDataBinding.btnReload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(reloadRunnable!=null){
+                            reloadRunnable.run();
+                        }
+                    }
+                });
+            }
+        };
     }
+
+
+
 
 
     @Override
-    public void onDataItemRangeChanged(BaseViewModule viewModule, int dataPosition, int itemCount, int layoutPosition) {
-        //size 无变化
+    public void onSizeChange(int size) {
+        setDataState(size>0?ViewModuleState.SUCCESS:ViewModuleState.EMPTY);
     }
 
     @Override
-    public void onDataItemRangeChanged(BaseViewModule viewModule, int dataPosition, int itemCount, int layoutPosition, Object payload) {
-        //size 无变化
+    public void onLoading() {
+        setDataState(ViewModuleState.LOADING);
     }
 
     @Override
-    public void onDataSizeChangeByInserted(BaseViewModule viewModule, int positionStart, int itemCount) {
-        checkDataIsEmpty(viewModule);
-    }
-
-    @Override
-    public void onDataSizeChangeByRemove(BaseViewModule viewModule, int positionStart, int itemCount) {
-        checkDataIsEmpty(viewModule);
-    }
-
-    @Override
-    public void onDataSizeChange(BaseViewModule viewModule) {
-        checkDataIsEmpty(viewModule);
+    public void onFail(int errorCode, String message) {
+        moduleState.setMessage(message);
+        moduleState.setErrorCode(errorCode);
+        setDataState(ViewModuleState.FAIL);
     }
 
 
-    private void checkDataIsEmpty(BaseViewModule viewModule){
-        setState(viewModule.size()==0?ViewModuleState.EMPTY:ViewModuleState.SUCCESS);
-    }
+
+
+
 
 
 

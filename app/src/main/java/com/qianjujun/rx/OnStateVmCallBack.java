@@ -13,25 +13,24 @@ public class OnStateVmCallBack<T> extends OnDataCallBack<T>{
 
     @Override
     public void onBegin() {
-        super.onBegin();
-        viewModule.setState(ViewModuleState.LOADING);
+        viewModule.notifyLoading();
     }
 
     @Override
     public void onSuccess(T t) throws AppException {
-        viewModule.setState(ViewModuleState.EMPTY);//值为空状态 ，有数据自动切换到数据状态
+
     }
 
     @Override
     public void onFail(AppException ex) {
         super.onFail(ex);
-        viewModule.setState(ViewModuleState.FAIL);
+        viewModule.notifyError(ex.getErrorCode(),ex.getMessage());
     }
 
     @Override
     public void onEmptyData() {
         super.onEmptyData();
-        viewModule.setState(ViewModuleState.EMPTY);
+        viewModule.notifyDataSizeChange();
     }
 
 

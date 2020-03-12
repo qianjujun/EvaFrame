@@ -81,13 +81,10 @@ public class TestStateVmFragment extends BetterCustomModuleFragment<FragmentTest
                 testLoadData();
                 break;
             case R.id.btn_loading:
-                testStateVm.forceState(ViewModuleState.LOADING);
                 break;
             case R.id.btn_fail:
-                testStateVm.forceState(ViewModuleState.FAIL);
                 break;
             case R.id.btn_empty:
-                testStateVm.forceState(ViewModuleState.EMPTY);
                 break;
             case R.id.btn_clear_reload:
                 testStateVm.clear();

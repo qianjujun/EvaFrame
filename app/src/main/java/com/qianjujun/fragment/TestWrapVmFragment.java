@@ -12,6 +12,7 @@ import com.hello7890.adapter.data.ViewModuleState;
 import com.hello7890.adapter.decoration.StickyItemDecoration;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.listener.OnModuleItemLongClickListener;
+import com.hello7890.adapter.vm.StateWrapViewModule;
 import com.qianjujun.R;
 import com.qianjujun.TestData;
 import com.qianjujun.databinding.FragmentTestWrapBinding;
@@ -47,11 +48,19 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(
                 new HeadVm("我是头"),
                 TitleWrapVm.wrap(stateVm1, "测试组头1"),
-                TitleWrapVm.wrap(stateVm2, "测试组头2"),
+                TitleWrapVm.wrap(new StateWrapViewModule().setReloadRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        request2();
+                    }
+                }).wrapWm(stateVm2), "测试组头2"),
                 TitleWrapVm.wrap(stateVm3, "测试组头3")
                 );
 
         recyclerView.setAdapter(adapter);
+
+
+
 
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
@@ -88,7 +97,7 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
                 .subscribeWith(new OnStateVmCallBack<List<String>>(stateVm1) {
                     @Override
                     public void onBegin() {
-                        stateVm1.forceState(ViewModuleState.LOADING);
+                        //stateVm1.forceState(ViewModuleState.LOADING);
                     }
                     @Override
                     public void onSuccess(List<String> strings) throws AppException {
@@ -108,7 +117,9 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
 
                     @Override
                     public void onBegin() {
-                        stateVm2.forceState(ViewModuleState.LOADING);
+                        //stateVm2.forceState(ViewModuleState.LOADING);
+                        //stateVm2.clear();
+                        stateVm2.notifyForceLoading();
                     }
 
                     @Override
