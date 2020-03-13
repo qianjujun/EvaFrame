@@ -28,6 +28,20 @@ public class DrawUtils {
         drawRoundRect(canvas,paint,LOCATION_LEFT_TOP|LOCATION_RIGHT_TOP|LOCATION_LEFT_BOTTOM|LOCATION_RIGHT_BOTTOM,rectF,radio);
     }
 
+
+    public static void drawRoundRect(Canvas canvas, Paint paint,RectF rectF, int radio,boolean top,boolean bottom){
+        int state = DrawUtils.LOCATION_NONE;
+        if(top){
+            state = state|DrawUtils.LOCATION_LEFT_TOP|DrawUtils.LOCATION_RIGHT_TOP;
+        }
+        if(bottom){
+            state = state|DrawUtils.LOCATION_LEFT_BOTTOM|DrawUtils.LOCATION_RIGHT_BOTTOM;
+        }
+
+        drawRoundRect(canvas,paint,state,rectF,radio);
+    }
+
+
     public static void drawTopRoundRect(Canvas canvas, Paint paint,RectF rectF, int radio){
         drawRoundRect(canvas,paint,LOCATION_LEFT_TOP|LOCATION_RIGHT_TOP,rectF,radio);
     }
@@ -40,7 +54,6 @@ public class DrawUtils {
 
 
     public static void drawRoundRect(Canvas canvas, Paint paint,int location, RectF rectF, int radio){
-
 
         if(location==LOCATION_NONE){
             drawRect(canvas,paint,rectF);

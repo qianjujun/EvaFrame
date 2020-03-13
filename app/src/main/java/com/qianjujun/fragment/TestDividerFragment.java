@@ -18,6 +18,8 @@ import com.qianjujun.TestData;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.SimpleTextVm;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+
 import static com.qianjujun.router.RouterPath.PATH_TEST_DIVIDER;
 
 /**
@@ -30,62 +32,51 @@ import static com.qianjujun.router.RouterPath.PATH_TEST_DIVIDER;
 public class TestDividerFragment extends BetterModuleFragment {
     private SimpleTextVm simpleTextVm = new SimpleTextVm(Color.parseColor("#336699"), Color.BLACK).setColumnNum(1);
     private SimpleTextVm grayTextVm = new SimpleTextVm(Color.parseColor("#f2f2f2"), Color.BLACK).setColumnNum(4);
-    private Paint paint;
+    private Paint paint,paintGray;
 
     @Override
     protected void initModule(RecyclerView recyclerView, View contentView) {
         paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(mActivity,4));
-        recyclerView.setAdapter(new RecyclerViewAdapter(grayTextVm,simpleTextVm));
+        paintGray = new Paint();
+        paintGray.setColor(Color.parseColor("#f2f2f2"));
 
+        recyclerView.setBackgroundColor(Color.parseColor("#336699"));
+
+        recyclerView.setLayoutManager(new GridLayoutManager(mActivity,4));
+
+        //设置adapter 动画
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(grayTextVm,simpleTextVm);
+        ScaleInAnimationAdapter adapter1 = new ScaleInAnimationAdapter(adapter);
+        adapter1.setFirstOnly(false);
+        recyclerView.setAdapter(adapter1);
+
+        //设置缓存池
         RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
         pool.setMaxRecycledViews(1000,21);
         recyclerView.setRecycledViewPool(pool);
 
 
-        recyclerView.setBackgroundColor(Color.parseColor("#dddddd"));
 
-        recyclerView.addItemDecoration(new BackgroundDecoration(grayTextVm,30,50){
+
+        recyclerView.addItemDecoration(new BackgroundDecoration(grayTextVm,30,50,2){
             @Override
             protected void onDrawViewModuleBackground(Canvas canvas, RectF rectF,boolean top,boolean bottom) {
-                Log.d(TAG, "onDrawViewModuleBackground() called with: canvas = [" + "canvas" + "], rectF = [" + rectF + "], top = [" + top + "], bottom = [" + bottom + "]");
-
-                int state = DrawUtils.LOCATION_NONE;
-                if(top){
-                    state = state|DrawUtils.LOCATION_LEFT_TOP|DrawUtils.LOCATION_RIGHT_TOP;
-                }
-                if(bottom){
-                    state = state|DrawUtils.LOCATION_LEFT_BOTTOM|DrawUtils.LOCATION_RIGHT_BOTTOM;
-                }
-
-                DrawUtils.drawRoundRect(canvas,paint,state,rectF,20);
-
-            }
-        });
-
-        recyclerView.addItemDecoration(new BackgroundDecoration(simpleTextVm,30,50){
-            @Override
-            protected void onDrawViewModuleBackground(Canvas canvas, RectF rectF,boolean top,boolean bottom) {
-                if(top&&bottom){
-                    DrawUtils.drawRoundRect(canvas,paint,rectF,20);
-                }else if(top){
-                    DrawUtils.drawTopRoundRect(canvas,paint,rectF,20);
-                }else if(bottom){
-                    DrawUtils.drawBottomRoundRect(canvas,paint,rectF,20);
-                }else {
-                    DrawUtils.drawRect(canvas,paint,rectF);
-                }
-
+                DrawUtils.drawRoundRect(canvas,paint,rectF,20,top,bottom);
             }
         });
 
 
-        recyclerView.addItemDecoration(new ViewModuleItemDecoration(grayTextVm,3).setNoneBottomDivider(true));
+        recyclerView.addItemDecoration(new BackgroundDecoration(simpleTextVm,30,50,2){
+            @Override
+            protected void onDrawViewModuleBackground(Canvas canvas, RectF rectF,boolean top,boolean bottom) {
+
+                DrawUtils.drawRoundRect(canvas,paintGray,rectF,20,top,bottom);
+            }
+        });
 
 
-        recyclerView.addItemDecoration(new ViewModuleItemDecoration(simpleTextVm,30).setNoneBottomDivider(true));
 
         grayTextVm.setList(TestData.createTestStringList(16));
         simpleTextVm.setList(TestData.createTestStringList(25));

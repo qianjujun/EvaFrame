@@ -55,4 +55,6 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation deps.rx.rxjava2
     implementation deps.rx.rx_android
+
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 }
