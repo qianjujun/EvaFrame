@@ -71,6 +71,8 @@ public class GroupVm extends GroupViewModule<Child,Group> {
             @Override
             protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
                 mDataBinding.view.setAnimation("cart.json");
+
+                addChild();
             }
 
             @Override
