@@ -51,6 +51,8 @@ public class TestGroupFragment extends BetterModuleFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity,2));
         recyclerView.setAdapter(adapter);
 
+        recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
+
 
 
         List<Group> list = Group.createTestData();
