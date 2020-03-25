@@ -51,9 +51,11 @@ public class TestGroupFragment extends BetterModuleFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity,2));
         recyclerView.setAdapter(adapter);
 
+        recyclerView.setBackgroundColor(Color.parseColor("#dddddd"));
+
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
-
+        recyclerView.addItemDecoration(new GroupViewModuleItemDecoration(groupVm,30,30).setChildColumnNum(2));
 
         List<Group> list = Group.createTestData();
         groupVm.setExpendable(true);

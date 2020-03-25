@@ -66,13 +66,17 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     protected GroupHolder<?> onCreateGroupBottomViewHolder(ViewGroup parent, int viewType) {
+
+        if(viewType==0){
+            return super.onCreateGroupBottomViewHolder(parent,viewType);
+        }
+
         return new GroupHolder<VmGroupBottomBinding>(R.layout.vm_group_bottom,parent) {
 
             @Override
             protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
                 mDataBinding.view.setAnimation("cart.json");
 
-                addChild();
             }
 
             @Override
@@ -108,6 +112,14 @@ public class GroupVm extends GroupViewModule<Child,Group> {
     }
 
 
+    @Override
+    protected int getBottomViewType(int groupPosition) {
+        Group group = getGroup(groupPosition);
+        if(group.getChildSize()<10){//没有加载更多
+            return 0;
+        }else {
+            return 1;
+        }
 
-
+    }
 }

@@ -5,7 +5,7 @@
 
 
     <TextView
-
+        android:background="@color/white"
         android:id="@+id/tv_text"
         android:gravity="center"
         android:textSize="16sp"
