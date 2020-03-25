@@ -1,5 +1,6 @@
 package com.qianjujun.vm;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.hello7890.adapter.vh.NoneTViewHolder;
 import com.hello7890.adapter.vm.GroupViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
+import com.qianjujun.databinding.VmGroupBottomBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
 import com.qianjujun.frame.utils.ToastUtils;
 import com.qianjujun.vh.EmptyVh;
@@ -64,14 +66,30 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     protected GroupHolder<?> onCreateGroupBottomViewHolder(ViewGroup parent, int viewType) {
-        return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
+        return new GroupHolder<VmGroupBottomBinding>(R.layout.vm_group_bottom,parent) {
 
             @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
-                dataBing.ivArrow.setVisibility(View.GONE);
-                dataBing.text.setText("底部");
-                dataBing.text.setBackgroundColor(Color.BLACK);
-                Log.d(TAG, "GroupHolder Bottom onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
+            protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
+                mDataBinding.view.setAnimation("cart.json");
+            }
+
+            @Override
+            public void onViewAttachedToWindow() {
+                super.onViewAttachedToWindow();
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(mDataBinding.text,"scaleX",1f,0.5f,1f);
+//                animator.setDuration(800);
+//                animator.start();
+                if(!mDataBinding.view.isAnimating()){
+                    mDataBinding.view.playAnimation();
+                }
+
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow() {
+                super.onViewDetachedFromWindow();
+                mDataBinding.view.pauseAnimation();
             }
         };
     }
@@ -84,23 +102,10 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     public int getSpanCount(int dataPosition) {
-        return isChildItem(dataPosition)?3:1;
+        return isChildItem(dataPosition)?2:1;
     }
 
 
 
-    @Override
-    protected BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
-        return new LoadingVh(parent);
-    }
 
-    @Override
-    protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
-        return new FailVh(parent);
-    }
-
-    @Override
-    protected NoneTViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
-        return new EmptyVh(parent);
-    }
 }

@@ -78,4 +78,13 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
     public void setOnModuleItemLongClickListener(OnModuleItemLongClickListener<T> onModuleItemLongClickListener) {
         this.mOnModuleItemLongClickListener = onModuleItemLongClickListener;
     }
+
+
+    public void onViewDetachedFromWindow(){
+
+    }
+
+    public void onViewAttachedToWindow(){
+
+    }
 }
