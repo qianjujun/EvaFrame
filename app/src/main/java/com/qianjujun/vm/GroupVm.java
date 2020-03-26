@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.vh.NoneTViewHolder;
 import com.hello7890.adapter.vm.GroupViewModule;
+import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
@@ -38,7 +39,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
             @Override
             protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition,int adapterPosition) {
                 dataBing.tvText.setText(child.getText());
-                Log.d(TAG, "ChildHolder onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], child = [" + "" + "], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]");
+                dataBing.tvText.setBackgroundColor(ColorUtils.getColor(dataPosition));
             }
         };
     }
@@ -52,6 +53,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
                 dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
                 mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
                 changeExpendImage(mDataBinding.ivArrow,expend);
+                dataBing.textParent.setBackgroundColor(ColorUtils.getColor(dataPosition));
                 Log.d(TAG, "GroupHolder TOP onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
             }
 
@@ -70,7 +72,8 @@ public class GroupVm extends GroupViewModule<Child,Group> {
             protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
                 dataBing.ivArrow.setVisibility(View.GONE);
                 dataBing.text.setText("底部");
-                dataBing.text.setBackgroundColor(Color.BLACK);
+                dataBing.textParent.setBackgroundColor(ColorUtils.getColor(dataPosition));
+
                 Log.d(TAG, "GroupHolder Bottom onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
             }
         };
@@ -82,10 +85,12 @@ public class GroupVm extends GroupViewModule<Child,Group> {
     }
 
 
-    @Override
-    public int getSpanCount(int dataPosition) {
-        return isChildItem(dataPosition)?3:1;
-    }
+//    @Override
+//    public int getSpanCount(int dataPosition) {
+//        return isChildItem(dataPosition)?4:1;
+//    }
+
+
 
 
 
