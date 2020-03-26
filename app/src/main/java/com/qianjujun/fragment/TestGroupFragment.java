@@ -2,7 +2,9 @@ package com.qianjujun.fragment;
 
 import android.graphics.Color;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,13 +55,32 @@ public class TestGroupFragment extends BetterModuleFragment {
 
         recyclerView.setBackgroundColor(Color.parseColor("#dddddd"));
 
-        recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
+        //recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
         recyclerView.addItemDecoration(new GroupViewModuleItemDecoration(groupVm,30,30).setChildColumnNum(2));
 
         List<Group> list = Group.createTestData();
         groupVm.setExpendable(true);
         groupVm.setList(list);
+
+        final TextView textView = contentView.findViewById(R.id.tv_text);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                View view = recyclerView.getChildAt(0);
+                RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+                if(viewHolder instanceof GroupVm.GroupTopHolder){
+                    GroupVm.GroupTopHolder groupTopHolder = (GroupVm.GroupTopHolder) viewHolder;
+                    textView.setText(groupTopHolder.getText());
+                }
+            }
+        });
 
 
         contentView.findViewById(R.id.btn_change_grid).setOnClickListener(this);

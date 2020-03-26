@@ -47,21 +47,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     protected GroupHolder<?> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
-        return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
-
-            @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
-                dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
-                mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
-                changeExpendImage(mDataBinding.ivArrow,expend);
-                Log.d(TAG, "GroupHolder TOP onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
-            }
-
-            @Override
-            protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, int adapterPosition,boolean expend) {
-                changeExpendImageAnim(dataBing.ivArrow,expend);
-            }
-        };
+        return new GroupTopHolder(parent);
     }
 
     @Override
@@ -122,4 +108,31 @@ public class GroupVm extends GroupViewModule<Child,Group> {
         }
 
     }
+
+    public class GroupTopHolder extends GroupHolder<VmGroupTopBinding>{
+
+        public GroupTopHolder( ViewGroup container) {
+            super(R.layout.vm_group_top, container);
+        }
+
+        private Group group;
+
+        @Override
+        protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition, int adapterPosition, boolean expend) {
+            dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
+            mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
+            changeExpendImage(mDataBinding.ivArrow,expend);
+            this.group = group;
+        }
+
+        @Override
+        protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, int adapterPosition,boolean expend) {
+            changeExpendImageAnim(dataBing.ivArrow,expend);
+        }
+
+        public String getText(){
+            return group!=null?group.getText():"";
+        }
+    }
+
 }
