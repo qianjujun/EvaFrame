@@ -40,6 +40,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
             @Override
             protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition,int adapterPosition) {
                 dataBing.tvText.setText(child.getText());
+
                 Log.d(TAG, "ChildHolder onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], child = [" + "" + "], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]");
             }
         };

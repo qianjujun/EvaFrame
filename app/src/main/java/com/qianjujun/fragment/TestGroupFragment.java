@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
 import com.hello7890.adapter.decoration.GroupViewModuleItemDecoration;
-import com.hello7890.adapter.decoration.StickyItemDecoration;
 import com.qianjujun.R;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.Group;
