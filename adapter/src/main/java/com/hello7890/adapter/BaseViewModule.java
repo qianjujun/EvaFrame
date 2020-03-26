@@ -116,7 +116,9 @@ public abstract class BaseViewModule<T> implements ViewType {
 
 
 
-
+    public int getDataPosition(int adapterPosition){
+        return adapterPosition-startPosition;
+    }
 
 
     public void clear() {

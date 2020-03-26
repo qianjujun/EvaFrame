@@ -1,21 +1,14 @@
 package com.qianjujun.vm;
 
-import android.graphics.Color;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.vh.NoneTViewHolder;
 import com.hello7890.adapter.vm.GroupViewModule;
 import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
+import com.qianjujun.databinding.VmGroupBottomBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
 import com.qianjujun.frame.utils.ToastUtils;
-import com.qianjujun.vh.EmptyVh;
-import com.qianjujun.vh.FailVh;
-import com.qianjujun.vh.LoadingVh;
 
 /**
  * @author qianjujun
@@ -46,35 +39,40 @@ public class GroupVm extends GroupViewModule<Child,Group> {
 
     @Override
     protected GroupHolder<?> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
-        return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
-
-            @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
-                dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
-                mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
-                changeExpendImage(mDataBinding.ivArrow,expend);
-                dataBing.textParent.setBackgroundColor(ColorUtils.getColor(dataPosition));
-                Log.d(TAG, "GroupHolder TOP onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
-            }
-
-            @Override
-            protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, int adapterPosition,boolean expend) {
-                changeExpendImageAnim(dataBing.ivArrow,expend);
-            }
-        };
+        return new GroupTopHolder(parent);
     }
 
     @Override
     protected GroupHolder<?> onCreateGroupBottomViewHolder(ViewGroup parent, int viewType) {
-        return new GroupHolder<VmGroupTopBinding>(R.layout.vm_group_top,parent) {
+
+        if(viewType==0){
+            return super.onCreateGroupBottomViewHolder(parent,viewType);
+        }
+
+        return new GroupHolder<VmGroupBottomBinding>(R.layout.vm_group_bottom,parent) {
 
             @Override
-            protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
-                dataBing.ivArrow.setVisibility(View.GONE);
-                dataBing.text.setText("底部");
-                dataBing.textParent.setBackgroundColor(ColorUtils.getColor(dataPosition));
+            protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition, int adapterPosition, boolean expend) {
+                mDataBinding.view.setAnimation("cart.json");
+            }
 
-                Log.d(TAG, "GroupHolder Bottom onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], groupIndex = [" + groupIndex + "], dataPosition = [" + dataPosition + "], expend = [" + expend + "]");
+
+
+            @Override
+            public void onViewAttachedToWindow() {
+                super.onViewAttachedToWindow();
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(mDataBinding.text,"scaleX",1f,0.5f,1f);
+//                animator.setDuration(800);
+//                animator.start();
+                if(!mDataBinding.view.isAnimating()){
+                    mDataBinding.view.playAnimation();
+                }
+
+            }
+
+            public void onViewDetachedFromWindow() {
+                super.onViewDetachedFromWindow();
+                mDataBinding.view.pauseAnimation();
             }
         };
     }
@@ -85,27 +83,47 @@ public class GroupVm extends GroupViewModule<Child,Group> {
     }
 
 
-//    @Override
-//    public int getSpanCount(int dataPosition) {
-//        return isChildItem(dataPosition)?4:1;
-//    }
-
-
-
+    @Override
+    public int getSpanCount(int dataPosition) {
+        return isChildItem(dataPosition)?2:1;
+    }
 
 
     @Override
-    protected BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
-        return new LoadingVh(parent);
+    protected int getBottomViewType(int groupPosition) {
+        Group group = getGroup(groupPosition);
+        if(group.getChildSize()<10){//没有加载更多
+            return 0;
+        }else {
+            return 1;
+        }
+
     }
 
-    @Override
-    protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
-        return new FailVh(parent);
+    public class GroupTopHolder extends GroupHolder<VmGroupTopBinding>{
+
+        public GroupTopHolder( ViewGroup container) {
+            super(R.layout.vm_group_top, container);
+        }
+
+        private Group group;
+
+        @Override
+        protected void onBindData(VmGroupTopBinding dataBing, Group group, int groupIndex, int dataPosition, int adapterPosition, boolean expend) {
+            dataBing.text.setText(group.getText()+"   adapterPosition:"+adapterPosition);
+            mDataBinding.ivArrow.setImageResource(R.mipmap.icon_arrow_down);
+            changeExpendImage(mDataBinding.ivArrow,expend);
+            this.group = group;
+        }
+
+        @Override
+        protected void onGroupExpendChange(VmGroupTopBinding dataBing, Group group, int groupIndex, int adapterPosition,boolean expend) {
+            changeExpendImageAnim(dataBing.ivArrow,expend);
+        }
+
+        public String getText(){
+            return group!=null?group.getText():"";
+        }
     }
 
-    @Override
-    protected NoneTViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
-        return new EmptyVh(parent);
-    }
 }

@@ -226,6 +226,21 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         set(groupPosition,group);
     }
 
+    public void addAllChild(int groupPosition,List<C> childs){
+        if(childs==null||childs.isEmpty()){
+            return;
+        }
+        G group = getGroup(groupPosition);
+        if(group==null){
+            Log.e(TAG, "removeChild: ",new RuntimeException("the group is null"));
+            return;
+        }
+        List<C> childList = group.getChildList();
+
+        childList.addAll(childs);
+        set(groupPosition,group);
+    }
+
 
 
 
