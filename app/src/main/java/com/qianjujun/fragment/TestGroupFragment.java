@@ -1,6 +1,7 @@
 package com.qianjujun.fragment;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.qianjujun.R;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.Group;
 import com.qianjujun.vm.GroupVm;
+import com.qianjujun.vm.ImageVm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class TestGroupFragment extends BetterModuleFragment {
         index = 0;
 
 
-        adapter = new RecyclerViewAdapter(groupVm);
+        adapter = new RecyclerViewAdapter(new ImageVm(),groupVm);
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity,2));
         recyclerView.setAdapter(adapter);
 
@@ -65,6 +67,11 @@ public class TestGroupFragment extends BetterModuleFragment {
 
         final TextView textView = contentView.findViewById(R.id.tv_text);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            int totalDy;
+            float maxHeight = getResources().getDimensionPixelOffset(R.dimen.dp240);
+            View tempView;
+
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -73,7 +80,22 @@ public class TestGroupFragment extends BetterModuleFragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                totalDy+=dy;
+                Log.d(TAG, "onScrolled() called with: recyclerView = [" + totalDy + "], dx = [" + dx + "], dy = [" + dy + "]");
+                float alpha = totalDy/maxHeight;
+                if(alpha>1){
+                    alpha = 1;
+                }
+                textView.setAlpha(alpha);
+
+
+
                 View view = recyclerView.getChildAt(0);
+                if(tempView==view){
+                    return;
+                }
+                tempView = view;
                 RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
                 if(viewHolder instanceof GroupVm.GroupTopHolder){
                     GroupVm.GroupTopHolder groupTopHolder = (GroupVm.GroupTopHolder) viewHolder;
