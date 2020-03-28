@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.DataChangeListener;
@@ -73,6 +75,7 @@ public class NineImageView extends ViewGroup implements DataChangeListener {
             bindViewHolder(nineLayoutVm,viewHolder,index);
         }
         requestLayout();
+
 
     }
 

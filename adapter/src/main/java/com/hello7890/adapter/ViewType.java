@@ -40,6 +40,9 @@ public interface ViewType {
     int MAX_GROUP_VIEW_TYPE = 299;
 
 
+    int MAX_TWO_GROUP_VIEW_TYPE = 170;
+
+
     //全局空数据item类型
     int GLOBE_NULL_DATA_VIEW_TYPE = -1;
 
