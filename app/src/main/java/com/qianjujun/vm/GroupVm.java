@@ -1,22 +1,14 @@
 package com.qianjujun.vm;
 
-import android.animation.ObjectAnimator;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.vh.NoneTViewHolder;
 import com.hello7890.adapter.vm.GroupViewModule;
+import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.databinding.VmGroupBottomBinding;
 import com.qianjujun.databinding.VmGroupTopBinding;
 import com.qianjujun.frame.utils.ToastUtils;
-import com.qianjujun.vh.EmptyVh;
-import com.qianjujun.vh.FailVh;
-import com.qianjujun.vh.LoadingVh;
 
 /**
  * @author qianjujun
@@ -40,8 +32,7 @@ public class GroupVm extends GroupViewModule<Child,Group> {
             @Override
             protected void onBindData(VmChildBinding dataBing, Group group, Child child, int groupIndex, int childIndex, int dataPosition,int adapterPosition) {
                 dataBing.tvText.setText(child.getText());
-
-                Log.d(TAG, "ChildHolder onBindData() called with: dataBing = [" + "" + "], group = [" + "" + "], child = [" + "" + "], groupIndex = [" + groupIndex + "], childIndex = [" + childIndex + "], dataPosition = [" + dataPosition + "]");
+                dataBing.tvText.setBackgroundColor(ColorUtils.getColor(dataPosition));
             }
         };
     }
@@ -61,10 +52,11 @@ public class GroupVm extends GroupViewModule<Child,Group> {
         return new GroupHolder<VmGroupBottomBinding>(R.layout.vm_group_bottom,parent) {
 
             @Override
-            protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition,int adapterPosition,boolean expend) {
+            protected void onBindData(VmGroupBottomBinding dataBing, Group group, int groupIndex, int dataPosition, int adapterPosition, boolean expend) {
                 mDataBinding.view.setAnimation("cart.json");
-
             }
+
+
 
             @Override
             public void onViewAttachedToWindow() {
@@ -76,10 +68,8 @@ public class GroupVm extends GroupViewModule<Child,Group> {
                     mDataBinding.view.playAnimation();
                 }
 
-
             }
 
-            @Override
             public void onViewDetachedFromWindow() {
                 super.onViewDetachedFromWindow();
                 mDataBinding.view.pauseAnimation();

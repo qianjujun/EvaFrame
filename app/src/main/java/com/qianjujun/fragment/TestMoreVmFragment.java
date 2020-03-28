@@ -19,6 +19,10 @@ import com.qianjujun.vm2.TitleWrapVm;
 
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+
 import static com.qianjujun.router.RouterPath.PATH_TEST_MORE_VM;
 
 
@@ -32,7 +36,14 @@ public class TestMoreVmFragment extends BetterModuleFragment {
     @Override
     protected void initModule(RecyclerView recyclerView, View contentView) {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(testStateVm, TitleWrapVm.wrap(testStateVm1,"第二个"), groupVm, testStateVm2);
-        recyclerView.setAdapter(adapter);
+        ScaleInAnimationAdapter adapter1 = new ScaleInAnimationAdapter(adapter);
+        adapter1.setFirstOnly(false);
+        AlphaInAnimationAdapter aa = new AlphaInAnimationAdapter(adapter);
+        aa.setFirstOnly(false);
+        recyclerView.setAdapter(adapter1);
+        //recyclerView.setItemAnimator(new ScaleInAnimator());
+
+
 
         testStateVm.setList(TestData.createTestStringList(5));
         testStateVm1.setList(TestData.createTestStringList(7));

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.ViewGroup;
 
 import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.frame.utils.ToastUtils;
@@ -45,7 +46,7 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
     protected void onBindData(VmChildBinding dataBinding, String s, int dataPosition, int layoutPosition) {
 
 
-        dataBinding.tvText.setBackgroundColor(colors[dataPosition%5]);
+        dataBinding.tvText.setBackgroundColor(ColorUtils.getColor(dataPosition));
 
         dataBinding.tvText.setText(s);
 
@@ -67,5 +68,5 @@ public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
     }
 
 
-    private int[] colors = new int[]{Color.RED,Color.BLUE,Color.YELLOW,Color.GREEN,Color.GRAY};
+
 }

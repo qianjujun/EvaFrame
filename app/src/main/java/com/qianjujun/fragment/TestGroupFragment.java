@@ -96,10 +96,20 @@ public class TestGroupFragment extends BetterModuleFragment {
                 }
                 tempView = view;
                 RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-                if(viewHolder instanceof GroupVm.GroupTopHolder){
-                    GroupVm.GroupTopHolder groupTopHolder = (GroupVm.GroupTopHolder) viewHolder;
-                    textView.setText(groupTopHolder.getText());
+                int adapterPosition = viewHolder.getAdapterPosition();
+                int dataPosition = groupVm.getDataPosition(adapterPosition);
+                Group group = groupVm.getItem(dataPosition);
+                if(group!=null){
+                    textView.setText(group.getText());
+                }else {
+                    textView.setText("");
                 }
+
+
+//                if(viewHolder instanceof GroupVm.GroupTopHolder){
+//                    GroupVm.GroupTopHolder groupTopHolder = (GroupVm.GroupTopHolder) viewHolder;
+//                    textView.setText(groupTopHolder.getText());
+//                }
             }
         });
 
