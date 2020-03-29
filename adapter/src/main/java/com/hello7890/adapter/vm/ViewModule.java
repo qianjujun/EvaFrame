@@ -158,4 +158,13 @@ public abstract class ViewModule<T> extends XXXViewModule<T> implements OpData<T
     protected final BaseViewModule getWrapViewModule() {
         return getSpanCount()>1?new SpaceViewModule():null;
     }
+
+    @Override
+    protected final int getSpanCount(int dataPosition) {
+        return _getSpanCount(dataPosition);
+    }
+
+    int _getSpanCount(int dataPosition){
+        return getSpanCount();
+    }
 }

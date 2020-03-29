@@ -3,6 +3,7 @@ package com.qianjujun.vm2;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -11,21 +12,17 @@ import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
-import com.hello7890.adapter.vm.TwoGroupViewModule;
+import com.hello7890.adapter.vm.Group2ViewModule;
 import com.qianjujun.R;
 import com.qianjujun.data.FriendData;
 import com.qianjujun.databinding.VhFraiendCommentBinding;
 import com.qianjujun.databinding.VhFriendImage1Binding;
 import com.qianjujun.databinding.VhFriendImage3Binding;
 import com.qianjujun.databinding.VhFriendTopBinding;
+import com.qianjujun.databinding.VhFrinedBottom1Binding;
 import com.qianjujun.frame.utils.LoadImageUtil;
 import com.qianjujun.frame.utils.ToastUtils;
 
@@ -35,7 +32,7 @@ import com.qianjujun.frame.utils.ToastUtils;
  * @createTime 2020/3/28 18:22
  * @describe
  */
-public class TestTwoGroupVm extends TwoGroupViewModule<String, FriendData.Comment,FriendData> {
+public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,FriendData> {
 
     public TestTwoGroupVm(){
         setOnModuleItemClickListener(new OnModuleItemClickListener<FriendData>() {
@@ -129,6 +126,17 @@ public class TestTwoGroupVm extends TwoGroupViewModule<String, FriendData.Commen
         };
     }
 
+
+    @Override
+    protected GroupViewHolder<? extends ViewDataBinding> onCreateChild1BottomViewHolder(ViewGroup parent, int viewType) {
+        return new GroupViewHolder<VhFrinedBottom1Binding>(R.layout.vh_frined_bottom1,parent) {
+            @Override
+            protected void onBindData(VhFrinedBottom1Binding dataBing, FriendData group, int groupIndex, int dataPosition, int adapterPosition) {
+
+            }
+        };
+    }
+
     @Override
     protected int getChild1ViewType(FriendData group, int groupPosition, int child1Position) {
         if(group.getChild1Size()==1){
@@ -138,13 +146,10 @@ public class TestTwoGroupVm extends TwoGroupViewModule<String, FriendData.Commen
     }
 
 
+
+
     @Override
-    public int getSpanCount(int dataPosition) {
-        DataInfo dataInfo = getDataType(dataPosition);
-        FriendData friendData = getItem(dataPosition);
-        if(dataInfo.getDataType()==DATA_TYPE_CHILD1&&friendData.getChild1Size()>1){
-            return 3;
-        }
-        return 1;
+    public int getChild1SpanCount(int groupPosition, FriendData group) {
+        return group.getChild1Size()>1?3:1;
     }
 }

@@ -211,4 +211,11 @@ public class ScrrenUtil {
             //activity.getWindow().getDecorView().findViewById(android.R.id.content).setPadding(0, 0, 0, navigationHeight);
         }
     }
+
+
+
+    public static int dp2px(float dpValue) {
+        final float scale = ContextProvider.getContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 }

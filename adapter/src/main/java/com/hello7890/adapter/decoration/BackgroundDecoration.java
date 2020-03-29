@@ -101,6 +101,8 @@ public class BackgroundDecoration extends ViewModuleItemDecoration {
         rectF.top = top;
         rectF.bottom = bottom;
 
+
+
         onDrawViewModuleBackground(canvas, rectF, top>parentTop&&isTopPosition(firstPosition), bottom<parentBottom&&isBottomPosition(lastPosition));
 
 

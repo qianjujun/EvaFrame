@@ -233,8 +233,7 @@ public abstract class BaseViewModule<T> implements ViewType {
      * <p>
      * 多种列结构 建议使用多个module组合非方式
      */
-    @Deprecated
-    public @IntRange(from = 1)
+    @IntRange(from = 1)
     int getSpanCount(int dataPosition) {
         return getSpanCount();
     }

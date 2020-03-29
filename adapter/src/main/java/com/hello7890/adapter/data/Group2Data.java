@@ -8,7 +8,7 @@ import java.util.List;
  * @createTime 2020/3/28 14:53
  * @describe
  */
-public interface TwoGroupData<C1,C2> {
+public interface Group2Data<C1,C2> {
     List<C1> getChild1List();
 
     List<C2> getChild2List();

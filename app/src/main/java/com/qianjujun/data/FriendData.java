@@ -6,7 +6,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
-import com.hello7890.adapter.data.TwoGroupData;
+import com.hello7890.adapter.data.Group2Data;
 
 import java.util.List;
 import java.util.Random;
@@ -17,7 +17,7 @@ import java.util.Random;
  * @createTime 2020/3/28 18:13
  * @describe
  */
-public class FriendData implements TwoGroupData<String,FriendData.Comment> {
+public class FriendData implements Group2Data<String,FriendData.Comment> {
     private static final String[] images = new String[]{
             "http://img1.imgtn.bdimg.com/it/u=1747563452,2047173239&fm=26&gp=0.jpg",
             "http://img3.imgtn.bdimg.com/it/u=216209579,1411994854&fm=26&gp=0.jpg",

@@ -2,8 +2,6 @@ package com.hello7890.adapter.data;
 
 import android.util.Log;
 
-import com.hello7890.adapter.data.GroupData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
  * @createTime 2020/3/2 14:26
  * @describe
  */
-public class GroupInfoData {
+public class GroupDataHelper {
     public static final String TAG = "GroupInfoData";
     public static <C,G extends GroupData<C>> List<G> convert(List<? extends G> list){
         List<G> result = new ArrayList<>();
@@ -36,7 +34,7 @@ public class GroupInfoData {
 
 
 
-    public static <C1,C2,G extends TwoGroupData<C1,C2>> List<G> convert2(List<? extends G> list){
+    public static <C1,C2,G extends Group2Data<C1,C2>> List<G> convert2(List<? extends G> list){
         List<G> result = new ArrayList<>();
         List<C1> childList;
         List<C2> childList2;

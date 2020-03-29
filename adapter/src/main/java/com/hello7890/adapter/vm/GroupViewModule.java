@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.IntRange;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.RecyclerViewHelper;
 import com.hello7890.adapter.data.GroupData;
-import com.hello7890.adapter.data.GroupInfoData;
+import com.hello7890.adapter.data.GroupDataHelper;
 import com.hello7890.adapter.listener.OnChildItemClickListener;
 import com.hello7890.adapter.listener.OnGroupItemClickListener;
 import com.hello7890.adapter.R;
@@ -23,7 +22,6 @@ import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.databinding.SpaceVmBinding;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -412,7 +410,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.addAll(list);
-        List<G> result = GroupInfoData.convert(list);
+        List<G> result = GroupDataHelper.convert(list);
         int oldSize = getSize();
         if (!dataList.isEmpty()) {
             dataList.clear();
@@ -427,7 +425,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.addAll(list);
-        List<G> result = GroupInfoData.convert(list);
+        List<G> result = GroupDataHelper.convert(list);
         location = convertLocation(location);
         if (location < 0) {
             location = 0;
@@ -471,14 +469,14 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.set(location, data);
-        super.setList(GroupInfoData.convert(groupList));
+        super.setList(GroupDataHelper.convert(groupList));
     }
 
 
     @Override
     public void removeAll(List<? extends G> list) {
         groupList.removeAll(list);
-        super.setList(GroupInfoData.convert(groupList));
+        super.setList(GroupDataHelper.convert(groupList));
     }
 
 
@@ -486,7 +484,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
     @Override
     public void remove(G data) {
         groupList.remove(data);
-        super.setList(GroupInfoData.convert(groupList));
+        super.setList(GroupDataHelper.convert(groupList));
     }
 
     @Override
@@ -495,7 +493,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             return;
         }
         groupList.remove(location);
-        super.setList(GroupInfoData.convert(groupList));
+        super.setList(GroupDataHelper.convert(groupList));
     }
 
 
@@ -583,6 +581,24 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         return dataType==DATA_TYPE_CHILD||dataType==DATA_TYPE_CHILD_SPACE;
     }
 
+
+    @Override
+    int _getSpanCount(int dataPosition) {
+        if(isChildItem(dataPosition)){
+            return getSpanCount();
+        }
+        return 1;
+    }
+
+
+    @Override
+    public final int getSpanCount() {
+        return getChildSpanCount();
+    }
+
+    public int getChildSpanCount(){
+        return 1;
+    }
 
 
 

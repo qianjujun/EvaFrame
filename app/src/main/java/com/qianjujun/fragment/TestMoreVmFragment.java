@@ -53,7 +53,6 @@ public class TestMoreVmFragment extends BetterModuleFragment {
         groupVm.setList(list);
 
         recyclerView.addItemDecoration(new GroupViewModuleItemDecoration(groupVm, 3)
-                .setChildColumnNum(1)
                 .setDividerColor(Color.BLUE));
 
         recyclerView.addItemDecoration(new ViewModuleItemDecoration(testStateVm1,3)

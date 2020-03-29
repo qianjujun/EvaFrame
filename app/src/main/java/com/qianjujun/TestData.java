@@ -157,7 +157,7 @@ public class TestData {
         for(int i = 0;i<20;i++){
             friendData = new FriendData();
             friendData.setUser(new FriendData.User());
-            friendData.setContent(random.nextBoolean()?"朋友圈内容"+random.nextInt(1000):"");
+            friendData.setContent(random.nextBoolean()?"朋友圈内容"+random.nextInt(1000):null);
             friendData.setLink(random.nextBoolean()?new FriendData.Link():null);
             friendData.setImageList(createMax9Images());
             friendData.setCommentList(createRandomComment());
@@ -169,15 +169,19 @@ public class TestData {
     private static List<String> createMax9Images(){
         List<String> list = new ArrayList<>();
         int max = random.nextInt(9);
+        if(max==0){
+            max = 1;
+        }
         for(int i = 0;i<max;i++){
             list.add(images[random.nextInt(images.length)]);
         }
+
         return list;
     }
 
     private static List<FriendData.Comment> createRandomComment(){
         List<FriendData.Comment> list = new ArrayList<>();
-        int max = random.nextInt(30);
+        int max = random.nextInt(10);
         for(int i = 0;i<max;i++){
             list.add(new FriendData.Comment());
         }

@@ -9,13 +9,12 @@ import androidx.databinding.ViewDataBinding;
 
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.R;
-import com.hello7890.adapter.data.GroupInfoData;
-import com.hello7890.adapter.data.TwoGroupData;
+import com.hello7890.adapter.data.GroupDataHelper;
+import com.hello7890.adapter.data.Group2Data;
 import com.hello7890.adapter.databinding.SpaceVmBinding;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import java.util.List;
  * @createTime 2020/3/28 14:55
  * @describe 暂未实现
  */
-public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>> extends ViewModule<G> {
+public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> extends ViewModule<G> {
     public static final String TAG = "TwoGroupViewModule";
     public static final int DATA_TYPE_GROUP_TOP = 1;
     public static final int DATA_TYPE_CHILD1 = 2;
@@ -240,21 +239,30 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
         return SPACE_VIEW_TYPE;
     }
 
-    public static class DataInfo {
+    public static class DataInfo<G extends Group2Data> {
         int dataType;
         int groupPosition;
         int childPosition;
+        G data;
 
+        public G getData() {
+            return data;
+        }
         public int getDataType() {
             return dataType;
         }
-
         public int getGroupPosition() {
             return groupPosition;
         }
-
         public int getChildPosition() {
             return childPosition;
+        }
+        public boolean isTopChild(int span){
+            return childPosition/span==0;
+        }
+
+        public boolean isBottomChild(int span){
+            return data==null?false:childPosition/span==(data.getChild1Size()-1)/span;
         }
     }
 
@@ -263,7 +271,7 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
         Log.d(TAG, "logDataType() called with: dataPosition = [" + dataPosition + "], firstDataIndex = [" + firstDataIndex + "], groupPosition = [" + groupPosition + "], child1Size = [" + child1Size + "], child1Start = [" + child1Start + "], child1End = [" + child1End + "]");
     }
 
-    public DataInfo getDataType(int dataPosition) {
+    public DataInfo<G> getDataType(int dataPosition) {
         G data = getItem(dataPosition);
         int firstDataIndex = dataList.indexOf(data);
         int groupPosition = groupList.indexOf(data);
@@ -272,6 +280,7 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
         if (mDataInfo == null) {
             mDataInfo = new DataInfo();
         }
+        mDataInfo.data = data;
         if (firstDataIndex == dataPosition) {
             mDataInfo.dataType = DATA_TYPE_GROUP_TOP;
             mDataInfo.groupPosition = groupPosition;
@@ -353,7 +362,7 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
             return;
         }
         groupList.addAll(list);
-        List<G> result = GroupInfoData.convert2(list);
+        List<G> result = GroupDataHelper.convert2(list);
         int oldSize = getSize();
         if (!dataList.isEmpty()) {
             dataList.clear();
@@ -368,7 +377,7 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
             return;
         }
         groupList.addAll(list);
-        List<G> result = GroupInfoData.convert2(list);
+        List<G> result = GroupDataHelper.convert2(list);
         location = convertLocation(location);
         if (location < 0) {
             location = 0;
@@ -412,14 +421,14 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
             return;
         }
         groupList.set(location, data);
-        super.setList(GroupInfoData.convert2(groupList));
+        super.setList(GroupDataHelper.convert2(groupList));
     }
 
 
     @Override
     public void removeAll(List<? extends G> list) {
         groupList.removeAll(list);
-        super.setList(GroupInfoData.convert2(groupList));
+        super.setList(GroupDataHelper.convert2(groupList));
     }
 
 
@@ -427,7 +436,7 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
     @Override
     public void remove(G data) {
         groupList.remove(data);
-        super.setList(GroupInfoData.convert2(groupList));
+        super.setList(GroupDataHelper.convert2(groupList));
     }
 
     @Override
@@ -436,6 +445,37 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
             return;
         }
         groupList.remove(location);
-        super.setList(GroupInfoData.convert2(groupList));
+        super.setList(GroupDataHelper.convert2(groupList));
     }
+
+
+
+
+    @Override
+    int _getSpanCount(int dataPosition) {
+        DataInfo<G> dataInfo = getDataType(dataPosition);
+        switch (dataInfo.getDataType()){
+            case DATA_TYPE_CHILD1:
+                return getChild1SpanCount(dataInfo.groupPosition,dataInfo.data);
+            case DATA_TYPE_CHILD2:
+                return getChild2SpanCount(dataInfo.groupPosition,dataInfo.data);
+            default:
+                return 1;
+        }
+    }
+
+
+    @Override
+    public final int getSpanCount() {
+        return super.getSpanCount();
+    }
+
+    public int getChild1SpanCount(int groupPosition,G group){
+        return 1;
+    }
+
+    public int getChild2SpanCount(int groupPosition,G group){
+        return 1;
+    }
+
 }

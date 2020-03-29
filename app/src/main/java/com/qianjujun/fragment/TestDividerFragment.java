@@ -1,27 +1,19 @@
 package com.qianjujun.fragment;
 
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.decoration.BackgroundDecoration;
-import com.hello7890.adapter.decoration.HeadDecoration;
 import com.qianjujun.TestData;
 import com.qianjujun.frame.base.BetterModuleFragment;
 import com.qianjujun.vm.Group;
 import com.qianjujun.vm.GroupVm;
 import com.qianjujun.vm.SimpleTextVm;
-
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 import static com.qianjujun.router.RouterPath.PATH_TEST_DIVIDER;
 

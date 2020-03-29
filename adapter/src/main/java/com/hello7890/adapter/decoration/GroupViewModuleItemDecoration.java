@@ -28,7 +28,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     private GroupViewModule viewModule;
     private int dividerColor = Color.TRANSPARENT;
     private boolean noneBottomDivider;
-    private int columnNum = 1;
 
     public GroupViewModuleItemDecoration setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
@@ -42,15 +41,13 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     }
 
 
-    public GroupViewModuleItemDecoration setChildColumnNum(int columnNum) {
-        this.columnNum = columnNum;
-        return this;
-    }
+
     public GroupViewModuleItemDecoration(GroupViewModule viewModule, int dividerHeight){
         this.viewModule = viewModule;
         mPaint = new Paint();
         mPaint.setColor(dividerColor);
         this.mDividerHeight = dividerHeight;
+        itemInfo = new ItemInfo(mDividerHeight,0);
     }
 
     public GroupViewModuleItemDecoration(GroupViewModule viewModule, int dividerHeight,int leftAndRight){
@@ -103,18 +100,18 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
     private int findChildIndex(int dataPosition){
         viewModule.getChildLocationInfo(dataPosition,childInfo);
-        return childInfo[0]%columnNum;
+        return childInfo[0]%viewModule.getChildSpanCount();
     }
 
     protected void getChildItemOffsets(@NonNull Rect outRect,int dataPosition){
-        if(columnNum==1){
+        if(viewModule.getChildSpanCount()==1){
             outRect.set(0,0,0,mDividerHeight);
         }else {
 
             viewModule.getChildLocationInfo(dataPosition,childInfo);
             int childDataPosition = childInfo[0];
 
-            int[] result = itemInfo.count(childDataPosition,columnNum);
+            int[] result = itemInfo.count(childDataPosition,viewModule.getChildSpanCount());
 
             int left = result[0];
             int right = result[1];
@@ -140,8 +137,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
             if(!isValidItem(adapterPosition)){
                 continue;
             }
-
-
             int dataPosition = adapterPosition-viewModule.getStartPosition();
             if(viewModule.getDataType(dataPosition)== GroupViewModule.DATA_TYPE_CHILD){//只绘制子项
                 layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
@@ -150,7 +145,7 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
                 final int top = child.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mDividerHeight;
                 canvas.drawRect(left, top, right, bottom, mPaint);
-                if(columnNum>1&&findChildIndex(dataPosition)!=columnNum-1){
+                if(viewModule.getChildSpanCount()>1&&findChildIndex(dataPosition)!=viewModule.getChildSpanCount()-1){
                     canvas.drawRect(right,child.getTop(),right+mDividerHeight,bottom,mPaint);
                 }
             }
