@@ -30,6 +30,9 @@ public interface RouterPath {
     String PATH_TEST_WRAP_VM = _GROUP_NAME+"testWrapVm";
 
 
+    String PATH_TEST_FRIEND = _GROUP_NAME+"test_friend";
+
+
 
 
 

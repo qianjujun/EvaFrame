@@ -1,6 +1,7 @@
 package com.qianjujun;
 
 import com.qianjujun.data.Data;
+import com.qianjujun.data.FriendData;
 import com.qianjujun.frame.exception.AppException;
 import com.qianjujun.frame.exception.EmptyException;
 import com.qianjujun.rx.RxUtil;
@@ -23,6 +24,26 @@ import io.reactivex.functions.Function;
 public class TestData {
     private static final Random random = new Random();
     private static int index = 0;
+
+    private static final String[] images = new String[]{
+            "http://img1.imgtn.bdimg.com/it/u=1747563452,2047173239&fm=26&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=216209579,1411994854&fm=26&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=2164724814,1401845036&fm=26&gp=0.jpg",
+            "http://img1.imgtn.bdimg.com/it/u=1798173886,3671914447&fm=26&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=2427441392,1027688913&fm=26&gp=0.jpg",
+            "http://img4.imgtn.bdimg.com/it/u=2545380209,2451354813&fm=26&gp=0.jpg",
+            "http://img4.imgtn.bdimg.com/it/u=3015946809,1032771475&fm=26&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=2444031136,1156137205&fm=26&gp=0.jpg",
+            "http://img1.imgtn.bdimg.com/it/u=1747563452,2047173239&fm=26&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=2915512436,1541993188&fm=26&gp=0.jpg",
+            "http://img1.imgtn.bdimg.com/it/u=3723747836,3447432399&fm=26&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=1731597746,428499852&fm=26&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=3639413414,822479011&fm=26&gp=0.jpg",
+            "http://img3.imgtn.bdimg.com/it/u=1956101362,3172476555&fm=26&gp=0.jpg",
+            "http://img5.imgtn.bdimg.com/it/u=2904743760,1881633435&fm=26&gp=0.jpg"
+    };
+
+
 
     public static List<String> createTestStringList() {
         int max = random.nextInt(25) + 1;
@@ -125,5 +146,42 @@ public class TestData {
                 .compose(RxUtil.rxBaseParamsHelper());
     }
 
+
+
+
+
+
+    public static List<FriendData> createFriendData(){
+        List<FriendData> list = new ArrayList<>();
+        FriendData friendData;
+        for(int i = 0;i<20;i++){
+            friendData = new FriendData();
+            friendData.setUser(new FriendData.User());
+            friendData.setContent(random.nextBoolean()?"朋友圈内容"+random.nextInt(1000):"");
+            friendData.setLink(random.nextBoolean()?new FriendData.Link():null);
+            friendData.setImageList(createMax9Images());
+            friendData.setCommentList(createRandomComment());
+            list.add(friendData);
+        }
+        return list;
+    }
+
+    private static List<String> createMax9Images(){
+        List<String> list = new ArrayList<>();
+        int max = random.nextInt(9);
+        for(int i = 0;i<max;i++){
+            list.add(images[random.nextInt(images.length)]);
+        }
+        return list;
+    }
+
+    private static List<FriendData.Comment> createRandomComment(){
+        List<FriendData.Comment> list = new ArrayList<>();
+        int max = random.nextInt(30);
+        for(int i = 0;i<max;i++){
+            list.add(new FriendData.Comment());
+        }
+        return list;
+    }
 
 }

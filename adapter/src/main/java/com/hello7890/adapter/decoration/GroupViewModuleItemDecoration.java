@@ -11,6 +11,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hello7890.adapter.data.ItemInfo;
 import com.hello7890.adapter.vm.GroupViewModule;
 
 /**
@@ -28,8 +29,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     private int dividerColor = Color.TRANSPARENT;
     private boolean noneBottomDivider;
     private int columnNum = 1;
-    private int dividerWidth;
-    private int leftAndRight;
 
     public GroupViewModuleItemDecoration setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
@@ -45,7 +44,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
     public GroupViewModuleItemDecoration setChildColumnNum(int columnNum) {
         this.columnNum = columnNum;
-        dividerWidth = mDividerHeight*(columnNum-1)/columnNum;
         return this;
     }
     public GroupViewModuleItemDecoration(GroupViewModule viewModule, int dividerHeight){
@@ -60,7 +58,15 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         mPaint = new Paint();
         mPaint.setColor(dividerColor);
         this.mDividerHeight = dividerHeight;
-        this.leftAndRight = leftAndRight;
+        itemInfo = new ItemInfo(mDividerHeight,leftAndRight);
+    }
+
+    public GroupViewModuleItemDecoration(GroupViewModule viewModule, int dividerHeight,int left,int right){
+        this.viewModule = viewModule;
+        mPaint = new Paint();
+        mPaint.setColor(dividerColor);
+        this.mDividerHeight = dividerHeight;
+        itemInfo = new ItemInfo(mDividerHeight,left,right);
     }
 
 
@@ -79,10 +85,6 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
 
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-        if(state.isMeasuring()){
-            //outRect.set(0,0,0,0);
-            //return;
-        }
         int adapterPosition = parent.getChildAdapterPosition(view);
         int dataPosition = adapterPosition-viewModule.getStartPosition();
         if(!isValidItem(adapterPosition)){
@@ -108,9 +110,7 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         if(columnNum==1){
             outRect.set(0,0,0,mDividerHeight);
         }else {
-            if(itemInfo==null){
-                itemInfo = new ItemInfo(mDividerHeight,leftAndRight);
-            }
+
             viewModule.getChildLocationInfo(dataPosition,childInfo);
             int childDataPosition = childInfo[0];
 
@@ -157,77 +157,4 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         }
     }
 
-    static class ItemInfo{
-        int columnNum;
-        int dividerWidth;//分割线的宽度
-        /**
-         * 最左和最右边的宽度
-         */
-        int leftAndRight;
-        /**
-         * 总宽度 为 60  columnNum*dividerWidth/(columnNum-1)
-         * --  --  --
-         *   30  30
-         */
-        int totalDividerWidth;
-
-        /**
-         * 每个item要分配给divider的宽度   如上图 分割线总长为60，有3个item  则每个item分配出去的宽度为60/3
-         */
-        int itemColumnWidth;
-
-        int firstLeft;
-        int lastLeft;
-        int itemStep;
-
-        int[] tempLR = new int[2];
-
-        public ItemInfo(int dividerWidth, int leftAndRight) {
-            this.dividerWidth = dividerWidth;
-            this.leftAndRight = leftAndRight;
-
-        }
-
-        private void update(@IntRange(from = 2) int columnNum){//列数变化
-            if(columnNum<2){
-                throw new IllegalArgumentException("columnNum must >= 2");
-            }
-            this.columnNum = columnNum;
-            totalDividerWidth = leftAndRight*2+dividerWidth*(columnNum-1);
-            itemColumnWidth = totalDividerWidth/columnNum;
-            firstLeft = leftAndRight;
-            lastLeft = itemColumnWidth - leftAndRight;
-            itemStep = (leftAndRight-lastLeft)/(columnNum-1);
-        }
-
-        int[] count(int dataPosition,int columnNum){
-            if(columnNum<1){
-                throw new IllegalArgumentException("columnNum must >= 1");
-            }
-            if(columnNum==1){
-                tempLR[0] = leftAndRight;
-                tempLR[1] = leftAndRight;
-                return tempLR;
-            }
-            if(this.columnNum!=columnNum){
-                update(columnNum);
-            }
-            int columnIndex = dataPosition%columnNum;
-            int left = leftAndRight - columnIndex*itemStep;
-            int right = itemColumnWidth-left;
-            tempLR[0] = left;
-            tempLR[1] = right;
-            return tempLR;
-        }
-
-
-        boolean needDrawGrid(int dataPosition){
-            return columnNum>1&&dataPosition%columnNum!=(columnNum-1);
-        }
-
-
-
-
-
-    }
 }

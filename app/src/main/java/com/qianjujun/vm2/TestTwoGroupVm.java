@@ -1,11 +1,33 @@
 package com.qianjujun.vm2;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.vm.TwoGroupViewModule;
+import com.qianjujun.R;
 import com.qianjujun.data.FriendData;
+import com.qianjujun.databinding.VhFraiendCommentBinding;
+import com.qianjujun.databinding.VhFriendImage1Binding;
+import com.qianjujun.databinding.VhFriendImage3Binding;
+import com.qianjujun.databinding.VhFriendTopBinding;
+import com.qianjujun.frame.utils.LoadImageUtil;
+import com.qianjujun.frame.utils.ToastUtils;
 
 /**
  * @author qianjujun
@@ -14,24 +36,115 @@ import com.qianjujun.data.FriendData;
  * @describe
  */
 public class TestTwoGroupVm extends TwoGroupViewModule<String, FriendData.Comment,FriendData> {
+
+    public TestTwoGroupVm(){
+        setOnModuleItemClickListener(new OnModuleItemClickListener<FriendData>() {
+            @Override
+            public void onModuleItemClick(FriendData friendData, int dataPosition, int adapterPosition) {
+                ToastUtils.showSuccess("dataPosition:"+dataPosition+" adapterPosition:"+adapterPosition);
+                Log.d("TestTwoGroupVm", "onModuleItemClick() called with: friendData = [" + "friendData" + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
+            }
+        });
+    }
+
+
+
     @Override
     protected GroupViewHolder<? extends ViewDataBinding> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new GroupViewHolder<VhFriendTopBinding>(R.layout.vh_friend_top,parent) {
+
+            @Override
+            protected void onBindData(VhFriendTopBinding dataBing, FriendData group, int groupIndex, int dataPosition, int adapterPosition) {
+                dataBing.setData(group);
+                LoadImageUtil.loadImage(dataBing.ivAvatar,group.getUser().getAvatar());
+                if(group.getLink()!=null){
+                    LoadImageUtil.loadImage(dataBing.ivLink,group.getLink().getImage());
+                }
+            }
+        };
     }
 
     @Override
     protected Child1ViewHolder<? extends ViewDataBinding> onCreateChild1ViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        if(viewType==0){
+            return new Child1ViewHolder<VhFriendImage3Binding>(R.layout.vh_friend_image3,parent) {
+
+                @Override
+                protected void onBindData(VhFriendImage3Binding dataBing, FriendData group, String child, int groupIndex, int childIndex, int dataPosition, int adapterPosition) {
+                    LoadImageUtil.loadImage(dataBing.image,child);
+                }
+            };
+        }
+        return new Child1ViewHolder<VhFriendImage1Binding>(R.layout.vh_friend_image1,parent) {
+
+
+
+            @Override
+            protected void onBindData(VhFriendImage1Binding dataBing, FriendData group, String child, int groupIndex, int childIndex, int dataPosition, int adapterPosition) {
+                resetImageSize(dataBing.image,group.width,group.height);
+                Glide.with(dataBing.image)
+                        .asBitmap()
+                        .load(child)
+                        .into(new CustomTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                group.width = resource.getWidth();
+                                group.height = resource.getHeight();
+                                resetImageSize(dataBing.image,resource.getWidth(),resource.getHeight());
+                                dataBing.image.setImageBitmap(resource);
+                            }
+
+                            @Override
+                            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                            }
+                        });
+            }
+        };
+    }
+
+
+    private void resetImageSize(ImageView imageView, int w, int h) {
+        if(w==0||h==0){
+            return;
+        }
+        ViewGroup.LayoutParams vl = imageView.getLayoutParams();
+        if(vl.width==w&&vl.height==h){
+            return;
+        }
+        vl.width = w;
+        vl.height = h;
+        imageView.setLayoutParams(vl);
     }
 
     @Override
     protected Child2ViewHolder<? extends ViewDataBinding> onCreateChild2ViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new Child2ViewHolder<VhFraiendCommentBinding>(R.layout.vh_fraiend_comment,parent) {
+
+
+            @Override
+            protected void onBindData(VhFraiendCommentBinding dataBing, FriendData group, FriendData.Comment child, int groupIndex, int childIndex, int dataPosition, int adapterPosition) {
+                dataBing.tvContent.setText(child.getContentStr());
+            }
+        };
     }
 
     @Override
-    protected int getChild1ViewType(int groupPosition, int child1Position) {
+    protected int getChild1ViewType(FriendData group, int groupPosition, int child1Position) {
+        if(group.getChild1Size()==1){
+            return 1;
+        }
+        return 0;
+    }
 
-        return super.getChild1ViewType(groupPosition, child1Position);
+
+    @Override
+    public int getSpanCount(int dataPosition) {
+        DataInfo dataInfo = getDataType(dataPosition);
+        FriendData friendData = getItem(dataPosition);
+        if(dataInfo.getDataType()==DATA_TYPE_CHILD1&&friendData.getChild1Size()>1){
+            return 3;
+        }
+        return 1;
     }
 }

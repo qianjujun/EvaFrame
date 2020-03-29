@@ -1,5 +1,6 @@
 package com.hello7890.adapter.vm;
 
+import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.IntRange;
@@ -14,6 +15,7 @@ import com.hello7890.adapter.databinding.SpaceVmBinding;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
  * @describe 暂未实现
  */
 public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>> extends ViewModule<G> {
+    public static final String TAG = "TwoGroupViewModule";
     public static final int DATA_TYPE_GROUP_TOP = 1;
     public static final int DATA_TYPE_CHILD1 = 2;
     public static final int DATA_TYPE_GROUP_BOTTOM1 = 3;
@@ -37,7 +40,6 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
 
     @Override
     public BaseViewHolder<G> onCreateViewHolder(ViewGroup parent, int viewType) {
-
         int type = viewType % 5;
         switch (type) {
             case 0:
@@ -167,53 +169,68 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
 
 
 
+    public G getGroup(int groupPosition){
+        if(groupPosition<0||groupPosition>=groupList.size()){
+            return null;
+        }
+        return groupList.get(groupPosition);
+    }
+
+
 
 
 
 
 
     protected @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_TWO_GROUP_VIEW_TYPE)
-    int getTopGroupViewType(int groupIndex) {
+    int getTopGroupViewType(G group,int groupIndex) {
         return 0;
     }
 
     protected @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_TWO_GROUP_VIEW_TYPE)
-    int getChild1ViewType(int groupPosition, int child1Position) {
+    int getChild1ViewType(G group,int groupPosition, int child1Position) {
         return 0;
     }
 
     protected @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_TWO_GROUP_VIEW_TYPE)
-    int getChild1BottomViewType(int groupPosition) {
+    int getChild1BottomViewType(G group,int groupPosition) {
         return 0;
     }
 
     protected @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_TWO_GROUP_VIEW_TYPE)
-    int getChild2ViewType(int groupPosition, int child1Position) {
+    int getChild2ViewType(G group,int groupPosition, int child1Position) {
         return 0;
     }
 
     protected @IntRange(from = MIN_NORMAL_VIEW_TYPE, to = MAX_TWO_GROUP_VIEW_TYPE)
-    int getChild2BottomViewType(int groupPosition) {
+    int getChild2BottomViewType(G group,int groupPosition) {
         return 0;
     }
 
 
     @Override
     public int getItemViewType(int dataPosition) {
+        G group = getItem(dataPosition);
+        if(group==null){
+            return getSpaceViewType();
+        }
+
         DataInfo dataInfo = getDataType(dataPosition);
+
         int dataType = dataInfo.dataType;
         int groupIndex = dataInfo.groupPosition;
+        Log.d(TAG, "getItemViewType() called with: dataPosition = [" + dataPosition + "]"+dataType);
         switch (dataType) {
             case DATA_TYPE_GROUP_TOP:
-                return getTopGroupViewType(groupIndex) * 5;
+                return getTopGroupViewType(group,groupIndex) * 5;
             case DATA_TYPE_CHILD1:
-                return getChild1ViewType(groupIndex, dataInfo.childPosition) * 5 + 1;
+                return getChild1ViewType(group,groupIndex, dataInfo.childPosition) * 5 + 1;
             case DATA_TYPE_GROUP_BOTTOM1:
-                return getChild1BottomViewType(groupIndex) * 5 + 2;
+                return getChild1BottomViewType(group,groupIndex) * 5 + 2;
             case DATA_TYPE_CHILD2:
-                return getChild2ViewType(groupIndex, dataInfo.childPosition) * 5 + 3;
+                return getChild2ViewType(group,groupIndex, dataInfo.childPosition) * 5 + 3;
             case DATA_TYPE_GROUP_BOTTOM2:
-                return getChild2BottomViewType(groupIndex)+4;
+                return getChild2BottomViewType(group,groupIndex)+4;
             default:
                 return getSpaceViewType();
         }
@@ -223,12 +240,28 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
         return SPACE_VIEW_TYPE;
     }
 
-    private static class DataInfo {
+    public static class DataInfo {
         int dataType;
         int groupPosition;
         int childPosition;
+
+        public int getDataType() {
+            return dataType;
+        }
+
+        public int getGroupPosition() {
+            return groupPosition;
+        }
+
+        public int getChildPosition() {
+            return childPosition;
+        }
     }
 
+
+    private void  logDataType(int dataPosition,int firstDataIndex,int groupPosition,int child1Size,int child1Start,int child1End){
+        Log.d(TAG, "logDataType() called with: dataPosition = [" + dataPosition + "], firstDataIndex = [" + firstDataIndex + "], groupPosition = [" + groupPosition + "], child1Size = [" + child1Size + "], child1Start = [" + child1Start + "], child1End = [" + child1End + "]");
+    }
 
     public DataInfo getDataType(int dataPosition) {
         G data = getItem(dataPosition);
@@ -247,7 +280,11 @@ public abstract class TwoGroupViewModule<C1, C2, G extends TwoGroupData<C1, C2>>
         }
         int child1Start = firstDataIndex + 1;
         int child1End = child1Start + child1Size;
-        if (dataPosition >= child1Size && dataPosition < child1End) {
+
+
+        logDataType(dataPosition,firstDataIndex,groupPosition,child1Size,child1Start,child1End);
+
+        if (dataPosition >= child1Start && dataPosition < child1End) {
             mDataInfo.dataType = DATA_TYPE_CHILD1;
             mDataInfo.groupPosition = groupPosition;
             mDataInfo.childPosition = dataPosition - child1Start;

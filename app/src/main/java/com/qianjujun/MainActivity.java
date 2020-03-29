@@ -44,6 +44,7 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
 
         private List<RouterBean> createData() {
             List<RouterBean> routers = new ArrayList<>();
+            routers.add(new RouterBean("仿朋友圈",PATH_TEST_FRIEND));
             routers.add(new RouterBean("分割线", PATH_TEST_DIVIDER));
             routers.add(new RouterBean("分组列表", PATH_TEST_MODULE));
             routers.add(new RouterBean("ViewPage2", PATH_TEST_PAGE));

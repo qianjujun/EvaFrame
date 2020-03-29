@@ -44,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder() called with: parent = [" + parent + "], viewType = [" + viewType + "]");
+        Log.d(TAG, "onCreateViewHolder() called with: parent = [" + "parent" + "], viewType = [" + viewType + "]");
         if(viewType==ViewType.GLOBE_NULL_DATA_VIEW_TYPE){
             return new SpaceViewHolder(parent);
         }
