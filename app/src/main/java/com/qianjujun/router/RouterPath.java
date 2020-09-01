@@ -32,6 +32,8 @@ public interface RouterPath {
 
     String PATH_TEST_FRIEND = _GROUP_NAME+"test_friend";
 
+    String PATH_WEB = _GROUP_NAME+"testWeb";
+
 
 
 

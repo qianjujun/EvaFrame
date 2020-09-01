@@ -2,6 +2,8 @@ package com.qianjujun.fragment;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,7 +34,7 @@ public class TestDividerFragment extends BetterModuleFragment {
 
     private GroupVm groupVm = new GroupVm();
 
-    private Paint paint,paintGray;
+    private Paint paint, paintGray;
 
     @Override
     protected void initModule(RecyclerView recyclerView, View contentView) {
@@ -46,30 +48,28 @@ public class TestDividerFragment extends BetterModuleFragment {
 
 
 
-        recyclerView.setLayoutManager(new GridLayoutManager(mActivity,4));
+
+        recyclerView.setLayoutManager(new GridLayoutManager(mActivity, 4));
 
         //设置adapter 动画
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(textVm2, textVm4,textVm1,groupVm);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(textVm2, textVm4, textVm1, groupVm);
 //        ScaleInAnimationAdapter adapter1 = new ScaleInAnimationAdapter(adapter);
 //        adapter1.setFirstOnly(false);
         recyclerView.setAdapter(adapter);
 
         //设置缓存池
         RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
-        pool.setMaxRecycledViews(1000,21);
+        pool.setMaxRecycledViews(1000, 21);
         recyclerView.setRecycledViewPool(pool);
 
 
-
-        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm2,30,50,2));
-
-
-        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm4,30,50));
+        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm2, 30, 50, 2));
 
 
-        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm1,30,50,2));
+        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm4, 30, 50));
 
 
+        recyclerView.addItemDecoration(new RoundBackgroundDecoration(textVm1, 30, 50, 2));
 
 
         textVm2.setList(TestData.createTestStringList(7));
@@ -79,13 +79,7 @@ public class TestDividerFragment extends BetterModuleFragment {
         groupVm.setList(Group.createTestData());
 
 
-
-
-
     }
-
-
-
 
 
 }

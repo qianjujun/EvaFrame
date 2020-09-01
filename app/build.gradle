@@ -16,6 +16,7 @@ android {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
                 includeCompileClasspath = true
+
             }
         }
     }
@@ -23,6 +24,22 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file("../qianjujun.jks")
+            storePassword "123456"
+            keyAlias "ben"
+            keyPassword "123456"
+        }
+        debug {
+            storeFile file("../qianjujun.jks")
+            storePassword "123456"
+            keyAlias "ben"
+            keyPassword "123456"
         }
     }
 

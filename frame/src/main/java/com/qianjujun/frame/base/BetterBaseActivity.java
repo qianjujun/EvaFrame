@@ -86,4 +86,19 @@ public class BetterBaseActivity extends AppCompatActivity implements FrameConsta
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
     }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.activity_container);
+        if(fragment instanceof BetterBaseFragment){
+            BetterBaseFragment baseFragment = (BetterBaseFragment) fragment;
+            if(baseFragment.onBackPressed()){
+                return;
+            }
+        }
+        super.onBackPressed();
+    }
 }

@@ -1,5 +1,7 @@
 package com.qianjujun.vm;
 
+import android.os.Bundle;
+
 /**
  * @author qianjujun
  * @email qianjujun@163.com
@@ -9,6 +11,7 @@ package com.qianjujun.vm;
 public class RouterBean implements IString{
     private String title;
     private String router;
+    private Bundle args;
 
     public String getTitle() {
         return title;
@@ -29,6 +32,15 @@ public class RouterBean implements IString{
     public RouterBean(String title, String router) {
         this.title = title;
         this.router = router;
+    }
+
+    public Bundle getArgs() {
+        return args;
+    }
+
+    public RouterBean setArgs(Bundle args) {
+        this.args = args;
+        return this;
     }
 
     @Override

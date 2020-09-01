@@ -34,9 +34,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     }
 
     public RecyclerViewAdapter(boolean handlerNullData,BaseViewModule... viewModules){
-        adapterHelper = new AdapterHelpImpl2(this,viewModules);
+        adapterHelper = createAdapterHelper(viewModules);
         this.handlerNullData = handlerNullData;
     }
+
+    IAdapterHelp createAdapterHelper(BaseViewModule... viewModules){
+        return new AdapterHelpImpl2(this,viewModules);
+    }
+
+
+
+
 
     boolean isHandlerNullData() {
         return handlerNullData;

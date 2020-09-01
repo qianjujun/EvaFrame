@@ -146,13 +146,10 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
                     onDrawBackground(firstChild,lastChild,c,backgroundBuild1,rectF1);
                     onDrawBackground1(rectF1,tempTop,tempBottom,c);
                     firstChild = null;
-                    continue;
-                }
-                if(firstChild2!=null){
+                }else  if(firstChild2!=null){
                     onDrawBackground(firstChild2,lastChild2,c,backgroundBuild2,rectF2);
                     onDrawBackground2(rectF2,tempTop,tempBottom,c);
                     firstChild2 = null;
-                    continue;
                 }
 
             }

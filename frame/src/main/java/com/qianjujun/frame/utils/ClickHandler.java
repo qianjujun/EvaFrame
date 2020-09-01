@@ -11,7 +11,7 @@ import com.qianjujun.frame.R;
  */
 public class ClickHandler {
     private static long lastClickTime;
-    private static final long MAX_TIME = 500;
+    private static final long MAX_TIME = 200;
     public static boolean isValidClick(){
         long time = System.currentTimeMillis();
         if(time-lastClickTime<MAX_TIME){

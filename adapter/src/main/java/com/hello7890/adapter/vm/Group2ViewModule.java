@@ -273,6 +273,10 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
 
     public DataInfo<G> getDataType(int dataPosition) {
         G data = getItem(dataPosition);
+        if(data==null){
+            mDataInfo.dataType = DATA_TYPE_UNKNOWN;
+            return mDataInfo;
+        }
         int firstDataIndex = dataList.indexOf(data);
         int groupPosition = groupList.indexOf(data);
         int child1Size = data.getChild1Size();

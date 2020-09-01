@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.Router;
 import com.hello7890.adapter.RecyclerViewAdapter;
+import com.hello7890.adapter.RecyclerViewAdapter2;
 import com.hello7890.adapter.decoration.ViewModuleItemDecoration;
 import com.qianjujun.frame.base.BetterBaseActivity;
 import com.qianjujun.frame.base.BetterModuleFragment;
@@ -33,17 +34,22 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
     public static class MainFragment extends BetterModuleFragment {
         private SimpleStringVm<RouterBean> textVm = new SimpleStringVm();
 
+
         @Override
         protected void initModule(RecyclerView recyclerView, View contentView) {
             recyclerView.setAdapter(new RecyclerViewAdapter(textVm));
             recyclerView.addItemDecoration(new ViewModuleItemDecoration(textVm, 2).setDividerColor(Color.parseColor("#f2f2f2")));
             textVm.setList(createData());
-            textVm.setOnModuleItemClickListener((routerBean, dataPosition, layoutPosition) -> Router.buildFragment(routerBean.getRouter()).navigation(mActivity));
+            textVm.setOnModuleItemClickListener((routerBean, dataPosition, layoutPosition) ->
+                    Router.buildFragment(routerBean.getRouter()).navigation(mActivity));
+
+
         }
 
 
         private List<RouterBean> createData() {
             List<RouterBean> routers = new ArrayList<>();
+            routers.add(new RouterBean("测试网页",PATH_WEB));
             routers.add(new RouterBean("仿朋友圈",PATH_TEST_FRIEND));
             routers.add(new RouterBean("分割线", PATH_TEST_DIVIDER));
             routers.add(new RouterBean("分组列表", PATH_TEST_MODULE));
