@@ -1,7 +1,6 @@
 package com.hello7890.adapter.vm;
 
 import com.hello7890.adapter.BaseViewModule;
-import com.hello7890.adapter.XXXViewModule;
 import com.hello7890.adapter.data.OpData;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
  * @createTime 2020/1/19 16:59
  * @describe
  */
-public abstract class ViewModule<T> extends XXXViewModule<T> implements OpData<T> {
+public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<T> {
 
 
 
@@ -154,13 +153,12 @@ public abstract class ViewModule<T> extends XXXViewModule<T> implements OpData<T
 
 
 
-    @Override
-    protected final BaseViewModule getWrapViewModule() {
+    public final BaseViewModule _getWrapViewModule() {
         return getSpanCount()>1?new SpaceViewModule():null;
     }
 
     @Override
-    protected final int getSpanCount(int dataPosition) {
+    public final int getSpanCount(int dataPosition) {
         return _getSpanCount(dataPosition);
     }
 

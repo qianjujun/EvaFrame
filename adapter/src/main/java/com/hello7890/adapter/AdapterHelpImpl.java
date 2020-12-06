@@ -1,25 +1,16 @@
 package com.hello7890.adapter;
 
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
- * @author qianjujun
- * @email qianjujun@163.com
- * @createTime 2020/1/19 17:17
- * @describe 相同的viewModule的viewHolder返回的viewType不同
+ * 实现多个相同viewModule的viewHolder的共享
  */
 public class AdapterHelpImpl extends BaseAdapterHelperImpl {
 
-
-    //按顺序添加ViewModule  key:添加的index  依次加1
-    private Map<Integer, BaseViewModule> mIndexViewModules = new TreeMap<>();
-
-
-    private int lastIndex = 0;
+    private static SparseArray<String> vmNames = new SparseArray<>();
 
 
     public AdapterHelpImpl(RecyclerViewAdapter adapter, BaseViewModule... viewModules) {
@@ -27,28 +18,30 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
         updateViewModule(viewModules);
     }
 
-
-
-
     @Override
     protected void onAddNewViewModule(BaseViewModule viewModule) {
-        viewModule.setTypeViewFlag(lastIndex * FLAG_VIEW_TYPE);
-        mIndexViewModules.put(lastIndex, viewModule);
-        lastIndex++;
+        String name = viewModule.getClass().getName();
+        int vmIndex = vmNames.indexOfValue(viewModule.getClass().getName());
+        if (vmIndex == -1) {
+            vmIndex = vmNames.size();
+            vmNames.put(vmIndex, name);
+
+        }
+        viewModule.setTypeViewFlag(vmIndex * FLAG_VIEW_TYPE);
     }
 
     @Override
     protected void onRestData() {
-        mIndexViewModules.clear();
-        lastIndex = 0;
+        //do nothing
     }
-
 
     @Override
     public BaseViewModule findViewModule(int viewType) {
         int index = viewType / FLAG_VIEW_TYPE;
-        if (mIndexViewModules.containsKey(index)) {
-            return mIndexViewModules.get(index);
+        String className = vmNames.get(index);
+        BaseViewModule viewModule = findOneVmByName(className);
+        if(viewModule!=null){
+            return viewModule;
         }
         throw new RuntimeException("After the data changes, must be called notifyXXX");
     }
@@ -58,7 +51,13 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
     protected List<BaseViewModule> convert(BaseViewModule... viewModules) {
         List<BaseViewModule> viewModuleList = new ArrayList<>();
         for(BaseViewModule viewModule:viewModules){
-            addViewModule(viewModule,viewModuleList);
+            if(viewModule.enableState){
+                StateWrapViewModule stateWrapViewModule = new StateWrapViewModule();
+                stateWrapViewModule.wrapWm(viewModule);
+                addViewModule(stateWrapViewModule,viewModuleList);
+            }else {
+                addViewModule(viewModule,viewModuleList);
+            }
         }
         return viewModuleList;
     }
@@ -68,9 +67,7 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
             return;
         }
         viewModuleList.add(viewModule);
-        addViewModule(viewModule.getWrapViewModule(),viewModuleList);
+        addViewModule(viewModule._getWrapViewModule(),viewModuleList);
 
     }
-
-
 }

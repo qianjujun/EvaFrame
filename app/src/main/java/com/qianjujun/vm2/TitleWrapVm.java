@@ -4,21 +4,20 @@ import android.view.ViewGroup;
 
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.BaseViewModule;
-import com.hello7890.adapter.vm.WrapViewModule;
+import com.hello7890.adapter.vm.DataViewModule;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vm.ViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmTitleWrapBinding;
 
-public class TitleWrapVm extends WrapViewModule<String> {
+public class TitleWrapVm extends DataViewModule<String> {
 
     private TitleWrapVm(){}
 
 
-    public static TitleWrapVm wrap(BaseViewModule viewModule, String title){
+    public static TitleWrapVm create(String title){
         TitleWrapVm titleWrapVm = new TitleWrapVm();
         titleWrapVm.setData(title);
-        titleWrapVm.wrapVm(viewModule);
         return titleWrapVm;
     }
 

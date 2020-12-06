@@ -54,8 +54,10 @@ public abstract class OnResponse<T, M extends IData<T>> extends ResourceSubscrib
             onSuccess(dt);
             onEnd(true,dt.getCode(), dt.getMessage());
         } catch (AppException e) {
+            onFail(e);
             onEnd(false,e.getErrorCode(),e.getMessage());
         }catch (Exception e){
+            onFail(AppException.create(e));
             onEnd(false,STATE_ERROR_UI_HANDLER,"");
         }
 

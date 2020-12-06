@@ -48,20 +48,20 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         BaseViewHolder<Footer> holder = null;
         switch (viewType) {
             case Footer.STATE_LODING:
-                holder = onCreateLoadingHolder(parent);
+                holder = onCreateLoadingHolder1(parent);
                 break;
             case Footer.STATE_FAIL:
-                holder = onCreateFailHolder(parent);
+                holder = onCreateFailHolder1(parent);
                 break;
             case Footer.STATE_NO_MORE:
-                holder = onCreateNoMoreHodler(parent);
+                holder = onCreateNoMoreHodler1(parent);
                 break;
             case Footer.STATE_NORMAL:
-                holder = onCreateNormalHodler(parent);
+                holder = onCreateNormalHodler1(parent);
                 break;
             case Footer.STATE_SUCCESS:
             default:
-                holder = onCreateSuccessHodler(parent);
+                holder = onCreateSuccessHodler1(parent);
                 break;
         }
         return holder;
@@ -93,15 +93,15 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
     }
 
 
-    protected BaseViewHolder<Footer> onCreateLoadingHolder(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateLoadingHolder1(ViewGroup parent) {
         return new LoadingHolder(R.layout.rv_item_footer_loading, parent);
     }
 
-    protected BaseViewHolder<Footer> onCreateFailHolder(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateFailHolder1(ViewGroup parent) {
         return new FailHolder(R.layout.rv_item_footer_error, parent);
     }
 
-    protected BaseViewHolder<Footer> onCreateNormalHodler(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateNormalHodler1(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
@@ -111,7 +111,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         };
     }
 
-    protected BaseViewHolder<Footer> onCreateSuccessHodler(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateSuccessHodler1(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNormalBinding>(R.layout.rv_item_footer_normal, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int adapterPosition) {
@@ -119,7 +119,7 @@ public class LoadMoreViewModule extends ViewModule<Footer> {
         };
     }
 
-    protected BaseViewHolder<Footer> onCreateNoMoreHodler(ViewGroup parent) {
+    protected BaseViewHolder<Footer> onCreateNoMoreHodler1(ViewGroup parent) {
         return new BaseDbViewHolder<Footer, RvItemFooterNomoredataBinding>(R.layout.rv_item_footer_nomoredata, parent) {
             @Override
             public void onBindData(Footer footer, int dataPosition, int adapterPosition) {

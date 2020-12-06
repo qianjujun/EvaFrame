@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     }
 
     IAdapterHelp createAdapterHelper(BaseViewModule... viewModules){
-        return new AdapterHelpImpl2(this,viewModules);
+        return new AdapterHelpImpl(this,viewModules);
     }
 
 

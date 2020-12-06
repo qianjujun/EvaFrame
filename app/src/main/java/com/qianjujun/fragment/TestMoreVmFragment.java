@@ -35,7 +35,7 @@ public class TestMoreVmFragment extends BetterModuleFragment {
 
     @Override
     protected void initModule(RecyclerView recyclerView, View contentView) {
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(testStateVm, TitleWrapVm.wrap(testStateVm1,"第二个"), groupVm, testStateVm2);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(testStateVm, testStateVm1, groupVm, testStateVm2);
         ScaleInAnimationAdapter adapter1 = new ScaleInAnimationAdapter(adapter);
         adapter1.setFirstOnly(false);
         AlphaInAnimationAdapter aa = new AlphaInAnimationAdapter(adapter);

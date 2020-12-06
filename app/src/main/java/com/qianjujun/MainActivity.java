@@ -1,21 +1,23 @@
 package com.qianjujun;
 
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.Router;
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.RecyclerViewAdapter2;
 import com.hello7890.adapter.decoration.ViewModuleItemDecoration;
+import com.hello7890.adapter.listener.OnModuleItemClickListener;
+import com.hello7890.album.MediaOptions;
+import com.hello7890.album.MediaTool;
 import com.qianjujun.frame.base.BetterBaseActivity;
 import com.qianjujun.frame.base.BetterModuleFragment;
+import com.qianjujun.frame.permission.IPermission;
+import com.qianjujun.frame.permission.PermissionBean;
+import com.qianjujun.frame.permission.PermissionCallBack;
+import com.qianjujun.frame.permission.PermissionUtils;
 import com.qianjujun.router.RouterPath;
 import com.qianjujun.vm.RouterBean;
 import com.qianjujun.vm.SimpleStringVm;
@@ -40,10 +42,24 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
             recyclerView.setAdapter(new RecyclerViewAdapter(textVm));
             recyclerView.addItemDecoration(new ViewModuleItemDecoration(textVm, 2).setDividerColor(Color.parseColor("#f2f2f2")));
             textVm.setList(createData());
-            textVm.setOnModuleItemClickListener((routerBean, dataPosition, layoutPosition) ->
-                    Router.buildFragment(routerBean.getRouter()).navigation(mActivity));
+            textVm.setOnModuleItemClickListener(new OnModuleItemClickListener<RouterBean>() {
+                @Override
+                public void onModuleItemClick(RouterBean routerBean, int dataPosition, int adapterPosition) {
+                    if(routerBean.getRouter().contains("album")){
+                        PermissionUtils.requestPermission(mActivity, PermissionBean.create("").addItem(IPermission.WRITE_EXTERNAL_STORAGE),
+                                new PermissionCallBack() {
+                                    @Override
+                                    public void onPermissionGranted() {
+                                        MediaTool.toSelectAlbum(mActivity, MediaOptions.build(1).setMax(1).setMediaType(MediaOptions.TYPE_VIDEO));
+                                    }
+                                });
 
+                    }else {
+                        Router.buildFragment(routerBean.getRouter()).navigation(mActivity);
+                    }
 
+                }
+            });
         }
 
 
@@ -57,6 +73,7 @@ public class MainActivity extends BetterBaseActivity implements RouterPath {
             routers.add(new RouterBean("状态VM",PATH_TEST_STATE_VM));
             routers.add(new RouterBean("多类型Vm，复用",PATH_TEST_MORE_VM));
             routers.add(new RouterBean("wrapVm",PATH_TEST_WRAP_VM));
+            routers.add(new RouterBean("相册","/app/album"));
             return routers;
         }
     }

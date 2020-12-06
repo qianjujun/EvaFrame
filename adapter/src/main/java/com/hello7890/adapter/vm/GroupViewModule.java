@@ -1,6 +1,7 @@
 package com.hello7890.adapter.vm;
 
 import android.animation.ObjectAnimator;
+import android.app.ActivityManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
 
 
     private static final String TAG = "GroupViewModule3";
+
     public static final String CHANGE_EXPEND = "GroupViewModule3_change_expend";
 
     private List<G> groupList = new ArrayList<>();
@@ -596,9 +598,13 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         return getChildSpanCount();
     }
 
+    /**
+     * @return
+     */
     public int getChildSpanCount(){
         return 1;
     }
+
 
 
 

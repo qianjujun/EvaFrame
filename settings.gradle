@@ -1,3 +1,5 @@
 rootProject.name='EvaFrame'
 include ':frame', ':arouter-api', ':app',':adapter', ':lib'
-
+include ':photo'
+include ':album'
+include ':mediatools'

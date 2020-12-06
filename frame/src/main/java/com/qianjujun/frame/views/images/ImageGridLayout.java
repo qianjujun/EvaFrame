@@ -1,4 +1,4 @@
-package com.cfmoto.widget;
+package com.qianjujun.frame.views.images;
 
 import android.content.Context;
 import android.graphics.Color;

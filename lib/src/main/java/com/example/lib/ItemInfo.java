@@ -5,19 +5,10 @@ import java.util.Arrays;
 public class ItemInfo {
     int columnNum;
     int dividerWidth;//分割线的宽度
-    /**
-     * 最左和最右边的宽度
-     */
-    /**
-     * 总宽度 为 60  columnNum*dividerWidth/(columnNum-1)
-     * --  --  --
-     *   30  30
-     */
+
     int totalDividerWidth;
 
-    /**
-     * 每个item要分配给divider的宽度   如上图 分割线总长为60，有3个item  则每个item分配出去的宽度为60/3
-     */
+
     int itemColumnWidth;
 
     int firstLeft;

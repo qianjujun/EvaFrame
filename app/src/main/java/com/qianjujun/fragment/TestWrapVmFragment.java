@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
+import com.hello7890.adapter.RecyclerViewAdapter2;
 import com.hello7890.adapter.decoration.StickyItemDecoration;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.listener.OnModuleItemLongClickListener;
-import com.hello7890.adapter.vm.StateWrapViewModule;
+import com.hello7890.adapter.StateWrapViewModule;
 import com.qianjujun.R;
 import com.qianjujun.TestData;
 import com.qianjujun.databinding.FragmentTestWrapBinding;
@@ -42,31 +43,33 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
 
     @Override
     protected void initModule(RecyclerView recyclerView, FragmentTestWrapBinding dataBinding) {
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter2(
                 new HeadVm("我是头"),
-                TitleWrapVm.wrap(new StateWrapViewModule().setReloadRunnable(new Runnable() {
+                TitleWrapVm.create("测试组头1"),
+                stateVm1.openEnableState(new Runnable() {
                     @Override
                     public void run() {
                         request1();
                     }
-                }).wrapWm(stateVm1), "测试组头1"),
-                TitleWrapVm.wrap(new StateWrapViewModule().setReloadRunnable(new Runnable() {
+                }),
+                TitleWrapVm.create("测试组头2"),
+                stateVm2.openEnableState(new Runnable() {
                     @Override
                     public void run() {
                         request2();
                     }
-                }).wrapWm(stateVm2), "测试组头2"),
-                TitleWrapVm.wrap(new StateWrapViewModule().setReloadRunnable(new Runnable() {
+                }),
+                TitleWrapVm.create("测试组头3"),
+                stateVm3.openEnableState(new Runnable() {
                     @Override
                     public void run() {
                         request3();
                     }
-                }).wrapWm(stateVm3), "测试组头3")
-                );
+                })
+
+        );
 
         recyclerView.setAdapter(adapter);
-
-
 
 
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
@@ -91,21 +94,21 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
             @Override
             public void onModuleItemClick(String s, int dataPosition, int adapterPosition) {
                 ToastUtils.show("插入一条");
-                stateVm2.add(dataPosition+1,"插入一条数据"+(insertIndex++));
+                stateVm2.add(dataPosition + 1, "插入一条数据" + (insertIndex++));
             }
         });
     }
 
 
-
     @SuppressLint("CheckResult")
     private void request1() {
-        TestData.createTestStringListRequest(index++,10)
+        TestData.createTestStringListRequest(index++, 10)
                 .subscribeWith(new OnStateVmCallBack<List<String>>(stateVm1) {
                     @Override
                     public void onBegin() {
                         stateVm1.notifyForceLoading();
                     }
+
                     @Override
                     public void onSuccess(List<String> strings) throws AppException {
                         super.onSuccess(strings);
@@ -140,6 +143,7 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
                     public void onBegin() {
                         stateVm3.notifyForceLoading();
                     }
+
                     @Override
                     public void onSuccess(List<String> groupList) throws AppException {
                         super.onSuccess(groupList);

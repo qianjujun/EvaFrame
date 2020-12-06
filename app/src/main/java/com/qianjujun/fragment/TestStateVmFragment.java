@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.vm.StateWrapViewModule;
+import com.hello7890.adapter.StateWrapViewModule;
 import com.qianjujun.R;
 import com.qianjujun.TestData;
 import com.qianjujun.databinding.FragmentTestStatVmBinding;
@@ -38,14 +38,10 @@ public class TestStateVmFragment extends BetterCustomModuleFragment<FragmentTest
     protected void initModule(RecyclerView recyclerView, FragmentTestStatVmBinding dataBinding) {
         dataBinding.setClick(this);
 
-        BaseViewModule viewModule = new StateWrapViewModule().setReloadRunnable(new Runnable() {
-            @Override
-            public void run() {
-                testLoadData();
-            }
-        }).wrapWm(testStateVm);
 
-        recyclerView.setAdapter(new RecyclerViewAdapter(viewModule));
+        testStateVm.openEnableState(() -> testLoadData());
+
+        recyclerView.setAdapter(new RecyclerViewAdapter(testStateVm));
         testLoadData();
     }
 
@@ -92,13 +88,14 @@ public class TestStateVmFragment extends BetterCustomModuleFragment<FragmentTest
                 testLoadData();
                 break;
             case R.id.btn_loading:
-                testStateVm.notifyForceLoading();
+                testStateVm.notifyLoading();
                 break;
             case R.id.btn_fail:
                 testStateVm.notifyError(1,"测试错误");
                 break;
             case R.id.btn_empty:
                 testStateVm.clear();
+                testStateVm.notifyEmpty();
                 break;
             case R.id.btn_clear_reload:
                 testStateVm.clear();

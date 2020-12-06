@@ -11,10 +11,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/adapter" />
+            <option value="$PROJECT_DIR$/album" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arouter-api" />
             <option value="$PROJECT_DIR$/frame" />
             <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/mediatools" />
+            <option value="$PROJECT_DIR$/photo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

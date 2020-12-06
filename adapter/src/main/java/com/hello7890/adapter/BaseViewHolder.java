@@ -33,7 +33,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
     final void bindData(T t, int dataPosition, int layoutPosition, List<Object> payloads){
 
         //当正常更新数据 或者 size发生变化
-        if(payloads==null||payloads.isEmpty()||payloads.contains(AdapterHelpImpl.ADAPTER_SIZE_UPDATE_PAYLOAD)){
+        if(payloads==null||payloads.isEmpty()||payloads.contains(AdapterHelpImpl2.ADAPTER_SIZE_UPDATE_PAYLOAD)){
             // TODO: 2020/3/9 预留  只需在这个地方需要重新绑定事件   暂未测试正确性
         }
 

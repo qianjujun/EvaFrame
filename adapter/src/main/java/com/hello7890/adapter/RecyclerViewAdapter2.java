@@ -1,14 +1,5 @@
 package com.hello7890.adapter;
 
-import android.util.Log;
-import android.view.ViewGroup;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.hello7890.adapter.vh.SpaceViewHolder;
-
-import java.util.List;
-
 
 /**
  * 介绍：
@@ -28,6 +19,6 @@ public class RecyclerViewAdapter2 extends RecyclerViewAdapter{
 
     @Override
     IAdapterHelp createAdapterHelper(BaseViewModule... viewModules) {
-        return new AdapterHelpImpl(this,viewModules);
+        return new AdapterHelpImpl2(this,viewModules);
     }
 }

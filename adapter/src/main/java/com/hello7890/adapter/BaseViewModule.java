@@ -5,10 +5,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.IntRange;
 
+import com.hello7890.adapter.data.ModuleState;
 import com.hello7890.adapter.listener.DataStateChangeListener;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.listener.OnModuleItemLongClickListener;
 import com.hello7890.adapter.vh.NoneTViewHolder;
+import com.hello7890.adapter.vh.SpaceTViewHolder;
 import com.hello7890.adapter.vh.SpaceViewHolder;
 
 import java.util.ArrayList;
@@ -28,7 +30,37 @@ public abstract class BaseViewModule<T> implements ViewType {
     private List<DataStateChangeListener> dataStateChangeListeners = new ArrayList<>();
 
 
-    BaseViewModule getWrapViewModule() {
+    boolean enableState;
+
+    private Runnable reloadRunnable;
+
+    public void setReloadRunnable(Runnable reloadRunnable) {
+        this.reloadRunnable = reloadRunnable;
+    }
+
+    public Runnable getReloadRunnable() {
+        return reloadRunnable;
+    }
+
+    public BaseViewModule openEnableState(){
+       return openEnableState(null);
+    }
+
+    public BaseViewModule openEnableState(Runnable reloadRunnable){
+        this.enableState = true;
+        this.reloadRunnable = reloadRunnable;
+        return this;
+    }
+
+
+
+
+
+    /**
+     * 包含的数据model
+     * @return
+     */
+    public BaseViewModule _getWrapViewModule() {
         return null;
     }
 
@@ -47,7 +79,11 @@ public abstract class BaseViewModule<T> implements ViewType {
         }
     }
 
-
+    public void notifyEmpty(){
+        for(DataStateChangeListener stateChangeListener:dataStateChangeListeners){
+            stateChangeListener.onSizeChange(0);
+        }
+    }
 
 
     public void notifyError(int errorCode,String message){
@@ -189,7 +225,7 @@ public abstract class BaseViewModule<T> implements ViewType {
 
 
 
-    int getSpanSize(int position) {
+     int getSpanSize(int position) {
         int maxSpanSize = getMaxSpanSize();
         if (maxSpanSize <= 1) {
             return 1;
@@ -234,7 +270,7 @@ public abstract class BaseViewModule<T> implements ViewType {
      * 多种列结构 建议使用多个module组合非方式
      */
     @IntRange(from = 1)
-    int getSpanCount(int dataPosition) {
+    protected int getSpanCount(int dataPosition) {
         return getSpanCount();
     }
 
@@ -270,14 +306,14 @@ public abstract class BaseViewModule<T> implements ViewType {
         if (context == null) {
             context = parent.getContext();
         }
-        switch (viewType) {
-            case EMPTY_VIEW_TYPE:
-                return onCreateEmptyViewHolder(parent);
-            case LOADING_VIEW_TYPE:
-                return onCreateLoadingHolder(parent);
-            case FAIL_VIEW_TYPE:
-                return onCreateFailHolder(parent);
-        }
+//        switch (viewType) {
+//            case EMPTY_VIEW_TYPE:
+//                return onCreateEmptyViewHolder(parent);
+//            case LOADING_VIEW_TYPE:
+//                return onCreateLoadingHolder(parent);
+//            case FAIL_VIEW_TYPE:
+//                return onCreateFailHolder(parent);
+//        }
 
         BaseViewHolder<T> viewHolder = onCreateViewHolder(parent, viewType);
         return viewHolder;
@@ -286,19 +322,18 @@ public abstract class BaseViewModule<T> implements ViewType {
 
     public abstract BaseViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType);
 
-    protected NoneTViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
-        return new SpaceViewHolder(parent);
+    protected BaseViewHolder<ModuleState> onCreateEmptyViewHolder(ViewGroup parent) {
+        //return new SpaceTViewHolder<>(parent);
+        return null;
     }
 
-    protected BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
-        return new SpaceViewHolder(parent);
+    protected BaseViewHolder<ModuleState> onCreateLoadingHolder(ViewGroup parent) {
+        return null;
     }
 
-    protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
-        return new SpaceViewHolder(parent);
+    protected BaseViewHolder<ModuleState> onCreateFailHolder(ViewGroup parent) {
+        return null;
     }
-
-
 
 
 

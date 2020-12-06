@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <com.hello7890.mediatools.player.BetterPlayer
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/q540"/>
+
+
+        <TextView
+            android:layout_marginLeft="@dimen/q60"
+            android:text="视频信息"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="#333"
+            tools:text="视频名称: xxx\n视频大小: 30M\n分辨率:720X1980\n帧率:30fps"
+            android:padding="@dimen/q60"
+            android:id="@+id/tv_video_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <SeekBar
+            android:progress="70"
+            android:max="100"
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginLeft="@dimen/q60"
+            android:text="压缩后预估大小"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginLeft="@dimen/q60"
+            android:text="20M"
+            android:id="@+id/tv_result_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:text="开始压缩"
+            android:id="@+id/btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+
+</layout>
