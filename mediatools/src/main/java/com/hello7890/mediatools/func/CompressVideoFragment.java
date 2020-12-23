@@ -1,17 +1,14 @@
 package com.hello7890.mediatools.func;
 
-import android.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.hello7890.mediatools.Cmd;
 import com.hello7890.mediatools.R;
 import com.hello7890.mediatools.databinding.FragmentCompressVideoBinding;
-import com.hello7890.mediatools.router.RouterPath;
 import com.hello7890.mediatools.utils.FileUtils;
 
 import java.io.File;

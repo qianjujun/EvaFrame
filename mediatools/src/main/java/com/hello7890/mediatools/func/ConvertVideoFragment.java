@@ -64,7 +64,6 @@ public class ConvertVideoFragment extends BaseFuncFragment<FragmentTestServiceBi
             mFFmpeg.register(mExcuteListener);
         } catch (RemoteException e) {
             e.printStackTrace();
-            showText("onServiceConnected" + e.getMessage());
         }
 
     }
@@ -76,7 +75,6 @@ public class ConvertVideoFragment extends BaseFuncFragment<FragmentTestServiceBi
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        showText("onServiceDisconnected");
     }
 
 
@@ -96,59 +94,7 @@ public class ConvertVideoFragment extends BaseFuncFragment<FragmentTestServiceBi
 
     };
 
-    private int totalD = (22*60+25)*1000;
 
-    private String processProgress(long timeInMilliseconds,int index){
-        int duration = index < 0 ? totalD*2:totalD;
-        String completePercentage = new BigDecimal(timeInMilliseconds).multiply(new BigDecimal(100)).divide(new BigDecimal(duration), 0, BigDecimal.ROUND_HALF_UP).toString();
-        return completePercentage;
-    }
-
-
-    Map<String,Integer> map = new HashMap<>();
-    private void showProgress(long id,int index, int porgress){
-        Log.d(TAG, "showProgress() called with: id = [" + id + "], index = [" + index + "], porgress = [" + porgress + "]");
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if(index==-1){
-                    showText(mDataBinding.tvProgress1,processProgress(porgress,-1));
-                    return;
-                }
-
-                if(index ==0){
-                    showText(mDataBinding.tvProgress21,processProgress(porgress,index));
-                }else if(index ==1){
-                    showText(mDataBinding.tvProgress22,processProgress(porgress,index));
-                }
-//                try {
-//                    int total = Integer.parseInt(mDataBinding.tvProgress21.getText().toString())+Integer.parseInt(mDataBinding.tvProgress22.getText().toString());
-//                    showText(mDataBinding.tvProgress2,processProgress(total));
-//                }catch (Exception e){
-//
-//                }
-
-
-            }
-        });
-    }
-
-    private void showText(TextView tv,String text){
-        tv.setText(text);
-    }
-
-
-    private void showText(String str) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                String text = mDataBinding.tvText.getText().toString();
-                text += "\n" + str;
-                mDataBinding.tvText.setText(text);
-            }
-        });
-
-    }
 
 
     @Override
@@ -156,7 +102,7 @@ public class ConvertVideoFragment extends BaseFuncFragment<FragmentTestServiceBi
         return null;
     }
 
-    long startTime;
+
 
     @Override
     protected void initView(FragmentTestServiceBinding dataBinding) {
@@ -172,164 +118,19 @@ public class ConvertVideoFragment extends BaseFuncFragment<FragmentTestServiceBi
                     return;
                 }
 
-                startTime = System.currentTimeMillis();
-
-                showText("开始时间：" + startTime);
-                mWorkHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        perferm(1);
-                    }
-                });
-            }
-        });
-
-
-        mDataBinding.btnUnbind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTime = System.currentTimeMillis();
-                showText("开始时间：" + startTime);
-                Cmd cmd = new Cmd();
-                cmd.append("-hwaccel")
-                        .append("mediacodec")
-                        .append("-y")
-                        .append("-i")
-                        .append(PATH)
-                        .append("-ss")
-                        .append("00:00:00")
-                        .append("-t")
-                        .append("00:22:25")
-                        .append("-b:v")
-                        .append("1000k")
-                        .append("-preset superfast")
-                        .append(FileUtils.getExportFile().getAbsolutePath());
-
-                long id = FuncDes.generateId();
-                try {
-                    mFFmpeg.excute(new FuncDes(id,cmd.toString(),0,1));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-
 
             }
         });
-
-        mDataBinding.btnUnbind1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTime = System.currentTimeMillis();
-                showText("开始时间：" + startTime);
-                long id = FuncDes.generateId();
-                Cmd cmd = new Cmd();
-                cmd.append("-hwaccel")
-                        .append("mediacodec")
-                        .append("-y")
-                        .append("-i")
-                        .append(PATH)
-                        .append("-ss")
-                        .append("00:22:25")
-                        .append("-t")
-                        .append("00:22:25")
-                        .append("-b:v")
-                        .append("1000k")
-                        .append("-preset superfast")
-                        .append(FileUtils.getExportFile().getAbsolutePath());
-                try {
-                    mFFmpeg2.excute(new FuncDes(id,cmd.toString(),1,1));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        mDataBinding.btnUnbind2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTime = System.currentTimeMillis();
-                showText("开始时间：" + startTime);
-
-                Cmd cmd = new Cmd();
-                cmd.append("-hwaccel")
-                        .append("mediacodec")
-                        .append("-y")
-                        .append("-i")
-                        .append(PATH)
-                        .append("-ss")
-                        .append("00:00:00")
-                        .append("-t")
-                        .append("00:22:25")
-                        .append("-b:v")
-                        .append("1000k")
-                        .append("-preset superfast")
-                        .append(FileUtils.getExportFile().getAbsolutePath());
-
-                Cmd cmd2 = new Cmd();
-                cmd2.append("-hwaccel")
-                        .append("mediacodec")
-                        .append("-y")
-                        .append("-i")
-                        .append(PATH)
-                        .append("-ss")
-                        .append("00:22:25")
-                        .append("-t")
-                        .append("00:22:25")
-                        .append("-b:v")
-                        .append("1000k")
-                        .append("-preset superfast")
-                        .append(FileUtils.getExportFile().getAbsolutePath());
-
-                long id = FuncDes.generateId();
-                try {
-                    mFFmpeg.excute(new FuncDes(id,cmd.toString(),0,1));
-                    mFFmpeg.excute(new FuncDes(id,cmd2.toString(),1,1));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-
-
-
 
 
     }
 
 
-    private void perferm(int num) {
-        String thread = "";
-        if (num > 1) {
-            thread = "-threads " + num;
-        }
 
-        Cmd cmd = new Cmd();
-        cmd.append("-hwaccel")
-                .append("mediacodec")
-                .append("-y")
-                .append("-i")
-                .append(PATH)
-                .append(thread)
-                //.append("-c:a copy")
-                .append("-b:v")
-                .append("1000k")
-                .append("-preset superfast")
-                .append(FileUtils.getExportFile().getAbsolutePath());
-
-
-        try {
-            mFFmpeg.excute(new FuncDes(cmd.toString()));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     @Override
     protected void onVideoInfo(String info, long bit) {
-        showText(info);
     }
 
     @Override

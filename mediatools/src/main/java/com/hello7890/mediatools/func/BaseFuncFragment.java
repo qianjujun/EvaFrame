@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 
 import com.arthenica.mobileffmpeg.Config;
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.arthenica.mobileffmpeg.FFprobe;
 import com.arthenica.mobileffmpeg.Level;
 import com.arthenica.mobileffmpeg.LogCallback;
@@ -98,6 +99,8 @@ public abstract class BaseFuncFragment<T extends ViewDataBinding> extends Better
 
     @SuppressLint("CheckResult")
     private void getVideoInfo(){
+
+
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         Flowable.just(mMedia.getPath())
                 .map(new Function<String, String>() {

@@ -42,7 +42,6 @@ public class TestStateVm extends SingleDbViewModule<String, VmTestStateBinding> 
     @Override
     protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
         return new FailVh(parent);
-        //return super.onCreateFailHolder(parent)
     }
 
     @Override
