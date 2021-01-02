@@ -1,6 +1,5 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
-import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.data.OpData;
 
 import java.util.ArrayList;

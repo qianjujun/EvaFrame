@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.vm.ViewModule;
+import com.hello7890.adapter.ViewModule;
 import com.qianjujun.frame.R;
 import com.qianjujun.frame.data.IData;
 import com.qianjujun.frame.data.IPageData;

@@ -1,9 +1,7 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
 import android.view.ViewGroup;
 
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
 /**

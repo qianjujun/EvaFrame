@@ -1,17 +1,12 @@
 package com.hello7890.album.vm;
 
-import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.data.ModuleState;
-import com.hello7890.adapter.vm.SingleDbViewModule;
-import com.hello7890.album.MediaTool;
+import com.hello7890.adapter.DbViewModule;
 import com.hello7890.album.R;
 import com.hello7890.album.bean.Album;
 import com.hello7890.album.databinding.VmAlbumBinding;
 
-public class VmAlbum extends SingleDbViewModule<Album, VmAlbumBinding> {
+public class VmAlbum extends DbViewModule<Album, VmAlbumBinding> {
 
 
 

@@ -1,4 +1,4 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
 import android.util.Log;
 import android.view.ViewGroup;
@@ -7,8 +7,6 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.R;
 import com.hello7890.adapter.data.GroupDataHelper;
 import com.hello7890.adapter.data.Group2Data;
 import com.hello7890.adapter.databinding.SpaceVmBinding;

@@ -14,10 +14,8 @@ import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
 
-/**
- * 方案不好实现  暂搁置
- */
-public class StateWrapViewModule extends BaseViewModule<ModuleState> implements DataStateChangeListener {
+
+class StateWrapViewModule extends BaseViewModule<ModuleState> implements DataStateChangeListener {
     public static final String TAG = "StateWrapViewModule";
 
     private ModuleState moduleState = new ModuleState();

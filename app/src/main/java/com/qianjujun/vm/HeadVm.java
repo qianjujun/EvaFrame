@@ -1,10 +1,10 @@
 package com.qianjujun.vm;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmHeadBinding;
 
-public class HeadVm extends SingleDbViewModule<String, VmHeadBinding> {
+public class HeadVm extends DbViewModule<String, VmHeadBinding> {
 
     public HeadVm(){
         setData("");

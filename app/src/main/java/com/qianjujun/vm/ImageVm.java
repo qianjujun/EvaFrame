@@ -1,9 +1,8 @@
 package com.qianjujun.vm;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmImageBinding;
-import com.qianjujun.frame.utils.LoadImageUtil;
 
 /**
  * @author qianjujun
@@ -11,7 +10,7 @@ import com.qianjujun.frame.utils.LoadImageUtil;
  * @createTime 2020/3/26 11:37
  * @describe
  */
-public class ImageVm extends SingleDbViewModule<Integer, VmImageBinding> {
+public class ImageVm extends DbViewModule<Integer, VmImageBinding> {
 
     public ImageVm(){
         setData(R.mipmap.android_test);

@@ -1,15 +1,12 @@
 package com.qianjujun.vm;
 
 import android.graphics.Color;
-import android.view.ViewGroup;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.frame.utils.ToastUtils;
-
-import java.util.Random;
 
 /**
  * @author qianjujun
@@ -17,7 +14,7 @@ import java.util.Random;
  * @createTime 2020/3/3 13:57
  * @describe
  */
-public class SimpleTextVm extends SingleDbViewModule<String, VmChildBinding> {
+public class SimpleTextVm extends DbViewModule<String, VmChildBinding> {
     private int backColor;
     private int textColor;
     public SimpleTextVm(){

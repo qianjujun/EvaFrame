@@ -4,14 +4,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.hello7890.album.R;
 import com.hello7890.album.bean.Media;
 import com.hello7890.album.databinding.VmMediaBinding;
 
 import java.text.DecimalFormat;
 
-public class VmMedia extends SingleDbViewModule<Media, VmMediaBinding> {
+public class VmMedia extends DbViewModule<Media, VmMediaBinding> {
     @Override
     protected int getLayoutId() {
         return R.layout.vm_media;

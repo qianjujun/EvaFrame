@@ -3,7 +3,7 @@ package com.qianjujun.vm;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.TestHold1Binding;
 
@@ -13,7 +13,7 @@ import com.qianjujun.databinding.TestHold1Binding;
  * @createTime 2020/1/20 16:34
  * @describe
  */
-public class TestVm2 extends SingleDbViewModule<String, TestHold1Binding> {
+public class TestVm2 extends DbViewModule<String, TestHold1Binding> {
     @Override
     protected int getLayoutId() {
         return R.layout.test_hold1;

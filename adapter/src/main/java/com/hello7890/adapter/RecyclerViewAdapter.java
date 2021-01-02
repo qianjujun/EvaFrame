@@ -20,9 +20,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private boolean handlerNullData;
 
     private IAdapterHelp adapterHelper;
+
+
+    private boolean mShareModuleType = false;
+
+
 
 
     public IAdapterHelp getAdapterHelper() {
@@ -30,25 +34,40 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<BaseViewHolder>{
     }
 
     public RecyclerViewAdapter(BaseViewModule... viewModules){
-        this(true,viewModules);
+        adapterHelper = createAdapterHelper(viewModules);
     }
 
-    public RecyclerViewAdapter(boolean handlerNullData,BaseViewModule... viewModules){
+    public RecyclerViewAdapter(boolean shareModuleType,BaseViewModule... viewModules){
+        this.mShareModuleType = shareModuleType;
         adapterHelper = createAdapterHelper(viewModules);
-        this.handlerNullData = handlerNullData;
     }
+
+
+    public static RecyclerViewAdapter create(BaseViewModule... viewModules){
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(viewModules);
+        return adapter;
+    }
+
+    public static RecyclerViewAdapter create(boolean shareModuleType,BaseViewModule... viewModules){
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(shareModuleType,viewModules);
+        return adapter;
+    }
+
+
+
+
+
 
     IAdapterHelp createAdapterHelper(BaseViewModule... viewModules){
-        return new AdapterHelpImpl(this,viewModules);
+        if(mShareModuleType){
+            return new AdapterHelpImpl(this,viewModules);
+        }else {
+            return new AdapterHelpImpl2(this,viewModules);
+        }
     }
 
 
 
-
-
-    boolean isHandlerNullData() {
-        return handlerNullData;
-    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

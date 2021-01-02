@@ -2,7 +2,7 @@ package com.qianjujun.vm;
 
 import android.graphics.Color;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 
@@ -12,7 +12,7 @@ import com.qianjujun.databinding.VmChildBinding;
  * @createTime 2020/3/3 13:57
  * @describe
  */
-public class SimpleStringVm<T extends IString> extends SingleDbViewModule<T, VmChildBinding> {
+public class SimpleStringVm<T extends IString> extends DbViewModule<T, VmChildBinding> {
     private int backColor;
     private int textColor;
     public SimpleStringVm(){

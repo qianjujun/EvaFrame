@@ -2,7 +2,7 @@ package com.qianjujun.vm;
 
 import android.view.ViewGroup;
 
-import com.hello7890.adapter.vm.GroupViewModule;
+import com.hello7890.adapter.GroupViewModule;
 import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;

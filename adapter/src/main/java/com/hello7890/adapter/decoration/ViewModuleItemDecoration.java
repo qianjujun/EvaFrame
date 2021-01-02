@@ -4,18 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.data.ItemInfo;
-import com.hello7890.adapter.vm.ViewModule;
-
-import java.util.Arrays;
+import com.hello7890.adapter.ViewModule;
 
 
 /**

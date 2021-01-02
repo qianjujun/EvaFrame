@@ -22,7 +22,7 @@ import java.util.List;
  * @createTime 2020/1/22 14:43
  * @describe
  */
-public abstract class BaseViewModule<T> implements ViewType {
+abstract class BaseViewModule<T> implements ViewType {
     protected List<T> dataList = new ArrayList<>();
 
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
@@ -34,9 +34,7 @@ public abstract class BaseViewModule<T> implements ViewType {
 
     private Runnable reloadRunnable;
 
-    public void setReloadRunnable(Runnable reloadRunnable) {
-        this.reloadRunnable = reloadRunnable;
-    }
+
 
     public Runnable getReloadRunnable() {
         return reloadRunnable;
@@ -60,7 +58,7 @@ public abstract class BaseViewModule<T> implements ViewType {
      * 包含的数据model
      * @return
      */
-    public BaseViewModule _getWrapViewModule() {
+    BaseViewModule _getWrapViewModule() {
         return null;
     }
 

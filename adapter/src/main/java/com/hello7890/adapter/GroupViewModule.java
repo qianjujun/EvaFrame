@@ -1,7 +1,6 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
 import android.animation.ObjectAnimator;
-import android.app.ActivityManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
@@ -12,13 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.RecyclerViewHelper;
 import com.hello7890.adapter.data.GroupData;
 import com.hello7890.adapter.data.GroupDataHelper;
 import com.hello7890.adapter.listener.OnChildItemClickListener;
 import com.hello7890.adapter.listener.OnGroupItemClickListener;
-import com.hello7890.adapter.R;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.databinding.SpaceVmBinding;
 import com.hello7890.adapter.vh.SpaceTViewHolder;

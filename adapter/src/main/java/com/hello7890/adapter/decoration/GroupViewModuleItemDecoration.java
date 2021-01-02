@@ -7,12 +7,11 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.data.ItemInfo;
-import com.hello7890.adapter.vm.GroupViewModule;
+import com.hello7890.adapter.GroupViewModule;
 
 /**
  * @author qianjujun

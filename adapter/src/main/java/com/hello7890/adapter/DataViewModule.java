@@ -1,4 +1,4 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
 
 import com.hello7890.adapter.BaseViewModule;

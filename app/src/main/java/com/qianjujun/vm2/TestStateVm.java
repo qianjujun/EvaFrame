@@ -3,8 +3,7 @@ package com.qianjujun.vm2;
 import android.view.ViewGroup;
 
 import com.hello7890.adapter.BaseViewHolder;
-import com.hello7890.adapter.vh.NoneTViewHolder;
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmTestStateBinding;
 import com.qianjujun.frame.utils.ToastUtils;
@@ -12,7 +11,7 @@ import com.qianjujun.vh.EmptyVh;
 import com.qianjujun.vh.FailVh;
 import com.qianjujun.vh.LoadingVh;
 
-public class TestStateVm extends SingleDbViewModule<String, VmTestStateBinding> {
+public class TestStateVm extends DbViewModule<String, VmTestStateBinding> {
     private String name;
 
     public TestStateVm() {

@@ -1,4 +1,4 @@
-package com.hello7890.adapter.vm;
+package com.hello7890.adapter;
 
 import android.util.Log;
 import android.view.ViewGroup;
@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.LayoutRes;
 import androidx.databinding.ViewDataBinding;
 
-import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
 
@@ -16,9 +15,9 @@ import com.hello7890.adapter.vh.BaseDbViewHolder;
  * @createTime 2020/1/20 16:24
  * @describe
  */
-public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends ViewModule<T> implements OnModuleItemClickListener<T> {
+public abstract class DbViewModule<T,DB extends ViewDataBinding> extends ViewModule<T> implements OnModuleItemClickListener<T> {
 
-    public SingleDbViewModule(){
+    public DbViewModule(){
         setOnModuleItemClickListener(this);
     }
 
@@ -30,7 +29,7 @@ public abstract class SingleDbViewModule<T,DB extends ViewDataBinding> extends V
         return new BaseDbViewHolder<T, DB>(getLayoutId(),parent) {
             @Override
             public void onBindData(T t, int dataPosition, int adapterPosition) {
-                SingleDbViewModule.this.onBindData(mDataBinding,t,dataPosition, adapterPosition);
+                DbViewModule.this.onBindData(mDataBinding,t,dataPosition, adapterPosition);
             }
         };
     }

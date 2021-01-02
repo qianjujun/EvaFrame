@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.data.ItemInfo;
 import com.hello7890.adapter.data.Group2Data;
-import com.hello7890.adapter.vm.Group2ViewModule;
+import com.hello7890.adapter.Group2ViewModule;
 
 public class Group2ViewModuleItemDecoration extends RecyclerView.ItemDecoration {
     int startPosition;

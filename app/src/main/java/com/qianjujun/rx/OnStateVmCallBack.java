@@ -1,7 +1,6 @@
 package com.qianjujun.rx;
 
-import com.hello7890.adapter.data.ViewModuleState;
-import com.hello7890.adapter.vm.ViewModule;
+import com.hello7890.adapter.ViewModule;
 import com.qianjujun.frame.exception.AppException;
 
 public class OnStateVmCallBack<T> extends OnDataCallBack<T>{

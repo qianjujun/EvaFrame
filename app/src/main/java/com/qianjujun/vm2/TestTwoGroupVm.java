@@ -3,7 +3,6 @@ package com.qianjujun.vm2;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -15,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
-import com.hello7890.adapter.vm.Group2ViewModule;
+import com.hello7890.adapter.Group2ViewModule;
 import com.qianjujun.R;
 import com.qianjujun.data.FriendData;
 import com.qianjujun.databinding.VhFraiendCommentBinding;

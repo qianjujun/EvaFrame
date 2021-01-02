@@ -1,6 +1,6 @@
 package com.qianjujun.vm;
 
-import com.hello7890.adapter.vm.SingleDbViewModule;
+import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.R;
 import com.qianjujun.databinding.ItemPageBinding;
 
@@ -10,7 +10,7 @@ import com.qianjujun.databinding.ItemPageBinding;
  * @createTime 2020/3/4 15:15
  * @describe
  */
-public class PageVm extends SingleDbViewModule<String, ItemPageBinding> {
+public class PageVm extends DbViewModule<String, ItemPageBinding> {
     @Override
     protected int getLayoutId() {
         return R.layout.item_page;

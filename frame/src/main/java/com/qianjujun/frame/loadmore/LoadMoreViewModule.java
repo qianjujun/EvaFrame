@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.hello7890.adapter.BaseViewHolder;
 import com.hello7890.adapter.vh.BaseDbViewHolder;
-import com.hello7890.adapter.vm.ViewModule;
+import com.hello7890.adapter.ViewModule;
 import com.qianjujun.frame.R;
 import com.qianjujun.frame.databinding.RvItemFooterErrorBinding;
 import com.qianjujun.frame.databinding.RvItemFooterLoadingBinding;
