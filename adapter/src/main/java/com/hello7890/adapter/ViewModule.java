@@ -152,7 +152,7 @@ public abstract class ViewModule<T> extends BaseViewModule<T> implements OpData<
 
 
 
-    public final BaseViewModule _getWrapViewModule() {
+    final BaseViewModule _getWrapViewModule() {
         return getSpanCount()>1?new SpaceViewModule():null;
     }
 

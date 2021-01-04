@@ -22,7 +22,7 @@ import java.util.List;
  * @createTime 2020/1/22 14:43
  * @describe
  */
-abstract class BaseViewModule<T> implements ViewType {
+public abstract class BaseViewModule<T> implements ViewType {
     protected List<T> dataList = new ArrayList<>();
 
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();

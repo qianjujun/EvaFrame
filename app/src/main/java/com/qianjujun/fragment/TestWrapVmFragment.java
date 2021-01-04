@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.RecyclerViewAdapter2;
 import com.hello7890.adapter.decoration.StickyItemDecoration;
 import com.hello7890.adapter.listener.OnModuleItemClickListener;
 import com.hello7890.adapter.listener.OnModuleItemLongClickListener;
-import com.hello7890.adapter.StateWrapViewModule;
 import com.qianjujun.R;
 import com.qianjujun.TestData;
 import com.qianjujun.databinding.FragmentTestWrapBinding;
@@ -43,7 +41,7 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
 
     @Override
     protected void initModule(RecyclerView recyclerView, FragmentTestWrapBinding dataBinding) {
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter2(
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(
                 new HeadVm("我是头"),
                 TitleWrapVm.create("测试组头1"),
                 stateVm1.openEnableState(new Runnable() {

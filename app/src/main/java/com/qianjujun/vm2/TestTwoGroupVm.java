@@ -31,30 +31,29 @@ import com.qianjujun.frame.utils.ToastUtils;
  * @createTime 2020/3/28 18:22
  * @describe
  */
-public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,FriendData> {
+public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment, FriendData> {
 
-    public TestTwoGroupVm(){
+    public TestTwoGroupVm() {
         setOnModuleItemClickListener(new OnModuleItemClickListener<FriendData>() {
             @Override
             public void onModuleItemClick(FriendData friendData, int dataPosition, int adapterPosition) {
-                ToastUtils.showSuccess("dataPosition:"+dataPosition+" adapterPosition:"+adapterPosition);
+                ToastUtils.showSuccess("dataPosition:" + dataPosition + " adapterPosition:" + adapterPosition);
                 Log.d("TestTwoGroupVm", "onModuleItemClick() called with: friendData = [" + "friendData" + "], dataPosition = [" + dataPosition + "], adapterPosition = [" + adapterPosition + "]");
             }
         });
     }
 
 
-
     @Override
     protected GroupViewHolder<? extends ViewDataBinding> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
-        return new GroupViewHolder<VhFriendTopBinding>(R.layout.vh_friend_top,parent) {
+        return new GroupViewHolder<VhFriendTopBinding>(R.layout.vh_friend_top, parent) {
 
             @Override
             protected void onBindData(VhFriendTopBinding dataBing, FriendData group, int groupIndex, int dataPosition, int adapterPosition) {
                 dataBing.setData(group);
-                LoadImageUtil.loadImage(dataBing.ivAvatar,group.getUser().getAvatar());
-                if(group.getLink()!=null){
-                    LoadImageUtil.loadImage(dataBing.ivLink,group.getLink().getImage());
+                LoadImageUtil.loadImage(dataBing.ivAvatar, group.getUser().getAvatar());
+                if (group.getLink() != null) {
+                    LoadImageUtil.loadImage(dataBing.ivLink, group.getLink().getImage());
                 }
             }
         };
@@ -62,22 +61,21 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
 
     @Override
     protected Child1ViewHolder<? extends ViewDataBinding> onCreateChild1ViewHolder(ViewGroup parent, int viewType) {
-        if(viewType==0){
-            return new Child1ViewHolder<VhFriendImage3Binding>(R.layout.vh_friend_image3,parent) {
+        if (viewType == 0) {
+            return new Child1ViewHolder<VhFriendImage3Binding>(R.layout.vh_friend_image3, parent) {
 
                 @Override
                 protected void onBindData(VhFriendImage3Binding dataBing, FriendData group, String child, int groupIndex, int childIndex, int dataPosition, int adapterPosition) {
-                    LoadImageUtil.loadImage(dataBing.image,child);
+                    LoadImageUtil.loadImage(dataBing.image, child);
                 }
             };
         }
-        return new Child1ViewHolder<VhFriendImage1Binding>(R.layout.vh_friend_image1,parent) {
-
+        return new Child1ViewHolder<VhFriendImage1Binding>(R.layout.vh_friend_image1, parent) {
 
 
             @Override
             protected void onBindData(VhFriendImage1Binding dataBing, FriendData group, String child, int groupIndex, int childIndex, int dataPosition, int adapterPosition) {
-                resetImageSize(dataBing.image,group.width,group.height);
+                resetImageSize(dataBing.image, group.width, group.height);
                 Glide.with(dataBing.image)
                         .asBitmap()
                         .load(child)
@@ -86,7 +84,7 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                 group.width = resource.getWidth();
                                 group.height = resource.getHeight();
-                                resetImageSize(dataBing.image,resource.getWidth(),resource.getHeight());
+                                resetImageSize(dataBing.image, resource.getWidth(), resource.getHeight());
                                 dataBing.image.setImageBitmap(resource);
                             }
 
@@ -101,11 +99,11 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
 
 
     private void resetImageSize(ImageView imageView, int w, int h) {
-        if(w==0||h==0){
+        if (w == 0 || h == 0) {
             return;
         }
         ViewGroup.LayoutParams vl = imageView.getLayoutParams();
-        if(vl.width==w&&vl.height==h){
+        if (vl.width == w && vl.height == h) {
             return;
         }
         vl.width = w;
@@ -115,7 +113,7 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
 
     @Override
     protected Child2ViewHolder<? extends ViewDataBinding> onCreateChild2ViewHolder(ViewGroup parent, int viewType) {
-        return new Child2ViewHolder<VhFraiendCommentBinding>(R.layout.vh_fraiend_comment,parent) {
+        return new Child2ViewHolder<VhFraiendCommentBinding>(R.layout.vh_fraiend_comment, parent) {
 
 
             @Override
@@ -128,7 +126,7 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
 
     @Override
     protected GroupViewHolder<? extends ViewDataBinding> onCreateChild1BottomViewHolder(ViewGroup parent, int viewType) {
-        return new GroupViewHolder<VhFrinedBottom1Binding>(R.layout.vh_frined_bottom1,parent) {
+        return new GroupViewHolder<VhFrinedBottom1Binding>(R.layout.vh_frined_bottom1, parent) {
             @Override
             protected void onBindData(VhFrinedBottom1Binding dataBing, FriendData group, int groupIndex, int dataPosition, int adapterPosition) {
 
@@ -138,17 +136,26 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
 
     @Override
     protected int getChild1ViewType(FriendData group, int groupPosition, int child1Position) {
-        if(group.getChild1Size()==1){
+        if (group.getChild1Size() == 1) {
             return 1;
         }
         return 0;
     }
 
 
+    @Override
+    public int getChild1SpanCount(int groupPosition, FriendData group) {
+        return group.getChild1Size() > 1 ? 3 : 1;
+    }
 
 
     @Override
-    public int getChild1SpanCount(int groupPosition, FriendData group) {
-        return group.getChild1Size()>1?3:1;
+    protected int getChild2ViewType(FriendData group, int groupPosition, int child1Position) {
+        return super.getChild2ViewType(group, groupPosition, child1Position);
+    }
+
+    @Override
+    public int getChild2SpanCount(int groupPosition, FriendData group) {
+        return super.getChild2SpanCount(groupPosition, group);
     }
 }

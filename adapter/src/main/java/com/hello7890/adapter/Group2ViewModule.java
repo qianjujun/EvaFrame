@@ -72,6 +72,7 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
             super(R.layout.space_vm, container);
         }
 
+
         @Override
         protected void onBindData(SpaceVmBinding dataBing, G group, int groupIndex, int dataPosition, int adapterPosition) {
 
@@ -92,14 +93,14 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
         }
 
         @Override
-        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<Object> payloads) {
+        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<?> payloads) {
             DataInfo dataInfo = getDataType(dataPosition);
             onBindData(mDataBinding,g,dataInfo.groupPosition,dataPosition,adapterPosition,payloads);
         }
 
         protected abstract void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition);
 
-        protected void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition, @NonNull List<Object> payloads) {
+        protected void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition, @NonNull List<?> payloads) {
 
         }
     }
@@ -122,7 +123,7 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
         }
 
         @Override
-        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<Object> payloads) {
+        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<?> payloads) {
             DataInfo dataInfo = getDataType(dataPosition);
             C1 child = g.getChild1(dataInfo.childPosition);
             onBindData(mDataBinding,g,child,dataInfo.groupPosition,dataInfo.childPosition,dataPosition,adapterPosition,payloads);
@@ -130,7 +131,7 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
 
         protected abstract void onBindData(DB dataBing, G group, C1 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition);
 
-        protected void onBindData(DB dataBing, G group, C1 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<Object> payloads) {
+        protected void onBindData(DB dataBing, G group, C1 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<?> payloads) {
 
         }
     }
@@ -149,7 +150,7 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
         }
 
         @Override
-        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<Object> payloads) {
+        public void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<?> payloads) {
             DataInfo dataInfo = getDataType(dataPosition);
             C2 child = g.getChild2(dataInfo.childPosition);
             onBindData(mDataBinding,g,child,dataInfo.groupPosition,dataInfo.childPosition,dataPosition,adapterPosition,payloads);
@@ -157,7 +158,7 @@ public abstract class Group2ViewModule<C1, C2, G extends Group2Data<C1, C2>> ext
 
         protected abstract void onBindData(DB dataBing, G group, C2 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition);
 
-        protected void onBindData(DB dataBing, G group, C2 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<Object> payloads) {
+        protected void onBindData(DB dataBing, G group, C2 child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<?> payloads) {
 
         }
     }

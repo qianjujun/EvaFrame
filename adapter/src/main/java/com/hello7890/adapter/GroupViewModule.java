@@ -19,6 +19,9 @@ import com.hello7890.adapter.vh.BaseDbViewHolder;
 import com.hello7890.adapter.databinding.SpaceVmBinding;
 import com.hello7890.adapter.vh.SpaceTViewHolder;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -289,8 +292,9 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             onBindData(mDataBinding, g, g.getChild(childIndex), groupIndex, childIndex, dataPosition,adapterPosition);
         }
 
+
         @Override
-        public final void onBindData(G g, int dataPosition, int adapterPosition, List<Object> payloads) {
+        public void onBindData(G g, int dataPosition, int adapterPosition, @NotNull List<?> payloads) {
             int firstIndex = dataList.indexOf(g);
             int childIndex = dataPosition - firstIndex - 1;
             int groupIndex = groupList.indexOf(g);
@@ -299,7 +303,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
 
         protected abstract void onBindData(DB dataBing, G group, C child, int groupIndex, int childIndex, int dataPosition, int adapterPosition);
 
-        protected void onBindData(DB dataBing, G group, C child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<Object> payloads) {
+        protected void onBindData(DB dataBing, G group, C child, int groupIndex, int childIndex, int dataPosition, int adapterPosition, List<?> payloads) {
 
         }
     }
@@ -331,7 +335,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
         }
 
         @Override
-        public final void onBindData(G g, int dataPosition, int adapterPosition, @NonNull List<Object> payloads) {
+        public void onBindData(G g, int dataPosition, int adapterPosition, @NotNull List<?> payloads) {
             int groupIndex = groupList.indexOf(g);
             boolean expend = expendGroup.get(groupIndex, true);
             if (payloads.contains(CHANGE_EXPEND)) {
@@ -341,10 +345,9 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
             }
         }
 
+        protected abstract void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition, boolean expend);
 
-        protected abstract void onBindData(DB dataBing, G group, int groupIndex, int dataPosition,int adapterPosition, boolean expend);
-
-        protected void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition,boolean expend, @NonNull List<Object> payloads) {
+        protected void onBindData(DB dataBing, G group, int groupIndex, int dataPosition, int adapterPosition,boolean expend, @NonNull List<?> payloads) {
 
         }
 

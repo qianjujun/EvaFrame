@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.StateWrapViewModule;
 import com.qianjujun.R;
 import com.qianjujun.TestData;
 import com.qianjujun.databinding.FragmentTestStatVmBinding;

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.BaseViewModule;
 
+
 public class BackgroundDecoration extends ViewModuleItemDecoration {
 
     private int padding, outPadding, innerPadding;

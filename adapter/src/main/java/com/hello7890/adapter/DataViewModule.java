@@ -1,7 +1,6 @@
 package com.hello7890.adapter;
 
 
-import com.hello7890.adapter.BaseViewModule;
 
 public abstract class DataViewModule<T> extends BaseViewModule<T> {
 
@@ -11,16 +10,7 @@ public abstract class DataViewModule<T> extends BaseViewModule<T> {
         this.dataList.add(data);
         notifyItemChanged(0);
     }
-
-
     public T getData() {
         return dataList.isEmpty()?null:dataList.get(0);
-    }
-
-
-
-
-    BaseViewModule getWap(){
-        return null;
     }
 }

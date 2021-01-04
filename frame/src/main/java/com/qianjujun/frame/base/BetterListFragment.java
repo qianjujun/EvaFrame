@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hello7890.adapter.RecyclerViewAdapter;
-import com.hello7890.adapter.RecyclerViewAdapter2;
 import com.hello7890.adapter.ViewModule;
 import com.qianjujun.frame.data.IData;
 import com.qianjujun.frame.data.OnResponse;
@@ -45,7 +44,7 @@ public abstract class BetterListFragment<T,VM extends ViewModule<T>> extends Bet
     protected abstract VM createVm();
 
     protected RecyclerViewAdapter createAdapter(VM vm){
-        return new RecyclerViewAdapter2(vm);
+        return new RecyclerViewAdapter(vm);
     }
 
     @Override

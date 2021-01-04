@@ -10,7 +10,9 @@ import com.qianjujun.databinding.VmTitleWrapBinding;
 
 public class TitleWrapVm extends DataViewModule<String> {
 
-    private TitleWrapVm(){}
+    private TitleWrapVm(){
+
+    }
 
 
     public static TitleWrapVm create(String title){
