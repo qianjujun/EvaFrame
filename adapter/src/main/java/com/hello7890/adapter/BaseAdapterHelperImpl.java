@@ -246,7 +246,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
     @Override
     public void onDataSizeChangeByInserted(BaseViewModule viewModule, int positionStart, int itemCount) {
         resetData();
-        int start = viewModule.getStartPosition()+positionStart;
+        int start = viewModule.getStartPosition() +positionStart;
         if(start>0){//==0时插入动画 会直接滑倒底部
             adapter.notifyItemRangeInserted(start,itemCount);
         }
@@ -258,7 +258,7 @@ public abstract class BaseAdapterHelperImpl implements IAdapterHelp,ViewType,Dat
     @Override
     public void onDataSizeChangeByRemove(BaseViewModule viewModule, int positionStart, int itemCount) {
         resetData();
-        int start = viewModule.getStartPosition()+positionStart;
+        int start = viewModule.getStartPosition() +positionStart;
         adapter.notifyItemRangeRemoved(start,itemCount);
         //adapter.notifyItemRangeChanged(start,size);
         adapter.notifyItemRangeChanged(start,size, ADAPTER_SIZE_UPDATE_PAYLOAD);

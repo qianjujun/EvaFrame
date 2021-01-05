@@ -131,7 +131,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
         for (int i = 0; i < childSize; i++) {
             child = parent.getChildAt(i);
             int adapterPosition = parent.getChildAdapterPosition(child);
-            int dataPosition = adapterPosition-viewModule.getStartPosition();
+            int dataPosition = adapterPosition- viewModule.getStartPosition();
             if(!isValidItem(dataPosition)){
                 continue;
             }

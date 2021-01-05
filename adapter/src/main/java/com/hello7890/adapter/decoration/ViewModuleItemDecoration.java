@@ -116,7 +116,7 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int adapterPosition = parent.getChildAdapterPosition(view);
-        int dataPosition = adapterPosition-viewModule.getStartPosition();
+        int dataPosition = adapterPosition- viewModule.getStartPosition();
         if(isValidItem(dataPosition)){
             int[] lr = itemInfo.count(dataPosition,viewModule.getSpanCount());
             outRect.set(lr[0],0,lr[1],getBottomHeight(dataPosition));
@@ -155,7 +155,7 @@ public class ViewModuleItemDecoration extends RecyclerView.ItemDecoration{
         for (int i = 0; i < childSize; i++) {
             child = parent.getChildAt(i);
             int adapterPosition = parent.getChildAdapterPosition(child);
-            int dataPosition = adapterPosition-viewModule.getStartPosition();
+            int dataPosition = adapterPosition- viewModule.getStartPosition();
             if(isValidItem(dataPosition)){
                 layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
                 onDrawLine(layoutParams,c,child,dataPosition,viewModule.getSpanCount(),mDividerHeight,viewModule.size());

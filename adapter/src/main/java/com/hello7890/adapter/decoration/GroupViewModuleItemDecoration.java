@@ -82,7 +82,7 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         int adapterPosition = parent.getChildAdapterPosition(view);
-        int dataPosition = adapterPosition-viewModule.getStartPosition();
+        int dataPosition = adapterPosition- viewModule.getSpanCount();
         if(!isValidItem(adapterPosition)){
             outRect.set(0,0,0,0);
             return;
@@ -136,7 +136,7 @@ public class GroupViewModuleItemDecoration extends RecyclerView.ItemDecoration{
             if(!isValidItem(adapterPosition)){
                 continue;
             }
-            int dataPosition = adapterPosition-viewModule.getStartPosition();
+            int dataPosition = adapterPosition- viewModule.getStartPosition();
             if(viewModule.getDataType(dataPosition)== GroupViewModule.DATA_TYPE_CHILD){//只绘制子项
                 layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
                 int left = child.getLeft();

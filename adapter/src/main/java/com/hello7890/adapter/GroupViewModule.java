@@ -128,7 +128,7 @@ public abstract class GroupViewModule<C, G extends GroupData<C>> extends ViewMod
      */
     private void opGroup2(int groupPosition, int dataPosition, int childSize, boolean expend) {
         if(mRecyclerView!=null){
-            int adapterPosition = dataPosition+getStartPosition();
+            int adapterPosition = dataPosition+ getStartPosition();
             int firstCompletePosition = recyclerViewHelper.findFirstCompletePosition(mRecyclerView);
             if(firstCompletePosition>adapterPosition){//处理因吸顶导致实际position已经划出界面外的情况
                 mRecyclerView.scrollToPosition(adapterPosition);
