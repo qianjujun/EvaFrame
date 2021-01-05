@@ -25,6 +25,8 @@ import com.qianjujun.databinding.VhFrinedBottom1Binding;
 import com.qianjujun.frame.utils.LoadImageUtil;
 import com.qianjujun.frame.utils.ToastUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author qianjujun
  * @email qianjujun@163.com
@@ -44,8 +46,9 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
     }
 
 
+    @NotNull
     @Override
-    protected GroupViewHolder<? extends ViewDataBinding> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
+    protected GroupViewHolder<? extends ViewDataBinding> onCreateGroupTopViewHolder(@NotNull ViewGroup parent, int viewType) {
         return new GroupViewHolder<VhFriendTopBinding>(R.layout.vh_friend_top, parent) {
 
             @Override
@@ -58,6 +61,22 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
             }
         };
     }
+
+
+//    @Override
+//    protected GroupViewHolder<ViewDataBinding> onCreateGroupTopViewHolder(ViewGroup parent, int viewType) {
+//        return new GroupViewHolder<VhFriendTopBinding>(R.layout.vh_friend_top, parent) {
+//
+//            @Override
+//            protected void onBindData(VhFriendTopBinding dataBing, FriendData group, int groupIndex, int dataPosition, int adapterPosition) {
+//                dataBing.setData(group);
+//                LoadImageUtil.loadImage(dataBing.ivAvatar, group.getUser().getAvatar());
+//                if (group.getLink() != null) {
+//                    LoadImageUtil.loadImage(dataBing.ivLink, group.getLink().getImage());
+//                }
+//            }
+//        };
+//    }
 
     @Override
     protected Child1ViewHolder<? extends ViewDataBinding> onCreateChild1ViewHolder(ViewGroup parent, int viewType) {
@@ -158,4 +177,6 @@ public class TestTwoGroupVm extends Group2ViewModule<String, FriendData.Comment,
     public int getChild2SpanCount(int groupPosition, FriendData group) {
         return super.getChild2SpanCount(groupPosition, group);
     }
+
+
 }

@@ -34,17 +34,17 @@ public class TestStateVm extends DbViewModule<String, VmTestStateBinding> {
 
 
     @Override
-    protected BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
+    public BaseViewHolder onCreateLoadingHolder(ViewGroup parent) {
         return new LoadingVh(parent);
     }
 
     @Override
-    protected BaseViewHolder onCreateFailHolder(ViewGroup parent) {
+    public BaseViewHolder onCreateFailHolder(ViewGroup parent) {
         return new FailVh(parent);
     }
 
     @Override
-    protected BaseViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
+    public BaseViewHolder onCreateEmptyViewHolder(ViewGroup parent) {
         return new EmptyVh(parent);
     }
 

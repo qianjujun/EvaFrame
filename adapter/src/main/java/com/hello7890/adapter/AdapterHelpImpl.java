@@ -51,7 +51,7 @@ public class AdapterHelpImpl extends BaseAdapterHelperImpl {
     protected List<BaseViewModule> convert(BaseViewModule... viewModules) {
         List<BaseViewModule> viewModuleList = new ArrayList<>();
         for(BaseViewModule viewModule:viewModules){
-            if(viewModule.enableState){
+            if(viewModule.getEnableState()){
                 StateWrapViewModule stateWrapViewModule = new StateWrapViewModule();
                 stateWrapViewModule.wrapWm(viewModule);
                 addViewModule(stateWrapViewModule,viewModuleList);

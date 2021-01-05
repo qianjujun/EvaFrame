@@ -56,7 +56,7 @@ public class Group2ViewModuleItemDecoration extends RecyclerView.ItemDecoration 
             return;
         }
 
-        Group2ViewModule.DataInfo<Group2Data> dataInfo = viewModule.getDataType(dataPosition);
+        Group2ViewModule.DataInfo dataInfo = viewModule.getDataType(dataPosition);
         switch (dataInfo.getDataType()) {
             case Group2ViewModule.DATA_TYPE_CHILD1:
                 getChild1ItemOffsets(outRect,dataPosition,dataInfo);
@@ -70,16 +70,16 @@ public class Group2ViewModuleItemDecoration extends RecyclerView.ItemDecoration 
         }
     }
 
-    protected void getChild1ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo<Group2Data> dataInfo){
-        int[] result = itemInfo.count(dataInfo.getChildPosition(),viewModule.getChild1SpanCount(dataInfo.getGroupPosition(),dataInfo.getData()));
+    protected void getChild1ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo dataInfo){
+        int[] result = itemInfo.count(dataInfo.getChildPosition(),viewModule.getChild1SpanCount(dataInfo.getGroupPosition(), dataInfo.getData()));
         int left = result[0];
         int right = result[1];
         outRect.set(left,0,right,mDividerHeight);
     }
 
 
-    protected void getChild2ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo<Group2Data> dataInfo){
-        int[] result = itemInfo.count(dataInfo.getChildPosition(),viewModule.getChild2SpanCount(dataInfo.getGroupPosition(),dataInfo.getData()));
+    protected void getChild2ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo dataInfo){
+        int[] result = itemInfo.count(dataInfo.getChildPosition(),viewModule.getChild2SpanCount(dataInfo.getGroupPosition(), dataInfo.getData()));
         int left = result[0];
         int right = result[1];
         outRect.set(left,0,right,mDividerHeight);

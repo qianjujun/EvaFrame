@@ -6,11 +6,11 @@ public abstract class DataViewModule<T> extends BaseViewModule<T> {
 
 
     public void setData(T data){
-        this.dataList.clear();
-        this.dataList.add(data);
+        _getDataList().clear();
+        _getDataList().add(data);
         notifyItemChanged(0);
     }
     public T getData() {
-        return dataList.isEmpty()?null:dataList.get(0);
+        return _getDataList().isEmpty()?null:_getDataList().get(0);
     }
 }

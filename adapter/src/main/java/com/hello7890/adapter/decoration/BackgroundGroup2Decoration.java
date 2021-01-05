@@ -42,7 +42,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
     }
 
     @Override
-    protected void getChild1ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo<Group2Data> dataInfo) {
+    protected void getChild1ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo dataInfo) {
         if(backgroundBuild1==null){
             outRect.set(0,0,0,0);
             return;
@@ -50,7 +50,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
         if(itemInfo1==null){
             itemInfo1 = new ItemInfo(backgroundBuild1.getDivider(),backgroundBuild1.getLeft(),backgroundBuild1.getRight());
         }
-        int spanCount = viewModule.getChild1SpanCount(dataInfo.getGroupPosition(),dataInfo.getData());
+        int spanCount = viewModule.getChild1SpanCount(dataInfo.getGroupPosition(), dataInfo.getData());
         int[] result = itemInfo1.count(dataInfo.getChildPosition(),spanCount);
         int left = result[0];
         int right = result[1];
@@ -58,7 +58,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
 
         if(dataInfo.isTopChild(spanCount)){
             outRect.top = backgroundBuild1.getInnerTop()+backgroundBuild1.getOuterTop();
-            handlerTopChild1(outRect,dataInfo.getGroupPosition());
+            handlerTopChild1(outRect, dataInfo.getGroupPosition());
         }
         if(dataInfo.isBottomChild(spanCount)){//直接处理掉最后一行  不需要分割
             outRect.bottom = backgroundBuild1.getInnerBottom()+backgroundBuild1.getOuterBottom();
@@ -73,7 +73,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
 
 
     @Override
-    protected void getChild2ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo<Group2Data> dataInfo) {
+    protected void getChild2ItemOffsets(@NonNull Rect outRect, int dataPosition, Group2ViewModule.DataInfo dataInfo) {
         if(backgroundBuild2==null){
             outRect.set(0,0,0,0);
             return;
@@ -81,7 +81,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
         if(itemInfo2==null){
             itemInfo2 = new ItemInfo(backgroundBuild2.getDivider(),backgroundBuild2.getLeft(),backgroundBuild2.getRight());
         }
-        int spanCount = viewModule.getChild2SpanCount(dataInfo.getGroupPosition(),dataInfo.getData());
+        int spanCount = viewModule.getChild2SpanCount(dataInfo.getGroupPosition(), dataInfo.getData());
         int[] result = itemInfo2.count(dataInfo.getChildPosition(),spanCount);
         int left = result[0];
         int right = result[1];
@@ -136,8 +136,8 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
                 continue;
             }
 
-            Group2ViewModule.DataInfo<Group2Data> dataInfo = viewModule.getDataType(dataPosition);
-            if(lastType!=dataInfo.getDataType()){
+            Group2ViewModule.DataInfo dataInfo = viewModule.getDataType(dataPosition);
+            if(lastType!= dataInfo.getDataType()){
                 lastType = dataInfo.getDataType();
 
                 if(firstChild!=null){
@@ -154,7 +154,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
 
 
 
-            if(dataInfo.getDataType()==Group2ViewModule.DATA_TYPE_CHILD1&&backgroundBuild1!=null){
+            if(dataInfo.getDataType() ==Group2ViewModule.DATA_TYPE_CHILD1&&backgroundBuild1!=null){
 
 
                 if(firstChild==null){
@@ -163,7 +163,7 @@ public class BackgroundGroup2Decoration extends Group2ViewModuleItemDecoration{
                 lastChild = child;
             }
 
-            if(dataInfo.getDataType()==Group2ViewModule.DATA_TYPE_CHILD2&&backgroundBuild2!=null){
+            if(dataInfo.getDataType() ==Group2ViewModule.DATA_TYPE_CHILD2&&backgroundBuild2!=null){
                 if(firstChild2==null){
                     firstChild2 = child;
                 }

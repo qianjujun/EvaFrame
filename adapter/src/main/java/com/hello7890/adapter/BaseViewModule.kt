@@ -16,16 +16,13 @@ import java.util.*
  * @describe
  */
 abstract class BaseViewModule<T> : ViewType {
-    @JvmField
-    protected var dataList: MutableList<T> = ArrayList()
+    protected val dataList = ArrayList<T>()
     private val dataChangeListeners: MutableList<DataChangeListener> = ArrayList()
     private val dataStateChangeListeners: MutableList<DataStateChangeListener> = ArrayList()
-    @JvmField
     var enableState = false
     var reloadRunnable: Runnable? = null
         private set
 
-    @JvmOverloads
     fun openEnableState(reloadRunnable: Runnable? = null): BaseViewModule<*> {
         enableState = true
         this.reloadRunnable = reloadRunnable
@@ -160,9 +157,7 @@ abstract class BaseViewModule<T> : ViewType {
         return false
     }
 
-    fun getDataList(): List<T> {
-        return ArrayList(dataList)
-    }
+
 
     /**
      * @return 返回源数据  操作后必须调用相关更新方法
@@ -252,16 +247,17 @@ abstract class BaseViewModule<T> : ViewType {
         return onCreateViewHolder(parent, viewType)
     }
 
-    abstract fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<T>
-    protected open fun onCreateEmptyViewHolder(parent: ViewGroup?): BaseViewHolder<ModuleState?>? {
+    abstract fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T>
+
+    open fun onCreateEmptyViewHolder(parent: ViewGroup): BaseViewHolder<ModuleState>? {
         return null
     }
 
-    protected open fun onCreateLoadingHolder(parent: ViewGroup?): BaseViewHolder<ModuleState?>? {
+    open fun onCreateLoadingHolder(parent: ViewGroup): BaseViewHolder<ModuleState>? {
         return null
     }
 
-    protected open fun onCreateFailHolder(parent: ViewGroup?): BaseViewHolder<ModuleState?>? {
+    open fun onCreateFailHolder(parent: ViewGroup): BaseViewHolder<ModuleState>? {
         return null
     }
 
