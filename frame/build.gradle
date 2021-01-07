@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -66,10 +67,16 @@ dependencies {
     api deps.rx.rx_android
     api project(path: ':adapter')
     api 'com.google.code.gson:gson:2.6.2'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 //    api "org.permissionsdispatcher:permissionsdispatcher:4.6.0"
 //    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.6.0"
 
 
 
+}
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }

@@ -72,7 +72,7 @@ public class TestWrapVmFragment extends BetterCustomModuleFragment<FragmentTestW
 
         recyclerView.addItemDecoration(new StickyItemDecoration(adapter.getAdapterHelper()));
 
-        request1();
+        //request1();
         request2();
         request3();
         dataBinding.setClick(this);

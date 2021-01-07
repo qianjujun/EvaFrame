@@ -2,11 +2,14 @@ package com.qianjujun.vm;
 
 import android.graphics.Color;
 
+import com.hello7890.adapter.BaseViewModule;
 import com.hello7890.adapter.DbViewModule;
 import com.qianjujun.ColorUtils;
 import com.qianjujun.R;
 import com.qianjujun.databinding.VmChildBinding;
 import com.qianjujun.frame.utils.ToastUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author qianjujun
@@ -53,15 +56,6 @@ public class SimpleTextVm extends DbViewModule<String, VmChildBinding> {
     @Override
     public int getSpanCount() {
         return columnNum;
-    }
-
-
-
-
-    @Override
-    public void onModuleItemClick(String s, int dataPosition, int adapterPosition) {
-        super.onModuleItemClick(s, dataPosition, adapterPosition);
-        ToastUtils.showSuccess(s);
     }
 
 

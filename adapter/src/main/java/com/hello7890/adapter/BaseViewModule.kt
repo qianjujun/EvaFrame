@@ -33,7 +33,7 @@ abstract class BaseViewModule<T> : ViewType {
      * 包含的数据model
      * @return
      */
-    open  fun _getWrapViewModule(): BaseViewModule<*>? {
+    internal open  fun _getWrapViewModule(): BaseViewModule<*>? {
         return null
     }
 
@@ -279,6 +279,16 @@ abstract class BaseViewModule<T> : ViewType {
     fun size(): Int {
         return dataList.size
     }
+
+
+    fun setOnModuleItemClickListener(listener:(t: T, dataPosition: Int, adapterPosition: Int)->Unit){
+        this.itemClickListener = object : OnModuleItemClickListener<T>{
+            override fun onModuleItemClick(t: T, dataPosition: Int, adapterPosition: Int) {
+                listener.invoke(t,dataPosition,adapterPosition)
+            }
+        }
+    }
+
 
     fun setOnModuleItemClickListener(itemClickListener: OnModuleItemClickListener<T>?) {
         this.itemClickListener = itemClickListener

@@ -51,20 +51,20 @@ dependencies {
 
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/
-//apply plugin: 'com.novoda.bintray-release'//添加
-////项目主页
-//def siteUrl = 'https://github.com/qianjujun/EvaFrame'
-//publish{
-//    repoName = 'recyclerview-adapter'//远程仓库名字,不指明，默认是上传到maven
-//    userOrg = 'qianjujun2020'//bintray.com的用户名
-//    groupId = 'com.hello7890'//jcenter上的路径
-//    artifactId = 'recyclerview-adapter'//项目名称
-//    publishVersion = '1.0.0'//版本号
-//    desc = '一个Adapter'//描述，不重要
-//    website = siteUrl//项目主页
-//}
-//tasks.withType(Javadoc) {//防止编码问题
-//    options.addStringOption('Xdoclint:none', '-quiet')
-//    options.addStringOption('encoding', 'UTF-8')
-//    options.addStringOption('charSet', 'UTF-8')
-//}
+apply plugin: 'com.novoda.bintray-release'//添加
+//项目主页
+def siteUrl = 'https://github.com/qianjujun/EvaFrame'
+publish{
+    repoName = 'recyclerview-adapter'//远程仓库名字,不指明，默认是上传到maven
+    userOrg = 'qianjujun2020'//bintray.com的用户名
+    groupId = 'com.hello7890'//jcenter上的路径
+    artifactId = 'recyclerview-adapter'//项目名称
+    publishVersion = '2.0.0'//版本号
+    desc = '一个Adapter'//描述，不重要
+    website = siteUrl//项目主页
+}
+tasks.withType(Javadoc) {//防止编码问题
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}

@@ -7,5 +7,5 @@ package com.hello7890.adapter.listener
  * @describe
  */
 interface OnModuleItemClickListener<T> {
-    fun onModuleItemClick(t: T, dataPosition: Int, adapterPosition: Int)
+    fun onModuleItemClick(data: T, dataPosition: Int, adapterPosition: Int)
 }

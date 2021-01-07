@@ -55,8 +55,5 @@ public class TestStateVm extends DbViewModule<String, VmTestStateBinding> {
                 '}';
     }
 
-    @Override
-    public void onModuleItemClick(String s, int dataPosition, int adapterPosition) {
-        ToastUtils.show("name:"+name+"  data:"+s);
-    }
+
 }

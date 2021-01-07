@@ -104,3 +104,7 @@ bintray {
         publicDownloadNumbers = true
     }
 }
+//gradlew bintrayUpload -PbintrayUser=qianjujun2020 -PbintrayKey=ff5a95774e0a36e138ba5c28266539645df6e498 -PdryRun=false
+
+//gradlew clean build bintrayUpload -PbintrayUser=qianjujun2020 -PbintrayKey=ff5a95774e0a36e138ba5c28266539645df6e498 -PdryRun=false
+

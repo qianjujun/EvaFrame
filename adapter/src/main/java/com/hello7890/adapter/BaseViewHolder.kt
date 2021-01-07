@@ -42,10 +42,10 @@ abstract class BaseViewHolder<T>(@LayoutRes layoutId: Int, container: ViewGroup)
         }
     }
 
-    abstract fun onBindData(t: T, dataPosition: Int, adapterPosition: Int)
+    abstract fun onBindData(data: T, dataPosition: Int, adapterPosition: Int)
 
 
-    open fun onBindData(t: T, dataPosition: Int, adapterPosition: Int, payloads: List<*>) {}
+    open fun onBindData(data: T, dataPosition: Int, adapterPosition: Int, payloads: List<*>) {}
 
 
 

@@ -25,14 +25,18 @@ abstract class ViewModule<T> : BaseViewModule<T>(), OpData<T> {
     }
 
     protected fun updateDate(oldSize: Int, newSize: Int) {
-        if (oldSize == newSize) {
-            notifyItemRangeChanged(0, newSize)
-        } else if (oldSize > newSize) {
-            notifyItemRangeChanged(0, newSize)
-            notifyItemRemove(newSize, oldSize - newSize)
-        } else {
-            notifyItemRangeChanged(0, oldSize)
-            notifyItemInserted(oldSize, newSize - oldSize)
+        when {
+            oldSize == newSize -> {
+                notifyItemRangeChanged(0, newSize)
+            }
+            oldSize > newSize -> {
+                notifyItemRangeChanged(0, newSize)
+                notifyItemRemove(newSize, oldSize - newSize)
+            }
+            else -> {
+                notifyItemRangeChanged(0, oldSize)
+                notifyItemInserted(oldSize, newSize - oldSize)
+            }
         }
     }
 
@@ -126,15 +130,15 @@ abstract class ViewModule<T> : BaseViewModule<T>(), OpData<T> {
         updateDate(oldSize, newSize)
     }
 
-    override fun _getWrapViewModule(): BaseViewModule<*>? {
+    internal override fun _getWrapViewModule(): BaseViewModule<*>? {
         return if (spanCount > 1) SpaceViewModule() else null
     }
 
-    public override fun getSpanCount(dataPosition: Int): Int {
+    public final override fun getSpanCount(dataPosition: Int): Int {
         return _getSpanCount(dataPosition)
     }
 
-    open fun _getSpanCount(dataPosition: Int): Int {
+    internal open fun _getSpanCount(dataPosition: Int): Int {
         return spanCount
     }
 }
