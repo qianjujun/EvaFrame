@@ -16,7 +16,7 @@ import com.hello7890.adapter.vh.SpaceTViewHolder
 internal class StateWrapViewModule : BaseViewModule<ModuleState>(), DataStateChangeListener {
     private val moduleState = ModuleState()
     private fun setDataState(state: ViewModuleState) {
-        if (state == null || wrapVm == null || wrapVm!!.size() > 0) {
+        if (state == null || wrapVm == null) {
             moduleState.state = IState.STATE_EMPTY
         } else {
             moduleState.state = state.value
@@ -117,6 +117,12 @@ internal class StateWrapViewModule : BaseViewModule<ModuleState>(), DataStateCha
         moduleState.errorCode = errorCode
         setDataState(ViewModuleState.FAIL)
     }
+
+
+    override fun onSuccess() {
+        setDataState(ViewModuleState.SUCCESS)
+    }
+
 
     companion object {
         const val TAG = "StateWrapViewModule"

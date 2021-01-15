@@ -130,7 +130,7 @@ abstract class ViewModule<T> : BaseViewModule<T>(), OpData<T> {
         updateDate(oldSize, newSize)
     }
 
-    internal override fun _getWrapViewModule(): BaseViewModule<*>? {
+     override fun _getWrapViewModule(): BaseViewModule<*>? {
         return if (spanCount > 1) SpaceViewModule() else null
     }
 

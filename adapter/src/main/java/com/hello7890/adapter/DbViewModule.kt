@@ -15,10 +15,13 @@ import com.hello7890.adapter.vh.BaseDbViewHolder
  */
 abstract class DbViewModule<T, DB : ViewDataBinding> : ViewModule<T>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseDbViewHolder<T, DB> {
-        Log.d("SingleDbViewModule", "onCreateViewHolder() called with: parent = [this], viewType = [$viewType]")
         return object : BaseDbViewHolder<T, DB>(layoutId, parent) {
             override fun onBindData(t: T, dataPosition: Int, adapterPosition: Int) {
                 this@DbViewModule.onBindData(mDataBinding, t, dataPosition, adapterPosition)
+            }
+
+            override fun onBindData(data: T, dataPosition: Int, adapterPosition: Int, payloads: List<*>) {
+                this@DbViewModule.onBindData(mDataBinding, data, dataPosition, adapterPosition,payloads)
             }
         }
     }
@@ -27,5 +30,5 @@ abstract class DbViewModule<T, DB : ViewDataBinding> : ViewModule<T>(){
     protected abstract val layoutId: Int
     protected abstract fun onBindData(dataBinding: DB, data: T, dataPosition: Int, layoutPosition: Int)
 
-
+    protected abstract fun onBindData(dataBinding: DB, data: T, dataPosition: Int, layoutPosition: Int,payloads: List<*>)
 }

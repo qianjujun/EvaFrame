@@ -33,7 +33,7 @@ abstract class BaseViewModule<T> : ViewType {
      * 包含的数据model
      * @return
      */
-    internal open  fun _getWrapViewModule(): BaseViewModule<*>? {
+     open  fun _getWrapViewModule(): BaseViewModule<*>? {
         return null
     }
 
@@ -59,6 +59,13 @@ abstract class BaseViewModule<T> : ViewType {
     fun notifyError(errorCode: Int, message: String?) {
         for (stateChangeListener in dataStateChangeListeners) {
             stateChangeListener.onFail(errorCode, message)
+        }
+    }
+
+
+    fun notifySuccess(){
+        dataStateChangeListeners.forEach {
+            it.onSuccess()
         }
     }
 

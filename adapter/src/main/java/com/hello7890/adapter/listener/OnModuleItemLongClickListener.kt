@@ -7,5 +7,5 @@ package com.hello7890.adapter.listener
  * @describe
  */
 interface OnModuleItemLongClickListener<T> {
-    fun onModuleItemLongClick(t: T, dataPosition: Int, adapterPosition: Int): Boolean
+    fun onModuleItemLongClick(data: T, dataPosition: Int, adapterPosition: Int): Boolean
 }
